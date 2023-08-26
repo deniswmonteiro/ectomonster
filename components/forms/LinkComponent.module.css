@@ -1,0 +1,66 @@
+.link {
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: .875rem;
+    text-align: center;
+    transition: .3s;
+}
+
+.link:not(.textSuccess, .textDanger, .textWarning) {
+    color: var(--color-white);
+    display: block;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    border-radius: 0.25rem;
+    padding: .5rem;
+}
+
+.link.disabled {
+    pointer-events: none;
+    opacity: .5;
+}
+
+.success {
+    background-color: var(--color-green-2);
+    border-color: var(--color-green-2);
+}
+
+.success:hover,
+.success:focus-visible,
+.success:active {
+    box-shadow: 0 0 0 3px var(--color-green-1), 0 0 0 4px var(--color-green-2);
+    background-color: var(--color-green-2) !important;
+    border-color: var(--color-green-2) !important;
+    transition: .3s;
+}
+
+.secondary {
+    background-color: var(--color-black-2);
+    border-color: var(--color-black-2);
+}
+
+.secondary:hover,
+.secondary:focus-visible,
+.secondary:active {
+    box-shadow: 0 0 0 3px var(--color-black-1), 0 0 0 4px var(--color-black-2);
+    background-color: var(--color-black-2) !important;
+    border-color: var(--color-black-2) !important;
+    transition: .3s;
+}
+
+.textWarning {
+    color: var(--color-tomato-2);
+    text-transform: initial;
+    font-weight: initial;
+    font-size: 1rem;
+    margin-left: .3rem;
+}
+
+.textWarning::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-tomato-2);
+}
