@@ -5,10 +5,15 @@ import styles from "./LinkComponent.module.css";
 type LinkComponentProps = {
     href: string,
     type: "success" | "secondary" | "text",
-    textType?: string,
-    query?: string,
+    textType?: "text-warning",
+    query?: {
+        name: string,
+        gender: string,
+        weight: string,
+        height: string
+    },
     disabled?: boolean,
-    children: string
+    children: React.ReactNode
 }
 
 const LinkComponent = ({ href, type, textType, query, disabled, children }: LinkComponentProps) => {

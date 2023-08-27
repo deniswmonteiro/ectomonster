@@ -24,6 +24,7 @@
 .success {
     background-color: var(--color-green-2);
     border-color: var(--color-green-2);
+    transition: .3s;
 }
 
 .success:hover,
@@ -38,6 +39,7 @@
 .secondary {
     background-color: var(--color-black-2);
     border-color: var(--color-black-2);
+    transition: .3s;
 }
 
 .secondary:hover,

@@ -98,11 +98,11 @@ a {
 
 /** Form */
 .valid-feedback {
-    color: var(--color-green-1);
+    color: var(--color-green-2);
 }
 
 .invalid-feedback {
-    color: var(--color-red-1);
+    color: var(--color-red-2);
 }
 
 /** Modal */

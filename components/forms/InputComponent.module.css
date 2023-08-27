@@ -1,0 +1,41 @@
+.label {
+    margin-bottom: .3125rem;
+}
+
+.input {
+    border-color: var(--color-grey-2);
+}
+
+.input:hover,
+.input:focus {
+    outline: none;
+    border-color: var(--color-grey-2);
+    box-shadow: 0 0 0 3px var(--color-grey-3);
+}
+
+.valid {
+    border-color: var(--color-green-2);
+}
+
+.valid:hover,
+.valid:focus {
+    outline: none;
+    border-color: var(--color-green-2);
+    box-shadow: 0 0 0 3px var(--color-green-1);
+}
+
+.invalid {
+    border-color: var(--color-red-2);
+}
+
+.invalid:hover,
+.invalid:focus {
+    outline: none;
+    border-color: var(--color-red-2);
+    box-shadow: 0 0 0 3px var(--color-red-1);
+}
+
+.inputGroupText {
+    border-color: var(--color-grey-2);
+    background-color: var(--color-grey-2);
+}
