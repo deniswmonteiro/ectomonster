@@ -1,4 +1,5 @@
 import React from "react";
+import Header from "../layout/Header";
 import useForm from "@/hooks/useForm";
 import ProgressBarComponent from "../ui/ProgressBarComponent";
 import InputComponent from "../forms/InputComponent";
@@ -26,6 +27,8 @@ const RegisterProfile = () => {
     
     return (
         <>
+            <Header backNavigation={true} href="/" />
+
             <section className={`container animeLeft ${styles.registerProfile}`}>
                 <ProgressBarComponent size={50} />
 

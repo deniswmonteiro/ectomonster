@@ -1,4 +1,5 @@
 import React from "react";
+import Header from "../layout/Header";
 import useForm from "@/hooks/useForm";
 import { useRouter } from "next/router";
 import ProgressBarComponent from "../ui/ProgressBarComponent";
@@ -64,6 +65,8 @@ const RegisterAccount = () => {
 
     return (
         <>
+            <Header backNavigation={true} href="/cadastro/dados-perfil" />
+
             <section className={`container animeLeft ${styles.registerAccount}`}>
                 <ProgressBarComponent size={100} />
 
