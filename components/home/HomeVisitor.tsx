@@ -1,6 +1,6 @@
 import React from "react";
 import LinkComponent from "../forms/LinkComponent";
-import HomeIcon from "../icons/home-icon.svg";
+import HomeIcon from "../icons/home-icon";
 import styles from "./HomeVisitor.module.css";
 
 const HomeVisitor = () => {

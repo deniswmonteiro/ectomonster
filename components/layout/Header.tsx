@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import ArrowLeftIcon from "../Icons/arrow-left.svg";
+import ArrowLeftIcon from "../icons/arrow-left-icon";
 import { Spinner } from "react-bootstrap";
 import styles from "./Header.module.css";
 
