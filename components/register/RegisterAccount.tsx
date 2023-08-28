@@ -12,6 +12,7 @@ const RegisterAccount = () => {
     const email = useForm({ type: "email" });
     const password = useForm({ type: "password", min: 6 });
     const [loading, setLoading] = React.useState(false);
+    const [fillProgressBar, setFillProgressBar] = React.useState(0);
     const router = useRouter();
     const userProfileData = router.query;
 
@@ -21,46 +22,50 @@ const RegisterAccount = () => {
         }
 
         else router.replace("/cadastro/dados-perfil");
-    }, [userProfileData, router]);
+
+        if (email.validate() && password.validate()) setFillProgressBar(100);
+    }, [userProfileData, router, email, password]);
 
     const handleRegisterFormSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
 
-        // if (email.validate() && password.validate()) {
-        //     setLoading(true);
+        if (email.validate() && password.validate()) {
+            setLoading(true);
             
-        //     const userData = {
-        //         name: userProfileData.name,
-        //         gender: userProfileData.gender,
-        //         weight: userProfileData.weight,
-        //         height: userProfileData.height,
-        //         email: email.value,
-        //         password: password.value
-        //     }
+            const userData = {
+                name: userProfileData.name,
+                gender: userProfileData.gender,
+                weight: userProfileData.weight,
+                height: userProfileData.height,
+                email: email.value,
+                password: password.value
+            }
     
-        //     const response = await fetch("/api/user", {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json"
-        //         },
-        //         body: JSON.stringify(userData)
-        //     });
+            const response = await fetch("/api/user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(userData)
+            });
 
-        //     await response.json();
+            const result = await response.json();
 
-        //     if (response.ok) {
-        //         const login = await signIn("credentials", {
-        //             redirect: false,
-        //             email: email.value,
-        //             password: password.value
-        //         });
+            console.log(result)
 
-        //         if (login.ok) router.replace("/");
-        //         else console.log(response.error);
-        //     }
+            // if (response.ok) {
+            //     const login = await signIn("credentials", {
+            //         redirect: false,
+            //         email: email.value,
+            //         password: password.value
+            //     });
 
-        //     else setLoading(false);
-        // }
+            //     if (login.ok) router.replace("/");
+            //     else console.log(response.error);
+            // }
+
+            // else setLoading(false);
+        }
     }
 
     return (
@@ -68,7 +73,7 @@ const RegisterAccount = () => {
             <Header backNavigation={true} href="/cadastro/dados-perfil" />
 
             <section className={`container animeLeft ${styles.registerAccount}`}>
-                <ProgressBarComponent size={100} />
+                <ProgressBarComponent size={fillProgressBar} />
 
                 <h1 className="title-2">Crie a sua conta:</h1>
 
