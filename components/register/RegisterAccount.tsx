@@ -12,7 +12,7 @@ const RegisterAccount = () => {
     const email = useForm({ type: "email" });
     const password = useForm({ type: "password", min: 6 });
     const [loading, setLoading] = React.useState(false);
-    const [fillProgressBar, setFillProgressBar] = React.useState(0);
+    const [fillProgressBar, setFillProgressBar] = React.useState(50);
     const router = useRouter();
     const userProfileData = router.query;
 
