@@ -14,17 +14,17 @@ type IUserData = {
 }
 
 const HomeAuthenticated = ({ user }: { user: IUserData }) => {
-    // Modal state
-    const [showProfileModal, setShowProfileModal] = React.useState(false);
-    const [showLogoutModal, setShowLogoutModal] = React.useState(false);
+    // // Modal state
+    // const [showProfileModal, setShowProfileModal] = React.useState(false);
+    // const [showLogoutModal, setShowLogoutModal] = React.useState(false);
     
-    /** Profile modal */
-    const handleShowProfileModal = () => setShowProfileModal(true);
-    const handleCloseProfileModal = () => setShowProfileModal(false);
+    // /** Profile modal */
+    // const handleShowProfileModal = () => setShowProfileModal(true);
+    // const handleCloseProfileModal = () => setShowProfileModal(false);
 
-    /** Logout modal */
-    const handleShowLogoutModal = () => setShowLogoutModal(true);
-    const handleCloseLogoutModal = () => setShowLogoutModal(false);
+    // /** Logout modal */
+    // const handleShowLogoutModal = () => setShowLogoutModal(true);
+    // const handleCloseLogoutModal = () => setShowLogoutModal(false);
 
     return (
         <>
@@ -35,9 +35,9 @@ const HomeAuthenticated = ({ user }: { user: IUserData }) => {
                     <h1 className="title-1">
                         Olá, {user.name}
                     </h1>
-                    <button onClick={handleShowProfileModal}>
+                    {/* <button onClick={handleShowProfileModal}>
                         <PersonCircleIcon />
-                    </button>
+                    </button> */}
                 </div>
                 <div className={styles.workoutsWeek}>
                     <h3 className="title-3">Treinos feitos na semana</h3>
@@ -84,14 +84,14 @@ const HomeAuthenticated = ({ user }: { user: IUserData }) => {
             </section>
 
             {/* Profile modal */}
-            <ProfileModal user={user}
+            {/* <ProfileModal user={user}
                 showProfileModal={showProfileModal}
                 handleCloseProfileModal={handleCloseProfileModal}
-                handleShowLogoutModal={handleShowLogoutModal} />
+                handleShowLogoutModal={handleShowLogoutModal} /> */}
 
             {/* Logout modal */}
-            <LogoutModal showLogoutModal={showLogoutModal}
-                handleCloseLogoutModal={handleCloseLogoutModal} />
+            {/* <LogoutModal showLogoutModal={showLogoutModal}
+                handleCloseLogoutModal={handleCloseLogoutModal} /> */}
         </>
     )
 }
