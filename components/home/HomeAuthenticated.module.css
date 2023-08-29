@@ -32,13 +32,8 @@
     padding: 3rem 0;
 }
 
-.workoutsTitle {
-    display: flex;
-    justify-content: space-between;
-}
-
 .workouts h2 {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .workouts button {

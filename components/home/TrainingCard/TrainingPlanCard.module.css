@@ -1,0 +1,26 @@
+.training {
+    margin-bottom: 2rem;
+}
+
+.cardBgBlue {
+    border: none;
+    background-color: var(--color-blue-3);
+    color: var(--color-white);
+}
+
+.cardBgBlueContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 1rem;
+}
+
+.cardBgBlueContent span {
+    color: var(--color-tomato-1);
+    font-weight: 700;
+}
+
+.cardBgBlueContent svg, .loading {
+    opacity: .6;
+}

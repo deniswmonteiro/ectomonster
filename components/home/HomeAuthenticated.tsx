@@ -4,6 +4,7 @@ import Calendar from "../ui/Calendar";
 import ProfileModal from "./ProfileModal/ProfileModal";
 import LogoutModal from "./LogoutModal/LogoutModal";
 import PersonCircleIcon from "../icons/person-circle-icon";
+import TrainingPlanCard from "./TrainingCard/TrainingPlanCard";
 import styles from "./HomeAuthenticated.module.css";
 
 type IUserData = {
@@ -12,6 +13,10 @@ type IUserData = {
     weight: string,
     height: string
 }
+
+const trainingPlanWeeks = [
+    "Semana 1", "Semana 2", "Semana 3", "Semana 4", "Semana 5", "Semana 6", "Semana 7", "Semana 8", "Semana 9", "Semana 10", "Semana 11", "Semana 12", 
+];
 
 const HomeAuthenticated = ({ user }: { user: IUserData }) => {
     // Modal state
@@ -44,42 +49,11 @@ const HomeAuthenticated = ({ user }: { user: IUserData }) => {
                     <Calendar />
                 </div>
                 <div className={styles.workouts}>
-                    <div className={styles.workoutsTitle}>
-                        <h2 className="title-2">Meu Treino</h2>
+                    <h2 className="title-2">Plano de Treino</h2>
 
-                        {/* {training.length > 0 &&
-                            (
-                                <button type="button" className={styles.btnCreateTraining}
-                                    onClick={handleCreateTrainingPlan}>
-                                    <PlusCircleFillIcon />
-                                </button>
-                            )
-                        } */}
-                    </div>
-
-                    {/* {training.length > 0 ?
-                        (
-                            training.map((plan) => (
-                                <TrainingPlanCard key={plan.id} plan={plan}
-                                    setTrainingData={setTrainingData}
-                                    trainingName={trainingName}
-                                    setTrainingDays={setTrainingDays}
-                                    handleShowEditTrainingModal={handleShowEditTrainingModal}
-                                    handleShowDeleteTrainingPlanModal={handleShowDeleteTrainingPlanModal} />
-                            ))
-                        ) : (
-                            <button type="button" onClick={handleCreateTrainingPlan}>
-                                <Card className={styles.cardBgBlue}>
-                                    <Card.Body className={styles.cardBgBlueContent}>
-                                        <p>
-                                            Criar um <span>plano de treino</span>
-                                        </p>
-                                        <PlusIcon />
-                                    </Card.Body>
-                                </Card>
-                            </button>
-                        )
-                    } */}
+                    {trainingPlanWeeks.map((week) => (
+                        <TrainingPlanCard key={week} week={week} />
+                    ))}
                 </div>
             </section>
 
