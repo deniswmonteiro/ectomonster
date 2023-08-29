@@ -23,7 +23,9 @@ const RegisterAccount = () => {
 
         else router.replace("/cadastro/dados-perfil");
 
-        if (email.validate() && password.validate()) setFillProgressBar(100);
+        if (email.value !== "" && password.value) {
+            if (email.validate() && password.validate()) setFillProgressBar(100);
+        }
     }, [userProfileData, router, email, password]);
 
     const handleRegisterFormSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
