@@ -25,7 +25,8 @@ type IUserData = {
 const HomePage = ({ session, user }: { session: ISession, user: IUserData }) => {
     if (session !== null) {
         return (
-            <HomeAuthenticated user={user} />
+            <HomeVisitor />
+            // <HomeAuthenticated user={user} />
         )
     }
 
@@ -37,7 +38,7 @@ const HomePage = ({ session, user }: { session: ISession, user: IUserData }) => 
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    // let session: ISession | null = await getServerSession(context.req, context.res, authOptions);
+    let session: ISession | null = await getServerSession(context.req, context.res, authOptions);
     // let user: IUserData | null = null;
     
     // // Get user data
@@ -54,7 +55,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     //     }
     // }
 
-    const session = null;
     const user = null;
 
     return {
