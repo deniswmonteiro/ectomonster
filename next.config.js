@@ -1,6 +1,21 @@
 /** @type {import('next').NextConfig} */
 
+const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
+
 const nextConfig = () => {
+    let nextAuthUrl;
+    let nextAuthSecret;
+
+    if (phase === PHASE_DEVELOPMENT_SERVER) {
+        nextAuthUrl: "http://localhost:3000";
+        nextAuthSecret: "Jm6J5cKmbJBGxwA9OIQMsTDgrHN57uk0+ngevoasi50=";
+    }
+
+    else {
+        nextAuthUrl: "https://ectomonster.vercel.app";
+        nextAuthSecret: "F9GzJIKPPK4gGgKxjn2s79IdAJh45NKoXn9az8TJoHc=";
+    }
+
     return {
         webpack(config) {
             // Grab the existing rule that handles SVG imports
@@ -31,8 +46,8 @@ const nextConfig = () => {
         },
         reactStrictMode: true,
         env: {
-            NEXTAUTH_URL: "http://localhost:3000",
-            NEXTAUTH_SECRET: "Jm6J5cKmbJBGxwA9OIQMsTDgrHN57uk0+ngevoasi50="
+            NEXTAUTH_URL: nextAuthUrl,
+            NEXTAUTH_SECRET: nextAuthSecret
         }
     }
 }

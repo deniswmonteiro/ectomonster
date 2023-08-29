@@ -43,7 +43,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     // Get user data
     if (session !== null) {
         const userEmail = session.user.email;
-        const userReq = await fetch(`https://ectomonster.vercel.app/api/user/?email=${userEmail}`);
+        const userReq = await fetch(`${process.env.NEXTAUTH_URL}/api/user/?email=${userEmail}`);
         const userRes = await userReq.json() as IUserData;
         
         if (userReq.ok) user = userRes;
