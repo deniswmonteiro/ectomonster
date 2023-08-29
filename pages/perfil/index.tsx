@@ -25,8 +25,7 @@ type ISession = {
 
 const ProfilePage = ({ user }: { user: IUser | null }) => {
     return (
-        <></>
-        // <Profile user={user} />
+        <Profile user={user} />
     )
 }
 
