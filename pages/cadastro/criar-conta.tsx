@@ -1,9 +1,15 @@
+import Head from "next/head";
 import RegisterAccount from "@/components/register/RegisterAccount";
-import React from "react";
 
 const RegisterAccountPage = () => {
     return (
-        <RegisterAccount />
+        <>
+            <Head>
+                <meta name="description" content="Crie a sua conta" />
+                <title>Ectomonster &bull; Cria a sua conta</title>
+            </Head>
+            <RegisterAccount />
+        </>
     )
 }
 
