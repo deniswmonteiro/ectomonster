@@ -23,17 +23,17 @@ type IUserData = {
 }
 
 const HomePage = ({ session, user }: { session: ISession, user: IUserData }) => {
-    if (session !== null) {
-        return (
-            <HomeAuthenticated user={user} />
-        )
-    }
+    // if (session !== null) {
+    //     return (
+    //         <HomeAuthenticated user={user} />
+    //     )
+    // }
 
-    else {
+    // else {
        return (
             <HomeVisitor />
         )
-    }
+    // }
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
