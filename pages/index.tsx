@@ -4,25 +4,23 @@ import { GetServerSideProps } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
 
-type IUser = {
-    name: string,
-    email: string,
-    image: string | null
-}
-
 type ISession = {
-    user: IUser,
+    user: {
+        name: string,
+        email: string,
+        image: string | null
+    },
     expires: string
 }
 
-type IUserData = {
+type IUser = {
     name: string,
     gender: "1" | "2",
     weight: string,
     height: string
 }
 
-const HomePage = ({ session, user }: { session: ISession, user: IUserData }) => {
+const HomePage = ({ session, user }: { session: ISession, user: IUser }) => {
     if (session !== null) {
         return (
             <HomeAuthenticated user={user} />
@@ -38,15 +36,14 @@ const HomePage = ({ session, user }: { session: ISession, user: IUserData }) => 
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     let session: ISession | null = await getServerSession(context.req, context.res, authOptions);
-    let user: IUserData | null = null;
+    let user: IUser | null = null;
     
     // Get user data
     if (session !== null) {
         const userEmail = session.user.email;
-        const userReq = await fetch(`${process.env.NEXTAUTH_URL}/api/user/?email=${userEmail}`);
-        const userRes = await userReq.json() as IUserData;
+        const response = await fetch(`${process.env.NEXTAUTH_URL}/api/user/?email=${userEmail}`);
         
-        if (userReq.ok) user = userRes;
+        if (response.ok) user = await response.json() as IUser;
 
         else {
             user = null;

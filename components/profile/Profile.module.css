@@ -1,0 +1,15 @@
+.profile {
+    padding: 3rem 1rem;
+}
+
+.profile h1 {
+    margin-bottom: 2rem;
+}
+
+.profile form {
+    margin-bottom: 2rem;
+}
+
+.profile .actions {
+    margin-top: 2rem;
+}

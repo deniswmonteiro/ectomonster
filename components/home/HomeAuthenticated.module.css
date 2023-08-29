@@ -82,7 +82,7 @@
 
 @media (max-width: 30rem) {
     .title {
-        padding: 3rem 1rem 2rem 1rem;
+        padding: 3rem 0 2rem 0;
     }
 
     .workoutsWeek {
@@ -94,7 +94,7 @@
     }
 
     .workouts {
-        padding: 3rem 1rem;
+        padding: 3rem 0;
     }
 }
 

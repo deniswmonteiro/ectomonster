@@ -1,6 +1,16 @@
+import { WithId } from "mongodb";
+import { NextApiRequest, NextApiResponse } from "next";
 import { validate } from "@/helpers/user-validate";
 import { dbConnect, getId } from "@/helpers/db-util";
 import { hashPassword } from "@/helpers/auth-util";
+
+type ResponseData = {
+    message?: string,
+    name?: string,
+    gender?: "1" | "2",
+    weight?: string,
+    height?: string,
+}
 
 type UserDataProps = {
     name: string,
@@ -11,7 +21,14 @@ type UserDataProps = {
     password: string
 }
 
-async function handler(req: any, res: any) {
+type IUser = WithId<Document> & {
+    name: string,
+    gender: "male" | "female",
+    weight: number,
+    height: number,
+}
+
+async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
     if (req.method === "POST") {
         const { name, gender, weight, height, email, password } = req.body as UserDataProps;
 
@@ -35,7 +52,7 @@ async function handler(req: any, res: any) {
                 const db = connect.db();
 
                 // Verifies if user exists
-                const userExists = await db.collection("users").findOne({ email });
+                const userExists = await db.collection("users").findOne({ email }) as IUser;
 
                 if (userExists) {
                     res.status(422).json({
@@ -79,12 +96,12 @@ async function handler(req: any, res: any) {
     }
 
     if (req.method === "GET") {
-        const email: string = req.query.email;
+        const email = req.query.email;
 
         try {
             const connect = await dbConnect();
             const db = connect.db();
-            const user = await db.collection("users").findOne({ email });
+            const user = await db.collection("users").findOne({ email }) as IUser;
 
             if (!user) {
                 res.status(422).json({
