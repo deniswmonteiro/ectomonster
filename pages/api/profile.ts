@@ -5,7 +5,7 @@ import { authOptions } from "./auth/[...nextauth]";
 import { validate } from "@/helpers/user-validate";
 import { dbConnect } from "@/helpers/db-util";
 
-type IUserResponse = {
+type IUserProps = {
     name: string,
     gender: "1" | "2",
     weight: string,
@@ -14,7 +14,7 @@ type IUserResponse = {
 
 type ResponseData = {
     message?: string,
-    user?: IUserResponse | null
+    user?: IUserProps | null
 }
 
 type IUser = WithId<Document> & {
@@ -23,6 +23,15 @@ type IUser = WithId<Document> & {
     gender: "male" | "female",
     weight: number,
     height: number,
+}
+
+type ISession = {
+    user: {
+        name: string,
+        email: string,
+        image: string | null
+    },
+    expires: string
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
@@ -66,75 +75,75 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
         }
     }
 
-    // if (req.method === "PATCH") {
-    //     const session: ISession | null = await getServerSession(req, res, authOptions);
+    if (req.method === "PATCH") {
+        const session: ISession | null = await getServerSession(req, res, authOptions);
 
-    //     if (!session) {
-    //         res.status(401).json({
-    //             message: "Usuário não autenticado."
-    //         })
-    //     }
+        if (!session) {
+            res.status(401).json({
+                message: "Usuário não autenticado."
+            })
+        }
 
-    //     else {
-    //         const { name, gender, weight, height } = req.body as UserDataProps;
+        else {
+            const { name, gender, weight, height } = req.body as IUserProps;
 
-    //         // Validation
-    //         const isValidName = name ? validate({ type: "name", value: name, min: 2 }) : false;
-    //         const isValidGender = gender ? validate({ type: "gender", value: gender }) : false;
-    //         const isValidWeight = weight ? validate({ type: "weight", value: weight }) : false;
-    //         const isValidHeight = height ? validate({ type: "height", value: height }) : false;
+            // Validation
+            const isValidName = name ? validate({ type: "name", value: name, min: 2 }) : false;
+            const isValidGender = gender ? validate({ type: "gender", value: gender }) : false;
+            const isValidWeight = weight ? validate({ type: "weight", value: weight }) : false;
+            const isValidHeight = height ? validate({ type: "height", value: height }) : false;
 
-    //         if (!isValidName || !isValidGender || !isValidWeight || !isValidHeight) {
-    //             res.status(422).json({
-    //                 message: "Preencha todos os campos corretamente."
-    //             });
-    //         }
+            if (!isValidName || !isValidGender || !isValidWeight || !isValidHeight) {
+                res.status(422).json({
+                    message: "Preencha todos os campos corretamente."
+                });
+            }
 
-    //         else {
-    //             try {
-    //                 const email = session.user.email;
-    //                 const connect = await dbConnect();
-    //                 const users = connect.db().collection("users");
-    //                 const user = await users.findOne({ email }) as IUser;
+            else {
+                try {
+                    const email = session.user.email;
+                    const connect = await dbConnect();
+                    const users = connect.db().collection("users");
+                    const user = await users.findOne({ email }) as IUser;
 
-    //                 if (!user) {
-    //                     res.status(404).json({
-    //                         message: "Usuário não encontrado."
-    //                     });
+                    if (!user) {
+                        res.status(404).json({
+                            message: "Usuário não encontrado."
+                        });
 
-    //                     connect.close();
-    //                 }
+                        connect.close();
+                    }
 
-    //                 else {
-    //                     const userGender = (gender === "1") ? "male" : "female";
-    //                     const userWeight = Number(weight.replace(",", "."));
-    //                     const userHeight = Number(height);
+                    else {
+                        const userGender = (gender === "1") ? "male" : "female";
+                        const userWeight = Number(weight.replace(",", "."));
+                        const userHeight = Number(height);
 
-    //                     await users.updateOne({ email }, {
-    //                         $set: {
-    //                             name,
-    //                             gender: userGender,
-    //                             weight: userWeight,
-    //                             height: userHeight,
-    //                         }
-    //                     });
+                        await users.updateOne({ email }, {
+                            $set: {
+                                name,
+                                gender: userGender,
+                                weight: userWeight,
+                                height: userHeight,
+                            }
+                        });
 
-    //                     res.status(200).json({
-    //                         message: "Dados atualizados com sucesso."
-    //                     });
+                        res.status(200).json({
+                            message: "Dados atualizados com sucesso."
+                        });
                         
-    //                     connect.close();
-    //                 }
-    //             }
+                        connect.close();
+                    }
+                }
 
-    //             catch (error) {
-    //                 res.status(500).json({
-    //                     message: "Erro de conexão com o servidor."
-    //                 });
-    //             }
-    //         }
-    //     }
-    // }
+                catch (error) {
+                    res.status(500).json({
+                        message: "Erro de conexão com o servidor."
+                    });
+                }
+            }
+        }
+    }
 }
 
 export default handler
