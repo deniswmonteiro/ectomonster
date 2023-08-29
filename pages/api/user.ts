@@ -109,7 +109,6 @@ async function handler(req: any, res: any) {
         }
     
         catch (error) {
-            console.log(error)
             res.status(500).json({
                 message: "Erro de conexão com o banco de dados."
             });
