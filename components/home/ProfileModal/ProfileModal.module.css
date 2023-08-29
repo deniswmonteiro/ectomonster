@@ -1,0 +1,34 @@
+.cardBgBlue {
+    border: none;
+    background-color: var(--color-blue-2);
+    color: var(--color-white);
+}
+
+.cardBgBlueContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 1rem;
+}
+
+.cardBgBlueContent svg, .loading {
+    opacity: .6;
+}
+
+.userInfo {
+    display: flex;
+    gap: 1rem;
+}
+
+.userInfo li:not(:last-of-type) {
+    margin-bottom: .5rem !important;
+}
+
+.userInfo svg {
+    margin-top: 2px;
+}
+
+.modalProfileFooter {
+    justify-content: flex-start;
+}

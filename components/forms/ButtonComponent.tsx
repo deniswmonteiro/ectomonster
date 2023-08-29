@@ -6,7 +6,8 @@ type ButtonComponentProps = {
     type: "button" | "submit",
     textType?: "text-success" | "text-danger"
     style: "success" | "text",
-    disabled?: boolean
+    disabled?: boolean,
+    onClick?: () => void
 }
 
 const ButtonComponent = ({ children, type, style, textType, ...props }: ButtonComponentProps) => {

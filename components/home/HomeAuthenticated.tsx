@@ -3,6 +3,7 @@ import Header from "../layout/Header";
 import Calendar from "../ui/Calendar";
 import PersonCircleIcon from "../icons/person-circle-icon";
 import styles from "./HomeAuthenticated.module.css";
+import ProfileModal from "./ProfileModal/ProfileModal";
 
 type IUserData = {
     name: string,
@@ -82,10 +83,10 @@ const HomeAuthenticated = ({ user }: { user: IUserData }) => {
             </section>
 
             {/* Profile modal */}
-            {/* <ProfileModal user={user}
+            <ProfileModal user={user}
                 showProfileModal={showProfileModal}
                 handleCloseProfileModal={handleCloseProfileModal}
-                handleShowLogoutModal={handleShowLogoutModal} /> */}
+                handleShowLogoutModal={handleShowLogoutModal} />
 
             {/* Logout modal */}
             {/* <LogoutModal showLogoutModal={showLogoutModal}
