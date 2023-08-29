@@ -23,7 +23,7 @@ type IUserData = {
 }
 
 const HomePage = ({ session, user }: { session: ISession, user: IUserData }) => {
-    if (session) {
+    if (session !== null) {
         return (
             <HomeAuthenticated user={user} />
         )
@@ -49,9 +49,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             user = await userReq.json() as IUserData;
         }
     }
-
-    console.log(session)
-    console.log(user)
 
     return {
         props: {
