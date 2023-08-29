@@ -2,7 +2,7 @@
 
 const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
 
-const nextConfig = () => {
+const nextConfig = (phase) => {
     let nextAuthUrl;
     let nextAuthSecret;
 
