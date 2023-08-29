@@ -4,6 +4,7 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 1rem;
+    padding-bottom: 1rem !important;
 }
 
 .calendarItem {

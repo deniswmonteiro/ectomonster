@@ -18,7 +18,7 @@
 
 .workoutsWeek {
     background-color: var(--color-blue-1);
-    padding: 1rem;
+    padding: 1rem 1rem 0 1rem;
     border: 1px solid var(--color-blue-3);
     border-radius: 4px;
 }
@@ -98,16 +98,13 @@
     }
 }
 
-@media (max-width: 19.5625rem) {
-    .workoutsWeek {
-        overflow-x: scroll;
-    }
-
+@media (max-width: 275px) {
     /** Change scrollbar theme */
     /* Works on Firefox */
     .workoutsWeek {
+        overflow-x: scroll;
         scrollbar-width: thin;
-        scrollbar-color: #fff;
+        scrollbar-color: var(--color-white);
     }
     
     /* Works on Chrome, Edge, and Safari */

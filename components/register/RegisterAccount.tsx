@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../layout/Header";
 import useForm from "@/hooks/useForm";
 import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 import ProgressBarComponent from "../ui/ProgressBarComponent";
 import InputComponent from "../forms/InputComponent";
 import ButtonComponent from "../forms/ButtonComponent";
@@ -51,22 +52,22 @@ const RegisterAccount = () => {
                 body: JSON.stringify(userData)
             });
 
-            const result = await response.json();
+            const result = await response.json() as {
+                message: string
+            };
 
-            console.log(result)
+            if (response.ok) {
+                const login = await signIn("credentials", {
+                    redirect: false,
+                    email: email.value,
+                    password: password.value
+                });
 
-            // if (response.ok) {
-            //     const login = await signIn("credentials", {
-            //         redirect: false,
-            //         email: email.value,
-            //         password: password.value
-            //     });
+                if (login && login.ok) router.replace("/");
+                else console.log(result.message);
+            }
 
-            //     if (login.ok) router.replace("/");
-            //     else console.log(response.error);
-            // }
-
-            // else setLoading(false);
+            else setLoading(false);
         }
     }
 
