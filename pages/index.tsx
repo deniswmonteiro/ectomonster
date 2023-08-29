@@ -37,8 +37,8 @@ const HomePage = ({ session, user }: { session: ISession, user: IUserData }) => 
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    let session: ISession | null = await getServerSession(context.req, context.res, authOptions);
-    let user: IUserData | null = null;
+    // let session: ISession | null = await getServerSession(context.req, context.res, authOptions);
+    // let user: IUserData | null = null;
     
     // // Get user data
     // if (session !== null) {
@@ -53,6 +53,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     //         session = null;
     //     }
     // }
+
+    const session = null;
+    const user = null;
 
     return {
         props: {
