@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import styles from "./LinkComponent.module.css";
 
-type LinkComponentProps = {
+type ILinkComponent = {
     href: string,
     type: "success" | "secondary" | "text",
     textType?: "text-warning",
@@ -16,7 +16,7 @@ type LinkComponentProps = {
     children: React.ReactNode
 }
 
-const LinkComponent = ({ href, type, textType, query, disabled, children }: LinkComponentProps) => {
+const LinkComponent = ({ href, type, textType, query, disabled, children }: ILinkComponent) => {
     let linkClass;
 
     switch (type) {

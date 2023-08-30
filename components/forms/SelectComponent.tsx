@@ -2,7 +2,7 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import styles from "./SelectComponent.module.css";
 
-type SelectComponentProps = React.ComponentProps<"select"> & {
+type ISelectComponent = React.ComponentProps<"select"> & {
     label: string,
     options: string[],
     value: string,
@@ -10,7 +10,7 @@ type SelectComponentProps = React.ComponentProps<"select"> & {
     valid: boolean | null,
 }
 
-const SelectComponent = ({ label, id, options, value, onChange, onBlur, message, valid }: SelectComponentProps) => {
+const SelectComponent = ({ label, id, options, value, onChange, onBlur, message, valid }: ISelectComponent) => {
     return (
         <Form.Group className="mb-4">
             <Form.Label htmlFor={id} className={styles.label}>

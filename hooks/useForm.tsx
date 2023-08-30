@@ -1,20 +1,26 @@
 import React from "react";
 
-type AttrProps = {
+type IFieldAttrs = {
     regex?: RegExp,
     min?: number,
     message: string
 }
 
-type FieldProps = {
-    [key: string]: AttrProps
+type IField = {
+    [key: string]: IFieldAttrs
 }
 
-type TypesProps = {
-    [key: string]: FieldProps
+type ITypes = {
+    [key: string]: IField
 }
 
-const types: TypesProps = {
+type IUseForm = {
+    type?: string,
+    min?: number,
+    initial?: string,
+}
+
+const types: ITypes = {
     name: {
         format: {
             regex: /^[a-zA-Zà-úÀ-Ú\s]{2,}$/,
@@ -55,13 +61,7 @@ const types: TypesProps = {
     },
 };
 
-type UseFormProps = {
-    type?: string,
-    min?: number,
-    initial?: string,
-}
-
-const useForm = ({ type, min = 0, initial = "" }: UseFormProps) => {
+const useForm = ({ type, min = 0, initial = "" }: IUseForm) => {
     const [value, setValue] = React.useState(initial);
     const [message, setMessage] = React.useState<string | null>(null);
     const [valid, setValid] = React.useState<boolean | null>(null);

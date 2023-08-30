@@ -2,13 +2,13 @@ import React from "react";
 import Link from "next/link";
 import { Card, Spinner } from "react-bootstrap";
 import ArrowRightIcon from "../../icons/arrow-right-icon";
-import styles from "./TrainingPlanCard.module.css";
+import styles from "./TrainingWeekCard.module.css";
 
-const TrainingPlanCard = ({ week }: { week: string }) => {
+const TrainingWeekCard = ({ week }: { week: string }) => {
     const [loading, setLoading] = React.useState(false);
 
     return (
-        <div className={styles.training}>
+        <div className={styles.trainingWeek}>
             <Link href={`/treino/${week.replace(" ", "-").toLowerCase()}`} onClick={() => setLoading(true)}>
                 <Card className={styles.cardBgBlue}>
                     <Card.Body className={styles.cardBgBlueContent}>
@@ -18,7 +18,7 @@ const TrainingPlanCard = ({ week }: { week: string }) => {
                             (
                                 <Spinner animation="border" size="sm"
                                     className={styles.loading} />
-                            ): (
+                            ) : (
                                 <ArrowRightIcon />
                             )
                         }
@@ -29,4 +29,4 @@ const TrainingPlanCard = ({ week }: { week: string }) => {
     )
 }
 
-export default TrainingPlanCard
+export default TrainingWeekCard

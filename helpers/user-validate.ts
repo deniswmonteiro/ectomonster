@@ -1,18 +1,24 @@
 /** Validation parameters */
-type AttrProps = {
+type IFieldAttrs = {
     regex?: RegExp,
     min?: number,
 }
 
-type FieldProps = {
-    [key: string]: AttrProps
+type IField = {
+    [key: string]: IFieldAttrs
 }
 
-type TypesProps = {
-    [key: string]: FieldProps
+type ITypes = {
+    [key: string]: IField
 }
 
-const types: TypesProps = {
+type IValidate = {
+    type: string,
+    value: string,
+    min?: number,
+}
+
+const types: ITypes = {
     name: {
         format: {
             regex: /^[a-zA-Zà-úÀ-Ú\s]{2,}$/,
@@ -46,14 +52,8 @@ const types: TypesProps = {
     },
 };
 
-type ValidateProps = {
-    type: string,
-    value: string,
-    min?: number,
-}
-
 /** Validate form fields */
-export function validate({ type, value, min = 0 }: ValidateProps) {
+export function validate({ type, value, min = 0 }: IValidate) {
     if (value.trim().length === 0) return false;
 
     else if (Number(value) === 0 && !isNaN(Number(value))) return false;

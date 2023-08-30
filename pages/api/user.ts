@@ -12,7 +12,7 @@ type ResponseData = {
     height?: string,
 }
 
-type UserDataProps = {
+type IUserData = {
     name: string,
     gender: "1" | "2",
     weight: string,
@@ -30,7 +30,7 @@ type IUser = WithId<Document> & {
 
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
     if (req.method === "POST") {
-        const { name, gender, weight, height, email, password } = req.body as UserDataProps;
+        const { name, gender, weight, height, email, password } = req.body as IUserData;
 
         // Validation
         const isValidName = name ? validate({ type: "name", value: name, min: 2 }) : false;

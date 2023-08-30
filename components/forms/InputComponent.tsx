@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import styles from "./InputComponent.module.css";
 
-type InputComponentProps = React.ComponentProps<"input"> & {
+type IInputComponent = React.ComponentProps<"input"> & {
     inputGroup?: boolean,
     inputGroupText?: string,
     label: string,
@@ -14,7 +14,7 @@ type InputComponentProps = React.ComponentProps<"input"> & {
 
 const InputComponent = ({
     inputGroup, inputGroupText, label, type, id, value, onChange, onBlur, message, valid
-}: InputComponentProps) => {
+}: IInputComponent) => {
     return (
         <Form.Group className="mb-4">
             <Form.Label htmlFor={id} className={styles.label}>

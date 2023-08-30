@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 import styles from "./ButtonComponent.module.css";
 
-type ButtonComponentProps = {
+type IButtonComponent = {
     children: React.ReactNode,
     type: "button" | "submit",
     textType?: "text-success" | "text-danger"
@@ -10,7 +10,7 @@ type ButtonComponentProps = {
     onClick?: () => void
 }
 
-const ButtonComponent = ({ children, type, style, textType, ...props }: ButtonComponentProps) => {
+const ButtonComponent = ({ children, type, style, textType, ...props }: IButtonComponent) => {
     let buttonClass;
 
     switch (style) {
