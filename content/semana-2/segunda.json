@@ -1,0 +1,70 @@
+{
+    "id": 201,
+    "title": "Treino de Segunda",
+    "exercises": {
+        "exercise-1": {
+            "exerciseId": 2011,
+            "name": "Agachamento no smith",
+            "series": 4,
+            "reps-min": 8,
+            "reps-max": 12,
+            "pause": 120,
+            "technique": "Falha concêntrica"
+        },
+        "exercise-2": {
+            "exerciseId": 2012,
+            "name": "Leg press 45º unilateral",
+            "series": 4,
+            "reps-min": 8,
+            "reps-max": 12,
+            "pause": 0,
+            "technique": "No-stop"
+        },
+        "exercise-3": {
+            "exerciseId": 2013,
+            "name": "Cadeira extensora",
+            "series": 4,
+            "reps-min": 10,
+            "reps-max": 10,
+            "pause": 90,
+            "technique": "Drop-set"
+        },
+        "exercise-4": {
+            "exerciseId": 2014,
+            "name": "Mesa Flexora",
+            "series": 4,
+            "reps-min": 10,
+            "reps-max": 10,
+            "pause": 0,
+            "technique": "Falha concêntrica",
+            "is-grouping": true,
+            "grouping": {
+                "exerciseId": 20141,
+                "name": "Stiff",
+                "series": 4,
+                "reps-min": 12,
+                "reps-max": 12,
+                "pause": 90,
+                "technique": "Falha concêntrica"
+            }
+        },
+        "exercise-5": {
+            "exerciseId": 2015,
+            "name": "Levantamento terra sumô",
+            "series": 4,
+            "reps-min": 12,
+            "reps-max": 12,
+            "pause": 120,
+            "technique": "Falha concêntrica"
+        },
+        "exercise-6": {
+            "exerciseId": 2016,
+            "name": "Panturrilha em pé",
+            "series": 4,
+            "reps-min": 20,
+            "reps-max": 20,
+            "pause": 60,
+            "technique": "Carga alta"
+        }
+    }
+}

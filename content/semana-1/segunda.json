@@ -1,8 +1,9 @@
 {
-    "id": "101",
+    "id": 101,
     "title": "Treino de Segunda",
     "exercises": {
         "exercise-1": {
+            "exerciseId": 1011,
             "name": "Agachamento no smith",
             "series": 4,
             "reps-min": 4,
@@ -11,6 +12,7 @@
             "technique": "Carga alta"
         },
         "exercise-2": {
+            "exerciseId": 1012,
             "name": "Leg press 45º",
             "series": 4,
             "reps-min": 4,
@@ -19,6 +21,7 @@
             "technique": "Carga alta"
         },
         "exercise-3": {
+            "exerciseId": 1013,
             "name": "Cadeira extensora",
             "series": 4,
             "reps-min": 4,
@@ -27,6 +30,7 @@
             "technique": "Carga alta"
         },
         "exercise-4": {
+            "exerciseId": 1014,
             "name": "Mesa Flexora",
             "series": 4,
             "reps-min": 6,
@@ -35,6 +39,7 @@
             "technique": "Carga alta"
         },
         "exercise-5": {
+            "exerciseId": 1015,
             "name": "Levantamento terra sumô",
             "series": 3,
             "reps-min": 6,
@@ -43,6 +48,7 @@
             "technique": "Carga alta"
         },
         "exercise-6": {
+            "exerciseId": 1016,
             "name": "Stiff",
             "series": 4,
             "reps-min": 6,
@@ -51,6 +57,7 @@
             "technique": "Carga alta"
         },
         "exercise-7": {
+            "exerciseId": 1017,
             "name": "Panturrilha em pé",
             "series": 4,
             "reps-min": 10,

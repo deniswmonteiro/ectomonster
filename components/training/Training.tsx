@@ -4,7 +4,7 @@ import TrainingDayCard from "./TrainingDayCard/TrainingDayCard";
 import styles from "./Training.module.css";
 
 const trainingDays = [
-    "Segunda", "Terça", "Quarta", "Quinta", "Sexta"
+    "Segunda", "Terca", "Quarta", "Quinta", "Sexta"
 ];
 
 const Training = ({ weekId }: { weekId: string }) => {

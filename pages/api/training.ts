@@ -8,18 +8,21 @@ type ResponseData = {
 }
 
 type IData = {
-    id: string,
+    id: number,
     title: string,
     exercises: IExercises[]
 }
 
 type IExercises = {
+    exerciseId: number,
     name: string,
     series: number,
     "reps-min": number,
     "reps-max": number,
     pause: number,
-    technique: string
+    technique: string,
+    "is-grouping"?: boolean,
+    grouping?: Omit<IExercises, "is-grouping" | "grouping"> 
 }
 
 function buildPath(week: string, day: string) {

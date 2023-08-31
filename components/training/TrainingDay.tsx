@@ -6,18 +6,21 @@ import PlayCircleFill from "../icons/play-circle-fill";
 import styles from "./TrainingDay.module.css";
 
 type IData = {
-    id: string,
+    id: number,
     title: string,
     exercises: IExercises[]
 }
 
 type IExercises = {
+    exerciseId: number,
     name: string,
     series: number,
     "reps-min": number,
     "reps-max": number,
     pause: number,
-    technique: string
+    technique: string,
+    "is-grouping"?: boolean,
+    grouping?: Omit<IExercises, "is-grouping" | "grouping"> 
 }
 
 const TrainingDay = ({ hasError, training}: { hasError: boolean, training: IData }) => {
