@@ -1,7 +1,8 @@
 import React from "react";
 import Header from "../layout/Header";
 import { useRouter } from "next/router";
-import TrainingExerciseCard from "./TrainingExercisesCard/TrainingExerciseCard";
+import TrainingExercisesList from "./TrainingExercisesList/TrainingExercisesList";
+import PlayCircleFill from "../icons/play-circle-fill";
 import styles from "./TrainingDay.module.css";
 
 type IData = {
@@ -42,10 +43,17 @@ const TrainingDay = ({ hasError, training}: { hasError: boolean, training: IData
                 <Header backNavigation={true} href={`/treino/${week}`} />
 
                 <section className={`container animeLeft ${styles.trainingDay}`}>
-                    <h1 className="title-1">{training.title}</h1>
-                
+                    <div className={styles.title}>
+                        <h1 className="title-1">
+                            {training.title}
+                        </h1>
+                        <button>
+                            <PlayCircleFill />
+                        </button>
+                    </div>
+
                     {Object.entries(training.exercises).map((exercise) => (
-                        <TrainingExerciseCard key={exercise[0]} exercise={exercise[1]} />
+                        <TrainingExercisesList key={exercise[0]} exercise={exercise[1]} />
                     ))}
                 </section>
             </>

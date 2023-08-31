@@ -2,6 +2,20 @@
     padding: 3rem 1rem;
 }
 
-.trainingDay h1 {
+.title {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
     margin-bottom: 2rem;
+}
+
+.title h1 {
+    margin-bottom: 0 !important;
+}
+
+.title button {
+    border: none;
+    background: none;
+    padding: 0;
+    outline: none;
 }

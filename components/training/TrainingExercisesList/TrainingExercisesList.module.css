@@ -1,0 +1,27 @@
+.exercise {
+    margin-bottom: .5rem;
+}
+
+.exerciseItem {
+    padding: 1rem;
+    border: 1px solid var(--color-grey-2);
+    background-color: var(--color-grey-1);
+    color: var(--color-black-3);
+}
+
+.exerciseItem h2 {
+    font-weight: 400;
+    margin-bottom: .5rem;
+}
+
+.exerciseInfo {
+    display: flex;
+    gap: .5rem;
+}
+
+.exerciseInfo span {
+    font-weight: 400;
+    background-color: var(--color-grey-2) !important;
+    color: var(--color-black-3);
+    padding: .5rem;
+}
