@@ -72,7 +72,7 @@ const Profile = ({ user }: { user: IUserData | null }) => {
             <>
                 <Header backNavigation={true} href="/" />
 
-                <section className={`container-1 animeLeft ${styles.profile}`}>
+                <section className={`container animeLeft ${styles.profile}`}>
                     <h1 className="title-2">Editar dados de perfil:</h1>
 
                     <form onSubmit={handleFormEditProfileSubmit}>

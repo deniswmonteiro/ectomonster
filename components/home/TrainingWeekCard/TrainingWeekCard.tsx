@@ -8,7 +8,7 @@ const TrainingWeekCard = ({ week }: { week: string }) => {
     const [loading, setLoading] = React.useState(false);
 
     return (
-        <div className={styles.trainingWeek}>
+        <div className={styles.trainingWeekCard}>
             <Link href={`/treino/${week.replace(" ", "-").toLowerCase()}`} onClick={() => setLoading(true)}>
                 <Card className={styles.cardBgBlue}>
                     <Card.Body className={styles.cardBgBlueContent}>

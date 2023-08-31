@@ -12,7 +12,7 @@ const Training = ({ weekId }: { weekId: string }) => {
         <>
             <Header backNavigation={true} href="/" />
 
-            <section className={`container-1 animeLeft ${styles.training}`}>
+            <section className={`container animeLeft ${styles.training}`}>
                 <h1 className="title-1">{weekId.replace("-", " ")}</h1>
             
                 {trainingDays.map((day) => (
