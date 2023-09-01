@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Card, Spinner } from "react-bootstrap";
-import ArrowRightIcon from "@/components/icons/arrow-right-icon";
+import PlayIcon from "@/components/icons/play-icon";
 import styles from "./TrainingDayCard.module.css";
 
 const TrainingDayCard = ({ day, week }: { day: string, week: string }) => {
@@ -19,7 +19,7 @@ const TrainingDayCard = ({ day, week }: { day: string, week: string }) => {
                                 <Spinner animation="border" size="sm"
                                     className={styles.loading} />
                             ) : (
-                                <ArrowRightIcon />
+                                <PlayIcon />
                             )
                         }
                     </Card.Body>

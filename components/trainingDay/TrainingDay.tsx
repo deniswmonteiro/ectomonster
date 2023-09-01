@@ -2,7 +2,6 @@ import React from "react";
 import Header from "../layout/Header";
 import { useRouter } from "next/router";
 import TrainingExercisesList from "./TrainingExercisesList/TrainingExercisesList";
-import PlayCircleFill from "../icons/play-circle-fill";
 import styles from "./TrainingDay.module.css";
 
 type IData = {
@@ -24,8 +23,8 @@ type IExercises = {
 }
 
 const TrainingDay = ({ hasError, training}: { hasError: boolean, training: IData }) => {
-    const [week, setWeek] = React.useState("");
     const router = useRouter();
+    const [week, setWeek] = React.useState("");
 
     React.useEffect(() => {
         if (router.query.dia) setWeek(router.query.dia[0]);
@@ -46,15 +45,10 @@ const TrainingDay = ({ hasError, training}: { hasError: boolean, training: IData
                 <Header backNavigation={true} href={`/treino/${week}`} />
 
                 <section className={`container animeLeft ${styles.trainingDay}`}>
-                    <div className={styles.title}>
-                        <h1 className="title-1">
-                            {training.title}
-                        </h1>
-                        <button>
-                            <PlayCircleFill />
-                        </button>
-                    </div>
-
+                    <h1 className="title-1">
+                        {training.title}
+                    </h1>
+                    
                     {Object.entries(training.exercises).map((exercise) => (
                         <TrainingExercisesList key={exercise[0]} exercise={exercise[1]} />
                     ))}

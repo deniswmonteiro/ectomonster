@@ -1,5 +1,5 @@
 import React from "react";
-import Training from "@/components/training/Training";
+import Training from "@/components/trainingDay/Training";
 import { useRouter } from "next/router";
 
 const trainingWeeks = [

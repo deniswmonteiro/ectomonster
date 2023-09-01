@@ -1,4 +1,3 @@
-import React from "react";
 import { Badge, ListGroup } from "react-bootstrap";
 import styles from "./TrainingExercisesList.module.css";
 

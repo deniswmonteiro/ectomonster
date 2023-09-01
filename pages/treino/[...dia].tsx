@@ -1,6 +1,6 @@
 import React from "react";
 import { GetStaticProps } from "next";
-import TrainingDay from "@/components/training/TrainingDay";
+import TrainingDay from "@/components/trainingDay/TrainingDay";
 
 type IResult = {
     data: IData
