@@ -30,11 +30,11 @@ const TrainingExercises = ({ training }: { training: IData }) => {
         <Carousel controls={false} interval={null}>
             {Object.entries(training.exercises).map((exercise) => (
                 <Carousel.Item key={exercise[0]}>
-                    {/* {exercise[1]["is-grouping"] && (
+                    {exercise[1]["is-grouping"] && (
                         <Badge className={styles.exerciseGroupingBadge}>
                             Bi-set
                         </Badge>
-                    )} */}
+                    )}
 
                     <div className={styles.carouselBg}></div>
 

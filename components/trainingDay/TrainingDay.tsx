@@ -44,10 +44,6 @@ const TrainingDay = ({ hasError, training}: { hasError: boolean, training: IData
                 <Header backNavigation={true} href={`/treino/${week}`} />
 
                 <section className={`container animeLeft ${styles.trainingDay}`}>
-                    <h1 className="title-1">
-                        {training.title}
-                    </h1>
-                    
                     <TrainingExercises training={training} />
                 </section>
             </>
