@@ -2,12 +2,12 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 import styles from "./ProgressBarComponent.module.css";
 
 type IProgressBarComponent = {
-    size: number
+    now: number,
 }
 
-const ProgressBarComponent = ({ size }: IProgressBarComponent) => {
+const ProgressBarComponent = ({ now }: IProgressBarComponent) => {
     return (
-        <ProgressBar now={size} className={styles.progressBar} />
+        <ProgressBar now={now} className={styles.progressBar} />
     )
 }
 

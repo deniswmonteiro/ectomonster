@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../layout/Header";
 import { useRouter } from "next/router";
 import TrainingExercisesList from "./TrainingExercisesList/TrainingExercisesList";
+import TrainingExercises from "./TrainingExercises/TrainingExercises";
 import styles from "./TrainingDay.module.css";
 
 type IData = {
@@ -19,7 +20,6 @@ type IExercises = {
     pause: number,
     technique: string,
     "is-grouping"?: boolean,
-    grouping?: Omit<IExercises, "is-grouping" | "grouping"> 
 }
 
 const TrainingDay = ({ hasError, training}: { hasError: boolean, training: IData }) => {
@@ -49,9 +49,7 @@ const TrainingDay = ({ hasError, training}: { hasError: boolean, training: IData
                         {training.title}
                     </h1>
                     
-                    {Object.entries(training.exercises).map((exercise) => (
-                        <TrainingExercisesList key={exercise[0]} exercise={exercise[1]} />
-                    ))}
+                    <TrainingExercises training={training} />
                 </section>
             </>
         )

@@ -22,7 +22,7 @@ type IExercises = {
     pause: number,
     technique: string,
     "is-grouping"?: boolean,
-    grouping?: Omit<IExercises, "is-grouping" | "grouping"> 
+    description?: string
 }
 
 function buildPath(week: string, day: string) {

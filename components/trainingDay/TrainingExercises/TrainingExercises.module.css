@@ -1,0 +1,131 @@
+.carouselBg {
+    width: 100%;
+    height: 25.875rem;
+    background-color: var(--color-blue-3);
+    border-radius: .375rem;
+}
+
+.carouselContent {
+    padding: 1.5rem 1rem 1rem 1rem;
+    text-align: left;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.bodyContent {
+    display: flex;
+    flex-direction: column;
+    min-height: 21.875rem;
+}
+
+.carouselContent h2 {
+    padding: 0 1rem;
+    text-align: center;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+}
+
+.exerciseInfo {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 1rem;
+    background: var(--color-black-2);
+    gap: 1rem;
+    margin-bottom: 2rem;
+    margin-left: -1rem;
+    margin-right: -1rem;
+}
+
+.exerciseInfo span {
+    font-weight: 700;
+    color: var(--color-tomato-2);
+}
+
+.timer {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.timer div {
+    height: 2.4375rem;
+}
+
+.timer span {
+    position: absolute;
+    top: .5rem;
+    left: 1rem;
+    text-transform: uppercase;
+    color: var(--color-black-3);
+}
+
+.timer p {
+    position: absolute;
+    top: .5rem;
+    right: 3.5rem;
+    color: var(--color-black-3);
+}
+
+.timer button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 2.4375rem;
+    border: none;
+    outline: none;
+    border-top-right-radius: .375rem;
+    border-bottom-right-radius: .375rem;
+    background-color: var(--color-green-2);
+    padding: 0 .5rem;
+    transition: .3s;
+}
+
+.timer button:hover,
+.timer button:focus-visible,
+.timer button:active {
+    background-color: var(--color-green-1) !important;
+    border-top-right-radius: .375rem;
+    border-bottom-right-radius: .375rem;
+    transition: .3s;
+}
+
+.exerciseDetails p:first-of-type {
+    margin-bottom: 1rem;
+    font-size: 1rem !important;
+}
+
+.exerciseDetails p:last-of-type {
+    font-size: .875rem;
+}
+
+.exerciseDetails span {
+    font-size: .875rem;
+    font-weight: 700;
+    color: var(--color-grey-2);
+    text-transform: uppercase;
+    display: block;
+}
+
+.exerciseWeightButton {
+    cursor: pointer;
+    margin-left: -1rem;
+    width: calc(100% + 2rem);
+    border: none;
+    background-color: var(--color-tomato-1);
+    padding: .5rem 1rem;
+    text-transform: uppercase;
+    color: var(--color-white) !important;
+    font-weight: 700;
+    border-bottom-left-radius: .375rem;
+    border-bottom-right-radius: .375rem;
+    transition: .3s;
+}
+
+.exerciseWeightButton:hover,
+.exerciseWeightButton:focus-visible,
+.exerciseWeightButton:active {
+    background-color: var(--color-tomato-2);
+    transition: .3s;
+}

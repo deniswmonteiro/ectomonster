@@ -18,7 +18,8 @@
             "reps-min": 8,
             "reps-max": 12,
             "pause": 0,
-            "technique": "No-stop"
+            "technique": "No-stop",
+            "description": "Realizar o exercício sem intervalo entre as séries."
         },
         "exercise-3": {
             "exerciseId": 2013,
@@ -27,7 +28,8 @@
             "reps-min": 10,
             "reps-max": 10,
             "pause": 90,
-            "technique": "Drop-set"
+            "technique": "Drop-set",
+            "description": "10 repetições com 40% da carga alta + 10 repetições com a carga normal após 10s de descanso."
         },
         "exercise-4": {
             "exerciseId": 2014,
@@ -37,18 +39,19 @@
             "reps-max": 10,
             "pause": 0,
             "technique": "Falha concêntrica",
-            "is-grouping": true,
-            "grouping": {
-                "exerciseId": 20141,
-                "name": "Stiff",
-                "series": 4,
-                "reps-min": 12,
-                "reps-max": 12,
-                "pause": 90,
-                "technique": "Falha concêntrica"
-            }
+            "isGrouping": true
         },
         "exercise-5": {
+            "exerciseId": 2015,
+            "name": "Stiff",
+            "series": 4,
+            "reps-min": 12,
+            "reps-max": 12,
+            "pause": 90,
+            "technique": "Falha concêntrica",
+            "isGrouping": true
+        },
+        "exercise-6": {
             "exerciseId": 2015,
             "name": "Levantamento terra sumô",
             "series": 4,
@@ -57,7 +60,7 @@
             "pause": 120,
             "technique": "Falha concêntrica"
         },
-        "exercise-6": {
+        "exercise-7": {
             "exerciseId": 2016,
             "name": "Panturrilha em pé",
             "series": 4,

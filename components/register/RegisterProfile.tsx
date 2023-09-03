@@ -32,7 +32,7 @@ const RegisterProfile = () => {
             <Header backNavigation={true} href="/" />
 
             <section className={`container animeLeft ${styles.registerProfile}`}>
-                <ProgressBarComponent size={fillProgressBar} />
+                <ProgressBarComponent now={fillProgressBar} />
 
                 <h1 className="title-2">Adicionar os seus dados de perfil:</h1>
 

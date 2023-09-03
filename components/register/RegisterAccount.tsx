@@ -76,7 +76,7 @@ const RegisterAccount = () => {
             <Header backNavigation={true} href="/cadastro/dados-perfil" />
 
             <section className={`container animeLeft ${styles.registerAccount}`}>
-                <ProgressBarComponent size={fillProgressBar} />
+                <ProgressBarComponent now={fillProgressBar} />
 
                 <h1 className="title-2">Crie a sua conta:</h1>
 

@@ -123,7 +123,7 @@ a {
 .modal-header .btn-close {
     margin-right: 0;
     background-color: var(--color-tomato-1) !important;
-    border-radius: 4px;
+    border-radius: .375rem;
     transition: .3s;
 }
 
@@ -133,6 +133,23 @@ a {
 
 .modal-body p {
     margin-bottom: 0 !important;
+}
+
+/** Carousel */
+.carousel.slide,
+.carousel-inner,
+.carousel-item {
+    border-radius: .375rem;
+    background-color: var(--color-blue-2);
+}
+
+.carousel-indicators {
+    bottom: -4rem;
+}
+
+.carousel-indicators [data-bs-target] {
+    background-color: var(--color-tomato-3);
+    width: 1rem;
 }
 
 /** Animation */
