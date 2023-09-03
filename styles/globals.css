@@ -144,7 +144,7 @@ a {
 }
 
 .carousel-indicators {
-    bottom: -4rem !important;
+    bottom: -3.5rem !important;
 }
 
 .carousel-indicators [data-bs-target] {
