@@ -1,7 +1,17 @@
+/* .exerciseGroupingBadge {
+    position: absolute;
+    right: 1rem;
+    top: -.875rem;
+    text-transform: uppercase;
+    font-weight: 400;
+    background-color: var(--color-tomato-3) !important;
+    padding: .5rem;
+} */
+
 .carouselBg {
     width: 100%;
-    height: 25.875rem;
-    background-color: var(--color-blue-3);
+    height: 26.4375rem;
+    background-color: var(--color-blue-2);
     border-radius: .375rem;
 }
 
@@ -14,10 +24,10 @@
     left: 0;
 }
 
-.bodyContent {
+.exerciseContent {
     display: flex;
     flex-direction: column;
-    min-height: 21.875rem;
+    min-height: 22.4375rem;
 }
 
 .carouselContent h2 {
@@ -39,6 +49,10 @@
     margin-right: -1rem;
 }
 
+.exerciseInfo p {
+    margin-bottom: 0;
+}
+
 .exerciseInfo span {
     font-weight: 700;
     color: var(--color-tomato-2);
@@ -50,12 +64,12 @@
 }
 
 .timer div {
-    height: 2.4375rem;
+    height: 2.9375rem;
 }
 
 .timer span {
     position: absolute;
-    top: .5rem;
+    top: .7rem;
     left: 1rem;
     text-transform: uppercase;
     color: var(--color-black-3);
@@ -63,8 +77,8 @@
 
 .timer p {
     position: absolute;
-    top: .5rem;
-    right: 3.5rem;
+    top: .7rem;
+    right: 4rem;
     color: var(--color-black-3);
 }
 
@@ -72,13 +86,13 @@
     position: absolute;
     top: 0;
     right: 0;
-    height: 2.4375rem;
+    height: 2.9375rem;
     border: none;
     outline: none;
     border-top-right-radius: .375rem;
     border-bottom-right-radius: .375rem;
     background-color: var(--color-green-2);
-    padding: 0 .5rem;
+    padding: 0 .7rem;
     transition: .3s;
 }
 

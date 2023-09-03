@@ -144,12 +144,12 @@ a {
 }
 
 .carousel-indicators {
-    bottom: -4rem;
+    bottom: -4rem !important;
 }
 
 .carousel-indicators [data-bs-target] {
-    background-color: var(--color-tomato-3);
-    width: 1rem;
+    background-color: var(--color-tomato-3) !important;
+    width: 1rem !important;
 }
 
 /** Animation */

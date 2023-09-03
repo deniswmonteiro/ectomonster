@@ -1,7 +1,6 @@
 import React from "react";
 import Header from "../layout/Header";
 import { useRouter } from "next/router";
-import TrainingExercisesList from "./TrainingExercisesList/TrainingExercisesList";
 import TrainingExercises from "./TrainingExercises/TrainingExercises";
 import styles from "./TrainingDay.module.css";
 

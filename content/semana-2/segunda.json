@@ -39,7 +39,7 @@
             "reps-max": 10,
             "pause": 0,
             "technique": "Falha concêntrica",
-            "isGrouping": true
+            "is-grouping": true
         },
         "exercise-5": {
             "exerciseId": 2015,
@@ -49,7 +49,7 @@
             "reps-max": 12,
             "pause": 90,
             "technique": "Falha concêntrica",
-            "isGrouping": true
+            "is-grouping": true
         },
         "exercise-6": {
             "exerciseId": 2015,

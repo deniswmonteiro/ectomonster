@@ -1,5 +1,5 @@
 import React from "react";
-import { Carousel } from "react-bootstrap";
+import { Badge, Carousel } from "react-bootstrap";
 import ProgressBarComponent from "@/components/ui/ProgressBarComponent";
 import PlayIcon from "@/components/icons/play-icon";
 import StopIcon from "@/components/icons/stop-icon";
@@ -30,9 +30,16 @@ const TrainingExercises = ({ training }: { training: IData }) => {
         <Carousel controls={false} interval={null}>
             {Object.entries(training.exercises).map((exercise) => (
                 <Carousel.Item key={exercise[0]}>
+                    {/* {exercise[1]["is-grouping"] && (
+                        <Badge className={styles.exerciseGroupingBadge}>
+                            Bi-set
+                        </Badge>
+                    )} */}
+
                     <div className={styles.carouselBg}></div>
+
                     <Carousel.Caption className={styles.carouselContent}>
-                        <div className={styles.bodyContent}>
+                        <div className={styles.exerciseContent}>
                             <h2 className="title-2">{exercise[1].name}</h2>
 
                             <div className={styles.exerciseInfo}>
