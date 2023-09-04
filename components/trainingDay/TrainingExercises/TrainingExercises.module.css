@@ -12,7 +12,7 @@
 
 .carouselBg {
     width: 100%;
-    height: 26.4375rem;
+    height: 29rem;
     background-color: var(--color-blue-2);
     border-radius: .375rem;
 }
@@ -29,7 +29,7 @@
 .exerciseContent {
     display: flex;
     flex-direction: column;
-    min-height: 22.4375rem;
+    min-height: 25rem;
 }
 
 .carouselContent h2 {
@@ -55,53 +55,6 @@
 .exerciseInfo span {
     font-weight: 700;
     color: var(--color-tomato-2);
-}
-
-.timer {
-    position: relative;
-    margin-bottom: 2rem;
-}
-
-.timer div {
-    height: 2.9375rem;
-}
-
-.timer span {
-    position: absolute;
-    top: .7rem;
-    left: 1rem;
-    text-transform: uppercase;
-    color: var(--color-black-3);
-}
-
-.timer p {
-    position: absolute;
-    top: .7rem;
-    right: 4rem;
-    color: var(--color-black-3);
-}
-
-.timer button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 2.9375rem;
-    border: none;
-    outline: none;
-    border-top-right-radius: .375rem;
-    border-bottom-right-radius: .375rem;
-    background-color: var(--color-green-2);
-    padding: 0 .7rem;
-    transition: .3s;
-}
-
-.timer button:hover,
-.timer button:focus-visible,
-.timer button:active {
-    background-color: var(--color-green-1) !important;
-    border-top-right-radius: .375rem;
-    border-bottom-right-radius: .375rem;
-    transition: .3s;
 }
 
 .exerciseDetails p:first-of-type {

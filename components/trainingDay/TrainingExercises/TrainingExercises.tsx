@@ -1,8 +1,7 @@
 import React from "react";
 import { Badge, Carousel } from "react-bootstrap";
-import ProgressBarComponent from "@/components/ui/ProgressBarComponent";
-import PlayIcon from "@/components/icons/play-icon";
-import StopIcon from "@/components/icons/stop-icon";
+import Timer from "@/components/ui/Timer";
+import ExerciseSeriesTimer from "./ExerciseSeriesTimer";
 import styles from "./TrainingExercises.module.css";
 
 type IData = {
@@ -24,8 +23,6 @@ type IExercises = {
 }
 
 const TrainingExercises = ({ training }: { training: IData }) => {
-    const [timer, setTimer] = React.useState(0);
-
     return (
         <Carousel controls={false} interval={null}>
             {Object.entries(training.exercises).map((exercise) => (
@@ -59,17 +56,9 @@ const TrainingExercises = ({ training }: { training: IData }) => {
                                     )
                                 }
                             </div>
-                            <div className={styles.timer}>
-                                <ProgressBarComponent now={timer} />
 
-                                <span>Descanso</span>
-                                <p>1:30</p>
-                                
-                                <button>
-                                    <PlayIcon />
-                                    {/* <StopIcon /> */}
-                                </button>
-                            </div>
+                            <ExerciseSeriesTimer pause={exercise[1].pause} series={exercise[1].series} />
+
                             <div className={styles.exerciseDetails}>
                                 <p>
                                     <span>Técnica:</span> {exercise[1].technique}
