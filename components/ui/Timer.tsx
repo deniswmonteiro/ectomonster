@@ -24,8 +24,12 @@ const Timer = ({ pause, serie, qtySeries }: ITimer) => {
     const handleCloseTimerModal = () => setShowTimerModal(false);
 
     const handleTimerModal = () => {
-        handleShowTimerModal();
-        setTimeout(() => setExerciseDone(true), 1000);
+        if (pause > 0) {
+            handleShowTimerModal();
+            setTimeout(() => setExerciseDone(true), 1000);
+        }
+
+        else setExerciseDone(true);
     }
 
     return (
