@@ -35,6 +35,17 @@
 .timer button:hover,
 .timer button:focus-visible,
 .timer button:active {
-    background-color: var(--color-tomato-2) !important;
+    background-color: var(--color-tomato-2);
     transition: .3s;
+}
+
+.exerciseDoneButton {
+    background-color: var(--color-green-2) !important;
+}
+
+.exerciseDoneButton:hover,
+.exerciseDoneButton:focus-visible,
+.exerciseDoneButton:active {
+    background-color: var(--color-green-2) !important;
+    pointer-events: none !important;
 }

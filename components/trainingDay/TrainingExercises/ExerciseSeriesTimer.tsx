@@ -22,7 +22,7 @@ const ExerciseSeriesTimer = ({ pause, series }: { pause: number, series: number 
     return (
         <div className={styles.seriesTimer}>
             {qtyTimer.map((timer, index) => (
-                <Timer key={index} pause={timer} serie={index + 1} />
+                <Timer key={index} pause={timer} serie={index + 1} qtySeries={series} />
             ))}
         </div>
     )

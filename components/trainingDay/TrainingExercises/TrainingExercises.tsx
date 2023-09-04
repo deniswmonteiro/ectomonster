@@ -1,6 +1,5 @@
 import React from "react";
 import { Badge, Carousel } from "react-bootstrap";
-import Timer from "@/components/ui/Timer";
 import ExerciseSeriesTimer from "./ExerciseSeriesTimer";
 import styles from "./TrainingExercises.module.css";
 
