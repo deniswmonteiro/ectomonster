@@ -1,0 +1,51 @@
+.timerIndicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 3.75rem;
+    margin-bottom: 2rem;
+}
+
+.timerIndicator div {
+    height: 2.9375rem;
+}
+
+.timerIndicator p {
+    width: 3.75rem;
+    text-align: center;
+    font-size: .875rem;
+    color: var(--color-white);
+    background-color: var(--color-black-2);
+    padding: .5rem 0;
+    border-top-left-radius: .375rem;
+    border-top-right-radius: .375rem;
+    margin-bottom: 0;
+}
+
+.timerIndicator button {
+    border: none;
+    outline: none;
+    border-bottom-left-radius: .375rem;
+    border-bottom-right-radius: .375rem;
+    background-color: var(--color-tomato-1);
+    padding: .5rem 1.125rem;
+    transition: .3s;
+}
+
+.timerIndicator button:hover,
+.timerIndicator button:focus-visible,
+.timerIndicator button:active {
+    background-color: var(--color-tomato-2);
+    transition: .3s;
+}
+
+.exerciseDoneButton {
+    background-color: var(--color-green-2) !important;
+}
+
+.exerciseDoneButton:hover,
+.exerciseDoneButton:focus-visible,
+.exerciseDoneButton:active {
+    background-color: var(--color-green-2) !important;
+    pointer-events: none !important;
+}

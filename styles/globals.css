@@ -149,7 +149,9 @@ a {
 
 .carousel-indicators [data-bs-target] {
     background-color: var(--color-tomato-3) !important;
-    width: 1rem !important;
+    width: .375rem !important;
+    height: .375rem !important;
+    border-radius: 50% !important;
 }
 
 /** Animation */

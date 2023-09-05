@@ -9,14 +9,3 @@
 .timerModalContent span {
     color: var(--color-tomato-3);
 }
-
-.timer {
-    background-color: var(--color-black-2);
-    border-radius: .375rem;
-}
-
-.timer p {
-    color: var(--color-grey-2);
-    text-align: center;
-    font-size: 3rem;
-}

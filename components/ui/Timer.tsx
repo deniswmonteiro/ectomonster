@@ -1,70 +1,42 @@
 import React from "react";
-import PlayIcon from "../icons/play-icon";
-import StopIcon from "@/components/icons/stop-icon";
 import styles from "./Timer.module.css";
-import TimerModal from "../trainingDay/TrainingExercises/TimerModal/TimerModal";
-import CheckIcon from "../icons/check-icon";
 
 type ITimer = {
-    pause: number,
-    serie: number,
-    qtySeries: number,
+    handleCloseTimerModal: () => void,
+    pause: number
 }
 
-const Timer = ({ pause, serie, qtySeries }: ITimer) => {
-    const [timer, setTimer] = React.useState(0);
-    const [timerStarted, setTimerStarted] = React.useState(false);
-    const [exerciseDone, setExerciseDone] = React.useState(false);
+const Timer = ({ pause, handleCloseTimerModal }: ITimer ) => {
+    const [remaining, setRemaining] = React.useState(pause);
 
-    // Modal state
-    const [showTimerModal, setShowTimerModal] = React.useState(false);
+    React.useEffect(() => {
+        const timer = () => {
+            let pauseTime = pause;
+            
+            setRemaining((time) => {
+                if (time > 0) return time - 1;
 
-    /** Timer modal */
-    const handleShowTimerModal = () => setShowTimerModal(true);
-    const handleCloseTimerModal = () => setShowTimerModal(false);
+                else {
+                    pauseTime = 0;
+                    return 0;
+                }
+            });
 
-    const handleTimerModal = () => {
-        if (pause > 0) {
-            handleShowTimerModal();
-            setTimeout(() => setExerciseDone(true), 1000);
+            if (pauseTime === 0) {
+                handleCloseTimerModal();
+                clearInterval(downloadTimer);
+            }
         }
 
-        else setExerciseDone(true);
-    }
+        const downloadTimer = setInterval(timer, 1000);
+
+        return () => clearInterval(downloadTimer);
+    }, [pause, handleCloseTimerModal]);
 
     return (
-        <>
-            <div className={styles.timer}>
-                <p>Série {serie}</p>
-
-                {timerStarted ?
-                    (
-                        (!exerciseDone ? 
-                            (
-                                <button onClick={handleTimerModal}>
-                                    <StopIcon />
-                                </button>
-                            ) : (
-                                <button className={styles.exerciseDoneButton}>
-                                    <CheckIcon />
-                                </button>
-                            )
-                        )
-                    ) : (
-                        <button onClick={() => setTimerStarted(!timerStarted)}>
-                            <PlayIcon />
-                        </button>
-                    )
-                }
-            </div>
-
-            {/* Timer modal */}
-            <TimerModal pause={pause}
-                serie={serie}
-                qtySeries={qtySeries}
-                showTimerModal={showTimerModal}
-                handleCloseTimerModal={handleCloseTimerModal} />
-        </>
+        <div className={styles.timer}>
+            <p>{remaining}</p>
+        </div>
     )
 }
 

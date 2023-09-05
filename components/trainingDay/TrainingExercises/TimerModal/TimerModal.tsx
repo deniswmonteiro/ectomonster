@@ -1,8 +1,9 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
+import StopwatchIcon from "@/components/icons/stopwatch-icon";
+import Timer from "@/components/ui/Timer";
 import ButtonComponent from "@/components/forms/ButtonComponent";
 import styles from "./TimerModal.module.css";
-import StopwatchIcon from "@/components/icons/stopwatch-icon";
 
 type ITimerModal = {
     pause: number,
@@ -13,10 +14,6 @@ type ITimerModal = {
 }
 
 const TimerModal = ({ pause, serie, qtySeries, showTimerModal, handleCloseTimerModal }: ITimerModal) => {
-    const handleTimerStop = () => {
-        handleCloseTimerModal();
-    }
-
     return (
         <Modal show={showTimerModal} className={styles.timerModal}>
             <Modal.Header>
@@ -32,22 +29,22 @@ const TimerModal = ({ pause, serie, qtySeries, showTimerModal, handleCloseTimerM
                     {serie !== qtySeries ?
                         (
                             <p>
-                                Você finalizou mais uma série, descanse por <span>{pause} segundos</span> antes de iniciar a próxima série.
+                                Você finalizou uma série, descanse por <span>{pause} segundos</span> antes de iniciar a próxima série.
                             </p>
                         ) : (
                             <p>
-                                Você finalizou mais um exercício, descanse por <span>{pause} segundos</span> antes de iniciar o próximo exercício.
+                                Você finalizou um exercício, descanse por <span>{pause} segundos</span> antes de iniciar o próximo exercício.
                             </p>
                         )
                     }
                 </div>
-                <div className={styles.timer}>
-                    <p>{pause}</p>
-                </div>
+                
+                <Timer pause={pause} handleCloseTimerModal={handleCloseTimerModal} />
+
             </Modal.Body>
             <Modal.Footer className={styles.modalProfileFooter}>
                 <ButtonComponent type="button" style="success"
-                    onClick={handleTimerStop}>
+                    onClick={handleCloseTimerModal}>
                     Parar Cronômetro
                 </ButtonComponent>
             </Modal.Footer>

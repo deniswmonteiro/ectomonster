@@ -1,5 +1,5 @@
 import React from "react";
-import Timer from "@/components/ui/Timer";
+import ExerciseTimerIndicator from "./ExerciseTimerIndicator";
 import styles from "./ExerciseSeriesTimer.module.css";
 
 const ExerciseSeriesTimer = ({ pause, series }: { pause: number, series: number }) => {
@@ -22,7 +22,7 @@ const ExerciseSeriesTimer = ({ pause, series }: { pause: number, series: number 
     return (
         <div className={styles.seriesTimer}>
             {qtyTimer.map((timer, index) => (
-                <Timer key={index} pause={timer} serie={index + 1} qtySeries={series} />
+                <ExerciseTimerIndicator key={index} pause={timer} serie={index + 1} qtySeries={series} />
             ))}
         </div>
     )
