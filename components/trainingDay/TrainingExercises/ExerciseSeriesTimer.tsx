@@ -2,7 +2,13 @@ import React from "react";
 import ExerciseTimerIndicator from "./ExerciseTimerIndicator";
 import styles from "./ExerciseSeriesTimer.module.css";
 
-const ExerciseSeriesTimer = ({ pause, series }: { pause: number, series: number }) => {
+type IExerciseSeriesTimer = {
+    id: number,
+    pause: number,
+    series: number
+}
+
+const ExerciseSeriesTimer = ({ id, pause, series }: IExerciseSeriesTimer ) => {
     const [qtyTimer, setQtyTimer] = React.useState<number[]>([]);
 
     React.useEffect(() => {
@@ -22,7 +28,10 @@ const ExerciseSeriesTimer = ({ pause, series }: { pause: number, series: number 
     return (
         <div className={styles.seriesTimer}>
             {qtyTimer.map((timer, index) => (
-                <ExerciseTimerIndicator key={index} pause={timer} serie={index + 1} qtySeries={series} />
+                <ExerciseTimerIndicator key={index} id={id}
+                    pause={timer}
+                    serie={index + 1}
+                    qtySeries={series} />
             ))}
         </div>
     )

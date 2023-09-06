@@ -19,7 +19,7 @@ const trainingWeeks = [
 ];
 
 const HomeAuthenticated = ({ user }: { user: IUserData }) => {
-    // Modal state
+    /** Modal state */
     const [showProfileModal, setShowProfileModal] = React.useState(false);
     const [showLogoutModal, setShowLogoutModal] = React.useState(false);
     

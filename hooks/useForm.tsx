@@ -59,6 +59,12 @@ const types: ITypes = {
             message: "Mínimo de 6 caracteres.",
         }
     },
+    exerciseWeight: {
+        format: {
+            regex: /^(([\d]{1,3})(\,([\d]{1,2}))?)$/,
+            message: "Digite uma Carga válida."
+        }
+    },
 };
 
 const useForm = ({ type, min = 0, initial = "" }: IUseForm) => {

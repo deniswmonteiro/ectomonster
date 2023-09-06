@@ -39,13 +39,13 @@
     transition: .3s;
 }
 
-.exerciseDoneButton {
+.serieDoneButton {
     background-color: var(--color-green-2) !important;
 }
 
-.exerciseDoneButton:hover,
-.exerciseDoneButton:focus-visible,
-.exerciseDoneButton:active {
+.serieDoneButton:hover,
+.serieDoneButton:focus-visible,
+.serieDoneButton:active {
     background-color: var(--color-green-2) !important;
     pointer-events: none !important;
 }
