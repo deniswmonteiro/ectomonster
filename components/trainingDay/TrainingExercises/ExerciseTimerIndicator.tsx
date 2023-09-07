@@ -9,13 +9,15 @@ type IExerciseTimerIndicator = {
     id: number,
     pause: number,
     serie: number,
+    serieListDone: number[],
+    setSerieListDone: React.Dispatch<React.SetStateAction<number[]>>   
 }
 
-const ExerciseTimerIndicator = ({ id, pause, serie }: IExerciseTimerIndicator) => {
+const ExerciseTimerIndicator = ({ id, pause, serie, serieListDone, setSerieListDone }: IExerciseTimerIndicator) => {
     const [timerStarted, setTimerStarted] = React.useState(false);
     const [exerciseDone, setExerciseDone] = React.useState(false);
     const [serieDone, setSerieDone] = React.useState(false);
-    const [exerciseSerieDone, setExerciseSerieDone] = React.useState("");
+    const [exerciseSerieListDone, setExerciseSerieListDone] = React.useState([]);
 
     /** Modal state */
     const [showTimerModal, setShowTimerModal] = React.useState(false);
@@ -27,35 +29,61 @@ const ExerciseTimerIndicator = ({ id, pause, serie }: IExerciseTimerIndicator) =
     const handleTimerModal = () => {
         if (pause > 0) {
             handleShowTimerModal();
-            setTimeout(() => setSerieDone(true), 1000);
+            setSerieDone(true);
+
+            setSerieListDone((serieListDone) => [...serieListDone, serie]);
         }
 
-        else setSerieDone(true);
+        else {
+            setSerieDone(true);
+            setSerieListDone((serieListDone) => [...serieListDone, serie]);
+        }
     }
 
     React.useEffect(() => {
-        const serieId = String(id).concat(String(serie));
-        
+        /** Save done series in local storage */
         const setSerieDone = () => {
-            if (serieDone) window.localStorage.setItem(`Serie-${serieId}`, `${serieId}`);
+            window.localStorage.setItem(`Exercise-${id}`, JSON.stringify(serieListDone));
         }
-        
+
+        if (serieListDone.length > 0) setSerieDone();
+
+        /** Get done series from local storage */
         const getSerieDone = () => {
-            const done = window.localStorage.getItem(`Serie-${serieId}`)
+            const done = window.localStorage.getItem(`Exercise-${id}`);
 
-            if (done) setExerciseSerieDone(done.slice(-1));
+            if (done) setExerciseSerieListDone(JSON.parse(done));
         }
 
-        setSerieDone();
         getSerieDone();
-    }, [serieDone, id, serie]);
+    }, [id, serieListDone]);
 
     return (
         <>
             <div className={styles.timerIndicator}>
                 <p>Série {serie}</p>
 
-                {serie === Number(exerciseSerieDone) ? 
+                {timerStarted ?
+                    (
+                        (!serieDone ? 
+                            (
+                                <button onClick={handleTimerModal}>
+                                    <StopIcon />
+                                </button>
+                            ) : (
+                                <button className={styles.serieDoneButton}>
+                                    <CheckIcon />
+                                </button>
+                            )
+                        )
+                    ) : (
+                        <button onClick={() => setTimerStarted(!timerStarted)}>
+                            <PlayIcon />
+                        </button>
+                    )
+                }
+
+                {/* {serie === Number(exerciseSerieDone) ? 
                     (
                         <button className={styles.serieDoneButton}>
                             <CheckIcon />
@@ -81,7 +109,7 @@ const ExerciseTimerIndicator = ({ id, pause, serie }: IExerciseTimerIndicator) =
                             )
                         )
                     )
-                }
+                } */}
             </div>
 
             {/* Timer modal */}
