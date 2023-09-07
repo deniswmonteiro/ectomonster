@@ -8,12 +8,11 @@ import styles from "./TimerModal.module.css";
 type ITimerModal = {
     pause: number,
     serie: number,
-    qtySeries: number,
     showTimerModal: boolean,
     handleCloseTimerModal: () => void,
 }
 
-const TimerModal = ({ pause, serie, qtySeries, showTimerModal, handleCloseTimerModal }: ITimerModal) => {
+const TimerModal = ({ pause, serie, showTimerModal, handleCloseTimerModal }: ITimerModal) => {
     return (
         <Modal show={showTimerModal} className={styles.timerModal}>
             <Modal.Header>
@@ -22,21 +21,13 @@ const TimerModal = ({ pause, serie, qtySeries, showTimerModal, handleCloseTimerM
             </Modal.Header>
             <Modal.Body>
                 <h2 className="title-2">
-                    {serie !== qtySeries ? "Série concluída!" : "Exercício concluído!"}
+                    Série concluída!
                 </h2>
 
                 <div className={styles.timerModalContent}>
-                    {serie !== qtySeries ?
-                        (
-                            <p>
-                                Você finalizou uma série, descanse por <span>{pause} segundos</span> antes de iniciar a próxima série.
-                            </p>
-                        ) : (
-                            <p>
-                                Você finalizou um exercício, descanse por <span>{pause} segundos</span> antes de iniciar o próximo exercício.
-                            </p>
-                        )
-                    }
+                    <p>
+                        Você finalizou mais uma série, descanse por <span>{pause} segundos</span> antes de iniciar a próxima série.
+                    </p>
                 </div>
                 
                 <Timer pause={pause} handleCloseTimerModal={handleCloseTimerModal} />

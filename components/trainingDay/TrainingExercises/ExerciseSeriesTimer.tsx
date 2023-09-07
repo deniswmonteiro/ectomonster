@@ -30,8 +30,7 @@ const ExerciseSeriesTimer = ({ id, pause, series }: IExerciseSeriesTimer ) => {
             {qtyTimer.map((timer, index) => (
                 <ExerciseTimerIndicator key={index} id={id}
                     pause={timer}
-                    serie={index + 1}
-                    qtySeries={series} />
+                    serie={index + 1} />
             ))}
         </div>
     )

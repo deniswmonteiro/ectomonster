@@ -9,10 +9,9 @@ type IExerciseTimerIndicator = {
     id: number,
     pause: number,
     serie: number,
-    qtySeries: number,
 }
 
-const ExerciseTimerIndicator = ({ id, pause, serie, qtySeries }: IExerciseTimerIndicator) => {
+const ExerciseTimerIndicator = ({ id, pause, serie }: IExerciseTimerIndicator) => {
     const [timerStarted, setTimerStarted] = React.useState(false);
     const [exerciseDone, setExerciseDone] = React.useState(false);
     const [serieDone, setSerieDone] = React.useState(false);
@@ -88,7 +87,6 @@ const ExerciseTimerIndicator = ({ id, pause, serie, qtySeries }: IExerciseTimerI
             {/* Timer modal */}
             <TimerModal pause={pause}
                 serie={serie}
-                qtySeries={qtySeries}
                 showTimerModal={showTimerModal}
                 handleCloseTimerModal={handleCloseTimerModal} />
         </>
