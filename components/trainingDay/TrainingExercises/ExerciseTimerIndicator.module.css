@@ -49,3 +49,14 @@
     background-color: var(--color-green-2) !important;
     pointer-events: none !important;
 }
+
+.exerciseFinished {
+    display: flex;
+    background-color: var(--color-green-2);
+    margin-bottom: 2rem;
+    padding: 1.69678125rem 1rem;
+    width: 100%;
+    border-radius: .375rem;
+    justify-content: center;
+    gap: 1rem;
+}

@@ -8,18 +8,18 @@ import styles from "./ExerciseTimerIndicator.module.css";
 type IExerciseTimerIndicator = {
     id: number,
     pause: number,
-    serieListDone: {
-        serie: number;
-        done: boolean;
-    }[],
-    setSerieListDone: React.Dispatch<React.SetStateAction<{
-        serie: number;
-        done: boolean;
-    }[]>>
+    serieListDone: ISeriesList[],
+    setSerieListDone: React.Dispatch<React.SetStateAction<ISeriesList[]>>
+}
+
+type ISeriesList = {
+    serie: number;
+    done: boolean;
 }
 
 const ExerciseTimerIndicator = ({ id, pause, serieListDone, setSerieListDone }: IExerciseTimerIndicator) => {
     const [serieStarted, setSerieStarted] = React.useState(0);
+    const [exerciseFinished, setExerciseFinished] = React.useState(false);
 
     /** Modal state */
     const [showTimerModal, setShowTimerModal] = React.useState(false);
@@ -54,45 +54,70 @@ const ExerciseTimerIndicator = ({ id, pause, serieListDone, setSerieListDone }: 
 
         // Save done series in local storage
         window.localStorage.setItem(`Exercise-${id}`, JSON.stringify(serieListDone));
+
+        handleExerciseDone();
     }
+
+    /** Set exercise as done if all series are finished */
+    const handleExerciseDone = React.useCallback(() => {
+        const exercisesSeries = window.localStorage.getItem(`Exercise-${id}`);
+
+        if (exercisesSeries !== null) {
+            const seriesDone = JSON.parse(exercisesSeries).every((item: ISeriesList) => item.done);
+
+            if (seriesDone) setExerciseFinished(true);
+        }
+    }, [id]);
 
     React.useEffect(() => {
         /** Get done series from local storage */
         const handleGetSerieDone = () => {
-            const done = window.localStorage.getItem(`Exercise-${id}`);
+            const exerciseSeries = window.localStorage.getItem(`Exercise-${id}`);
 
-            if (done !== null) setSerieListDone(JSON.parse(done));
+            if (exerciseSeries !== null) {
+                const exerciseSeriesList = JSON.parse(exerciseSeries);
+                
+                setSerieListDone(exerciseSeriesList);
+                handleExerciseDone();
+            }
         }
 
         handleGetSerieDone();
-    }, [id, setSerieListDone]);
+    }, [id, setSerieListDone, handleExerciseDone]);
 
     return (
         <>
-            {serieListDone.map((item) => (
-                <div key={item.serie} className={styles.timerIndicator}>
-                    <p>Série {item.serie}</p>
+            {!exerciseFinished ? 
+                (serieListDone.map((item) => (
+                    <div key={item.serie} className={styles.timerIndicator}>
+                        <p>Série {item.serie}</p>
 
-                    {item.done ? 
-                        (
-                            <button className={styles.serieDoneButton}>
-                                <CheckIcon />
-                            </button>
-                        ) : (
-                            serieStarted === item.serie ?
-                                (
-                                    <button onClick={() => handleSerieFinished(item.serie)}>
-                                        <StopIcon />
-                                    </button>
-                                ) : (
-                                    <button onClick={() => handleSerieStarted(item.serie)}>
-                                        <PlayIcon />
-                                    </button>
-                                )
-                        )
-                    }
-                </div>
-            ))}
+                        {item.done ? 
+                            (
+                                <button className={styles.serieDoneButton}>
+                                    <CheckIcon />
+                                </button>
+                            ) : (
+                                serieStarted === item.serie ?
+                                    (
+                                        <button onClick={() => handleSerieFinished(item.serie)}>
+                                            <StopIcon />
+                                        </button>
+                                    ) : (
+                                        <button onClick={() => handleSerieStarted(item.serie)}>
+                                            <PlayIcon />
+                                        </button>
+                                    )
+                            )
+                        }
+                    </div>
+                ))) : (
+                    <div className={styles.exerciseFinished}>
+                        <p>Exercício concluído</p>
+                        <CheckIcon />
+                    </div>
+                )
+            }
 
             {/* Timer modal */}
             <TimerModal pause={pause}
