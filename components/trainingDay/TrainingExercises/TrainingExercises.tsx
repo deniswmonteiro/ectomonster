@@ -1,8 +1,8 @@
 import React from "react";
 import { Badge, Carousel } from "react-bootstrap";
 import ExerciseSeriesTimer from "./ExerciseSeriesTimer";
-import styles from "./TrainingExercises.module.css";
 import ExerciseWeightModal from "./ExerciseWeightModal/ExerciseWeightModal";
+import styles from "./TrainingExercises.module.css";
 
 type IData = {
     id: number,
@@ -26,7 +26,7 @@ const TrainingExercises = ({ training }: { training: IData }) => {
     /** Modal state */
     const [showExerciseWeightModal, setShowExerciseWeightModal] = React.useState(false);
 
-    /** ExerciseWeight modal */
+    /** Exercise Weight modal */
     const handleShowExerciseWeightModal = () => setShowExerciseWeightModal(true);
     const handleCloseExerciseWeightModal = () => setShowExerciseWeightModal(false);
 

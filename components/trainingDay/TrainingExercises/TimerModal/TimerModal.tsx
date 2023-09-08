@@ -7,12 +7,11 @@ import styles from "./TimerModal.module.css";
 
 type ITimerModal = {
     pause: number,
-    serie: number,
     showTimerModal: boolean,
     handleCloseTimerModal: () => void,
 }
 
-const TimerModal = ({ pause, serie, showTimerModal, handleCloseTimerModal }: ITimerModal) => {
+const TimerModal = ({ pause, showTimerModal, handleCloseTimerModal }: ITimerModal) => {
     return (
         <Modal show={showTimerModal} className={styles.timerModal}>
             <Modal.Header>
