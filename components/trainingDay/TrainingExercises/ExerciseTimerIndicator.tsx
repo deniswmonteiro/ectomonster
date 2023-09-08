@@ -28,6 +28,19 @@ const ExerciseTimerIndicator = ({ id, pause, serieListDone, setSerieListDone }: 
     const handleShowTimerModal = () => setShowTimerModal(true);
     const handleCloseTimerModal = () => setShowTimerModal(false);
 
+    /** When the series is started */
+    const handleSerieStarted = (serie: number) => {
+        if (serie === 1) setSerieStarted(serie);
+
+        else {
+            serieListDone.find((serieId) => {
+                if (serieId.serie === serie - 1) {
+                    if (serieId.done) setSerieStarted(serie);
+                }
+            });
+        }
+    }
+
     /** When the series is finished */
     const handleSerieFinished = (serie: number) => {
         // Show modal with timer if is a non-zero pause
@@ -72,7 +85,7 @@ const ExerciseTimerIndicator = ({ id, pause, serieListDone, setSerieListDone }: 
                                         <StopIcon />
                                     </button>
                                 ) : (
-                                    <button onClick={() => setSerieStarted(item.serie)}>
+                                    <button onClick={() => handleSerieStarted(item.serie)}>
                                         <PlayIcon />
                                     </button>
                                 )
