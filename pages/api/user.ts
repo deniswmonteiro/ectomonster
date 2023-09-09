@@ -1,6 +1,6 @@
 import { WithId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
-import { validate } from "@/helpers/user-validate";
+import { validate } from "@/helpers/form-validate";
 import { dbConnect, getId } from "@/helpers/db-util";
 import { hashPassword } from "@/helpers/auth-util";
 

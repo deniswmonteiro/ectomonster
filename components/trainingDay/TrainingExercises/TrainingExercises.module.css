@@ -73,23 +73,3 @@
     text-transform: uppercase;
     display: block;
 }
-
-.exerciseWeightButton {
-    cursor: pointer;
-    margin-left: -1rem;
-    width: calc(100% + 2rem);
-    border: none;
-    background-color: var(--color-tomato-1);
-    padding: .5rem 1rem;
-    text-transform: uppercase;
-    color: var(--color-white) !important;
-    font-weight: 700;
-    transition: .3s;
-}
-
-.exerciseWeightButton:hover,
-.exerciseWeightButton:focus-visible,
-.exerciseWeightButton:active {
-    background-color: var(--color-tomato-2);
-    transition: .3s;
-}

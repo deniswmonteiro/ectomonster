@@ -2,7 +2,7 @@ import { WithId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./auth/[...nextauth]";
-import { validate } from "@/helpers/user-validate";
+import { validate } from "@/helpers/form-validate";
 import { dbConnect } from "@/helpers/db-util";
 
 type IUserProps = {

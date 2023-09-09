@@ -1,9 +1,9 @@
 {
-    "id": 201,
+    "id": 21,
     "title": "Treino de Segunda",
     "exercises": {
         "exercise-1": {
-            "exerciseId": 2011,
+            "exerciseId": 211,
             "name": "Agachamento no smith",
             "series": 4,
             "reps-min": 8,
@@ -12,7 +12,7 @@
             "technique": "Falha concêntrica"
         },
         "exercise-2": {
-            "exerciseId": 2012,
+            "exerciseId": 212,
             "name": "Leg press 45º unilateral",
             "series": 4,
             "reps-min": 8,
@@ -22,7 +22,7 @@
             "description": "Realizar o exercício sem intervalo entre as séries."
         },
         "exercise-3": {
-            "exerciseId": 2013,
+            "exerciseId": 213,
             "name": "Cadeira extensora",
             "series": 4,
             "reps-min": 10,
@@ -32,7 +32,7 @@
             "description": "10 repetições com 40% da carga alta + 10 repetições com a carga normal após 10s de descanso."
         },
         "exercise-4": {
-            "exerciseId": 2014,
+            "exerciseId": 214,
             "name": "Mesa Flexora",
             "series": 4,
             "reps-min": 10,
@@ -42,7 +42,7 @@
             "is-grouping": true
         },
         "exercise-5": {
-            "exerciseId": 2015,
+            "exerciseId": 215,
             "name": "Stiff",
             "series": 4,
             "reps-min": 12,
@@ -52,7 +52,7 @@
             "is-grouping": true
         },
         "exercise-6": {
-            "exerciseId": 2015,
+            "exerciseId": 215,
             "name": "Levantamento terra sumô",
             "series": 4,
             "reps-min": 12,
@@ -61,7 +61,7 @@
             "technique": "Falha concêntrica"
         },
         "exercise-7": {
-            "exerciseId": 2016,
+            "exerciseId": 216,
             "name": "Panturrilha em pé",
             "series": 4,
             "reps-min": 20,

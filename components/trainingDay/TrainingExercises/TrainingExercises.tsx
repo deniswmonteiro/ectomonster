@@ -1,7 +1,7 @@
 import React from "react";
 import { Badge, Carousel } from "react-bootstrap";
 import ExerciseSeriesTimer from "./ExerciseSeriesTimer";
-import ExerciseWeightModal from "./ExerciseWeightModal/ExerciseWeightModal";
+import ExerciseWeight from "@/components/ui/ExerciseWeight";
 import styles from "./TrainingExercises.module.css";
 
 type IData = {
@@ -23,13 +23,6 @@ type IExercises = {
 }
 
 const TrainingExercises = ({ training }: { training: IData }) => {
-    /** Modal state */
-    const [showExerciseWeightModal, setShowExerciseWeightModal] = React.useState(false);
-
-    /** Exercise Weight modal */
-    const handleShowExerciseWeightModal = () => setShowExerciseWeightModal(true);
-    const handleCloseExerciseWeightModal = () => setShowExerciseWeightModal(false);
-
     return (
         <>
             <Carousel controls={false} interval={null}>
@@ -82,18 +75,11 @@ const TrainingExercises = ({ training }: { training: IData }) => {
                                 </div>
                             </div>
 
-                            <button className={styles.exerciseWeightButton}
-                                onClick={handleShowExerciseWeightModal}>
-                                Adicionar Carga
-                            </button>
+                            <ExerciseWeight exerciseId={exercise[1].exerciseId} />
                         </Carousel.Caption>
                     </Carousel.Item>
                 ))}
             </Carousel>
-
-            {/* Exercise Weight modal */}
-            <ExerciseWeightModal showExerciseWeightModal={showExerciseWeightModal}
-                handleCloseExerciseWeightModal={handleCloseExerciseWeightModal} />
         </>
     )
 }

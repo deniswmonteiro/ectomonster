@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import path from "path";
 import fs from "fs";
+import { buildPath, extractData } from "@/helpers/content-util";
 
 type ResponseData = {
     message?: string,
@@ -23,16 +23,6 @@ type IExercises = {
     technique: string,
     "is-grouping"?: boolean,
     description?: string
-}
-
-function buildPath(week: string, day: string) {
-    return path.join(process.cwd(), `content/${week}`, `${day}.json`);
-}
-
-function extractData(filePath: string) {
-    const fileData = fs.readFileSync(filePath);
-
-    return JSON.parse(fileData.toString());
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {

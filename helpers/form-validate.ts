@@ -50,6 +50,11 @@ const types: ITypes = {
             min: 6,
         }
     },
+    exerciseWeight: {
+        format: {
+            regex: /^(([\d]{1,3})(\,([\d]{1,2}))?)$/,
+        }
+    },
 };
 
 /** Validate form fields */
