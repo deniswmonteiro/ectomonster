@@ -7,7 +7,7 @@ import { WithId } from "mongodb";
 
 type ResponseData = {
     message?: string,
-    weight?: string
+    weight?: string | null
 }
 
 type IExerciseData = {
@@ -76,6 +76,38 @@ function getDay(day: string) {
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
+    if (req.method === "GET") {
+        const exerciseId = req.query.exerciseId;
+
+        try {
+            const connect = await dbConnect();
+            const db = connect.db();
+            const exercise = await db.collection("exercise").findOne({ exerciseId: Number(exerciseId) });
+
+            if (!exercise) {
+                res.status(201).json({
+                    weight: ""
+                });
+
+                connect.close();
+            }
+
+            else {
+                const exerciseWeight = String(exercise.weight).replace(".", ",");
+
+                res.status(201).json({
+                    weight: exerciseWeight,
+                });
+            }
+        }
+    
+        catch (error) {
+            res.status(500).json({
+                message: "Erro de conexão com o banco de dados."
+            });
+        }
+    }
+
     if (req.method === "POST") {
         const { exerciseId, week, day, weight } = req.body as IExerciseData;
 

@@ -5,15 +5,14 @@ import { Modal, Spinner } from "react-bootstrap";
 import InputComponent from "@/components/forms/InputComponent";
 import ButtonComponent from "@/components/forms/ButtonComponent";
 
-type IExerciseWeightModal = {
+type ICreateExerciseWeightModal = {
     exerciseId: number,
-    exerciseWeight: string,
     setExerciseWeight: React.Dispatch<React.SetStateAction<string>>,
-    showExerciseWeightModal: boolean,
-    handleCloseExerciseWeightModal: () => void
+    showCreateExerciseWeightModal: boolean,
+    handleCloseCreateExerciseWeightModal: () => void
 }
 
-const ExerciseWeightModal = ({ exerciseId, exerciseWeight, setExerciseWeight, showExerciseWeightModal, handleCloseExerciseWeightModal }: IExerciseWeightModal ) => {
+const CreateExerciseWeightModal = ({ exerciseId, setExerciseWeight, showCreateExerciseWeightModal, handleCloseCreateExerciseWeightModal }: ICreateExerciseWeightModal) => {
     const weight = useForm({ type: "exerciseWeight" });
     const [week, setWeek] = React.useState("");
     const [day, setDay] = React.useState("");
@@ -29,14 +28,14 @@ const ExerciseWeightModal = ({ exerciseId, exerciseWeight, setExerciseWeight, sh
 
     /** Close modal and reset form */
     const hideExerciseWeightModal = () => {
-        handleCloseExerciseWeightModal();
+        handleCloseCreateExerciseWeightModal();
         weight.setValue("");
         weight.setMessage(null);
         weight.setValid(null);
     }
 
     /** Submit form with exercise data */
-    const handleExerciseWeightFormSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
+    const handleCreateExerciseWeightFormSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
 
         if (weight.validate()) {
@@ -71,12 +70,12 @@ const ExerciseWeightModal = ({ exerciseId, exerciseWeight, setExerciseWeight, sh
     }
 
     return (
-        <Modal show={showExerciseWeightModal} onHide={hideExerciseWeightModal}>
+        <Modal show={showCreateExerciseWeightModal} onHide={hideExerciseWeightModal}>
             <Modal.Header closeButton>
                 <Modal.Title>Adicionar Carga</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <form onSubmit={handleExerciseWeightFormSubmit}>
+                <form onSubmit={handleCreateExerciseWeightFormSubmit}>
                     {/* Exercise Weight */}
                     <InputComponent inputGroup={true}
                         inputGroupText="kg"
@@ -103,4 +102,4 @@ const ExerciseWeightModal = ({ exerciseId, exerciseWeight, setExerciseWeight, sh
     )
 }
 
-export default ExerciseWeightModal
+export default CreateExerciseWeightModal

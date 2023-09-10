@@ -33,7 +33,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     let session: ISession | null = await getServerSession(context.req, context.res, authOptions);
     let user: IUser | null = null;
 
-    // Get user data
     if (session === null) {
         return {
             redirect: {
@@ -44,6 +43,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 
     else {
+        // Get user data
         const userEmail = session.user.email;
         const response = await fetch(`${process.env.NEXTAUTH_URL}/api/profile/?email=${userEmail}`);
 
