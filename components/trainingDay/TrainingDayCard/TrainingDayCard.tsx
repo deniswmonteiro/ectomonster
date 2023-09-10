@@ -12,7 +12,7 @@ const TrainingDayCard = ({ day, week }: { day: string, week: string }) => {
             <Link href={`/treino/${week}/${day.toLowerCase()}`} onClick={() => setLoading(true)}>
                 <Card className={styles.cardBgBlue}>
                     <Card.Body className={styles.cardBgBlueContent}>
-                        <p>Treino de <span>{day}</span></p>
+                        <p>Treino de <span>{day === "Terca" ? "Terça" : day}</span></p>
 
                         {loading ? 
                             (

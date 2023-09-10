@@ -9,10 +9,14 @@ type IResult = {
 type IData = {
     id: number,
     title: string,
-    exercises: IExercises[]
+    exercises: IExercises
 }
 
 type IExercises = {
+    [key: string]: IExercisesData
+}
+
+type IExercisesData = {
     exerciseId: number,
     name: string,
     series: number,
