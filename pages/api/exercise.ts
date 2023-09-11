@@ -2,6 +2,8 @@ import fs from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
 import { validate } from "@/helpers/form-validate";
 import { buildPath, extractData, updateData } from "@/helpers/content-util";
+import { dbConnect } from "@/helpers/db-util";
+import { WithId } from "mongodb";
 
 type ResponseData = {
     message?: string,
@@ -38,6 +40,38 @@ type IExercisesData = {
     description?: string
 }
 
+type IExercise = WithId<Document> & IExerciseData & {
+    name: string,
+}
+
+function getDay(day: string) {
+    let dayName = "";
+
+    switch (day) {
+        case "segunda":
+            dayName = "Segunda";
+            break;
+
+        case "terca":
+            dayName = "Terça";
+            break;
+
+        case "quarta":
+            dayName = "Quarta";
+            break;
+
+        case "quinta":
+            dayName = "Quinta";
+            break;
+
+        case "sexta":
+            dayName = "Sexta";
+            break;
+    }
+
+    return dayName;
+}
+
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
     if (req.method === "POST") {
         const { exerciseId, week, day, weight } = req.body as IExerciseData;
@@ -58,22 +92,61 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
             if (fs.existsSync(filePath)) {
                 const data: IData = extractData(filePath);
 
-                // Update exercise weight
                 data.exercises[`${exercise}`].weight = Number(weight.replace(",", "."));
-
                 updateData(filePath, data);
 
-                res.status(201).json({
-                    message: "Carga adicionada com sucesso.",
-                    weight
-                });
+                const { name } = data.exercises[`${exercise}`];
+
+                const connect = await dbConnect();
+                const db = connect.db();
+
+                const exerciseDataExists = await db.collection("exercise").findOne({ exerciseId }) as IExercise;
+
+                if (exerciseDataExists) {
+                    //
+                }
+
+                else {
+                    const exerciseWeight = Number(weight.replace(",", "."));
+                    const exerciseWeek = week.replace("-", " ").substring(0, 1).toUpperCase() + week.replace("-", " ").substring(1);
+                    const exerciseDay = getDay(day);
+
+                    await db.collection("exercise").insertOne({
+                        exerciseId,
+                        week: exerciseWeek,
+                        day: exerciseDay,
+                        name,
+                        weight: exerciseWeight
+                    });
+
+                    res.status(201).json({
+                        message: "Carga adicionada com sucesso.",
+                        weight
+                    });
+
+                    connect.close();
+                }
             }
 
-            else {
-                res.status(500).json({
-                    message: "Erro de conexão com o banco de dados."
-                });
-            }
+            // if (fs.existsSync(filePath)) {
+            //     const data: IData = extractData(filePath);
+
+            //     // Update exercise weight
+            //     data.exercises[`${exercise}`].weight = Number(weight.replace(",", "."));
+
+            //     updateData(filePath, data);
+
+            //     res.status(201).json({
+            //         message: "Carga adicionada com sucesso.",
+            //         weight
+            //     });
+            // }
+
+            // else {
+            //     res.status(500).json({
+            //         message: "Erro de conexão com o banco de dados."
+            //     });
+            // }
         }
     }
 }
