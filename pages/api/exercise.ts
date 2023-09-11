@@ -96,6 +96,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
             if (fs.existsSync(filePath)) {
                 const data: IData = extractData(filePath);
 
+                data.exercises[`${exercise}`].weight = Number(weight.replace(",", "."));
+                updateData(filePath, data);
+
                 const { name } = data.exercises[`${exercise}`];
 
                 const connect = await dbConnect();
@@ -119,9 +122,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
                         name,
                         weight: exerciseWeight
                     });
-
-                    data.exercises[`${exercise}`].weight = Number(weight.replace(",", "."));
-                    updateData(filePath, data);
 
                     res.status(201).json({
                         message: "Carga adicionada com sucesso.",
