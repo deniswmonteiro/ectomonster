@@ -5,15 +5,16 @@ import { Modal, Spinner } from "react-bootstrap";
 import InputComponent from "@/components/forms/InputComponent";
 import ButtonComponent from "@/components/forms/ButtonComponent";
 
-type ICreateExerciseWeightModal = {
+type IExerciseWeightModal = {
     exerciseId: number,
+    exerciseWeight: string,
     setExerciseWeight: React.Dispatch<React.SetStateAction<string>>,
-    showCreateExerciseWeightModal: boolean,
-    handleCloseCreateExerciseWeightModal: () => void
+    showExerciseWeightModal: boolean,
+    handleCloseExerciseWeightModal: () => void
 }
 
-const CreateExerciseWeightModal = ({ exerciseId, setExerciseWeight, showCreateExerciseWeightModal, handleCloseCreateExerciseWeightModal }: ICreateExerciseWeightModal) => {
-    const weight = useForm({ type: "exerciseWeight" });
+const ExerciseWeightModal = ({ exerciseId, exerciseWeight, setExerciseWeight, showExerciseWeightModal, handleCloseExerciseWeightModal }: IExerciseWeightModal) => {
+    const weight = useForm({ type: "exerciseWeight", initial: exerciseWeight });
     const [week, setWeek] = React.useState("");
     const [day, setDay] = React.useState("");
     const [loading, setLoading] = React.useState(false);
@@ -27,15 +28,17 @@ const CreateExerciseWeightModal = ({ exerciseId, setExerciseWeight, showCreateEx
     }, [router.query.dia]);
 
     /** Close modal and reset form */
-    const hideExerciseWeightModal = () => {
-        handleCloseCreateExerciseWeightModal();
-        weight.setValue("");
+    const hideExerciseWeightModal = (saved: boolean) => {
+        handleCloseExerciseWeightModal();
+
+        if (!saved && exerciseWeight === "") weight.setValue("")
+        
         weight.setMessage(null);
         weight.setValid(null);
     }
 
     /** Submit form with exercise data */
-    const handleCreateExerciseWeightFormSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
+    const handleExerciseWeightFormSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
 
         if (weight.validate()) {
@@ -60,7 +63,7 @@ const CreateExerciseWeightModal = ({ exerciseId, setExerciseWeight, showCreateEx
             };
 
             if (response.ok) { 
-                hideExerciseWeightModal();
+                hideExerciseWeightModal(true);
                 setLoading(false);
                 setExerciseWeight(result.weight);
             }
@@ -70,12 +73,14 @@ const CreateExerciseWeightModal = ({ exerciseId, setExerciseWeight, showCreateEx
     }
 
     return (
-        <Modal show={showCreateExerciseWeightModal} onHide={hideExerciseWeightModal}>
+        <Modal show={showExerciseWeightModal} onHide={() => hideExerciseWeightModal(false)}>
             <Modal.Header closeButton>
-                <Modal.Title>Adicionar Carga</Modal.Title>
+                <Modal.Title>
+                    {exerciseWeight === "" ? "Adicionar" : "Editar"} Carga
+                </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <form onSubmit={handleCreateExerciseWeightFormSubmit}>
+                <form onSubmit={handleExerciseWeightFormSubmit}>
                     {/* Exercise Weight */}
                     <InputComponent inputGroup={true}
                         inputGroupText="kg"
@@ -102,4 +107,4 @@ const CreateExerciseWeightModal = ({ exerciseId, setExerciseWeight, showCreateEx
     )
 }
 
-export default CreateExerciseWeightModal
+export default ExerciseWeightModal
