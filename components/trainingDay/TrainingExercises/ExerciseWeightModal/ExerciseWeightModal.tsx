@@ -61,8 +61,6 @@ const ExerciseWeightModal = ({ exerciseId, exerciseWeight, setExerciseWeight, sh
                 message: string,
                 weight: string
             };
-            
-            console.log(response, result)
 
             if (response.ok) { 
                 hideExerciseWeightModal(true);

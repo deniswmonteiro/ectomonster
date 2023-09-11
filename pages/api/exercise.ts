@@ -73,6 +73,10 @@ function getDay(day: string) {
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
+    if (req.method === "GET") {
+
+    }
+
     if (req.method === "POST") {
         const { exerciseId, week, day, weight } = req.body as IExerciseData;
 
@@ -91,8 +95,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
 
             if (fs.existsSync(filePath)) {
                 const data: IData = extractData(filePath);
-
-                data.exercises[`${exercise}`].weight = Number(weight.replace(",", "."));
                 updateData(filePath, data);
 
                 const { name } = data.exercises[`${exercise}`];
