@@ -12,5 +12,5 @@ export function extractData(filePath: string) {
 }
 
 export function updateData(filePath: string, data: any) {
-    return fs.writeFileSync(filePath, JSON.stringify(data, null, 4));
+    fs.writeFileSync(filePath, JSON.stringify(data));
 }
