@@ -2,68 +2,75 @@
     "id": 11,
     "title": "Treino de Segunda",
     "exercises": {
-        "exercise-1": {
+        "exercise-111": {
             "exerciseId": 111,
             "name": "Agachamento no smith",
             "series": 4,
             "reps-min": 4,
             "reps-max": 6,
             "pause": 120,
-            "technique": "Carga alta"
+            "technique": "Carga alta",
+            "weight": 0
         },
-        "exercise-2": {
+        "exercise-112": {
             "exerciseId": 112,
             "name": "Leg press 45º",
             "series": 4,
             "reps-min": 4,
             "reps-max": 6,
             "pause": 120,
-            "technique": "Carga alta"
+            "technique": "Carga alta",
+            "weight": 0
         },
-        "exercise-3": {
+        "exercise-113": {
             "exerciseId": 113,
             "name": "Cadeira extensora",
             "series": 4,
             "reps-min": 4,
             "reps-max": 6,
             "pause": 90,
-            "technique": "Carga alta"
+            "technique": "Carga alta",
+            "weight": 0
         },
-        "exercise-4": {
+        "exercise-114": {
             "exerciseId": 114,
             "name": "Mesa Flexora",
             "series": 4,
             "reps-min": 6,
             "reps-max": 6,
             "pause": 90,
-            "technique": "Carga alta"
+            "technique": "Carga alta",
+            "weight": 0
         },
-        "exercise-5": {
+        "exercise-115": {
             "exerciseId": 115,
             "name": "Levantamento terra sumô",
             "series": 3,
             "reps-min": 6,
             "reps-max": 6,
             "pause": 120,
-            "technique": "Carga alta"
+            "technique": "Carga alta",
+            "weight": 0
         },
-        "exercise-6": {
+        "exercise-116": {
             "exerciseId": 116,
             "name": "Stiff",
             "series": 4,
             "reps-min": 6,
             "reps-max": 6,
             "pause": 120,
-            "technique": "Carga alta"
+            "technique": "Carga alta",
+            "weight": 0
         },
-        "exercise-7": {
+        "exercise-117": {
             "exerciseId": 117,
             "name": "Panturrilha em pé",
             "series": 4,
             "reps-min": 10,
             "reps-max": 15,
             "pause": 60,
-            "technique": "Carga alta"
+            "technique": "Carga alta",
+            "weight": 0
         }
     }
 }

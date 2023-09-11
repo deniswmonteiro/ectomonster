@@ -22,6 +22,7 @@ type IExercisesData = {
     "reps-max": number,
     pause: number,
     technique: string,
+    weight: number,
     "is-grouping"?: boolean,
     description?: string
 }
@@ -79,7 +80,7 @@ const TrainingExercises = ({ training }: { training: IData }) => {
                                 </div>
                             </div>
 
-                            <ExerciseWeight exerciseId={exercise[1].exerciseId} />
+                            <ExerciseWeight exerciseId={exercise[1].exerciseId} weight={exercise[1].weight} />
                         </Carousel.Caption>
                     </Carousel.Item>
                 ))}

@@ -10,3 +10,7 @@ export function extractData(filePath: string) {
 
     return JSON.parse(fileData.toString());
 }
+
+export function updateData(filePath: string, data: any) {
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 4));
+}

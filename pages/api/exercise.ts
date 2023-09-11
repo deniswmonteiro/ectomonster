@@ -1,9 +1,7 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import fs from "fs";
-import { buildPath, extractData } from "@/helpers/content-util";
-import { dbConnect, getId } from "@/helpers/db-util";
+import { NextApiRequest, NextApiResponse } from "next";
 import { validate } from "@/helpers/form-validate";
-import { WithId } from "mongodb";
+import { buildPath, extractData, updateData } from "@/helpers/content-util";
 
 type ResponseData = {
     message?: string,
@@ -35,79 +33,12 @@ type IExercisesData = {
     "reps-max": number,
     pause: number,
     technique: string,
+    weight: number,
     "is-grouping"?: boolean,
     description?: string
 }
 
-type IExercise = WithId<Document> & {
-    exerciseId: number,
-    week: string,
-    day: string,
-    name: string,
-    weight: string
-}
-
-function getDay(day: string) {
-    let dayName = "";
-
-    switch (day) {
-        case "segunda":
-            dayName = "Segunda";
-            break;
-
-        case "terca":
-            dayName = "Terça";
-            break;
-
-        case "quarta":
-            dayName = "Quarta";
-            break;
-
-        case "quinta":
-            dayName = "Quinta";
-            break;
-
-        case "sexta":
-            dayName = "Sexta";
-            break;
-    }
-
-    return dayName;
-}
-
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
-    if (req.method === "GET") {
-        const exerciseId = req.query.exerciseId;
-
-        try {
-            const connect = await dbConnect();
-            const db = connect.db();
-            const exercise = await db.collection("exercise").findOne({ exerciseId: Number(exerciseId) });
-
-            if (!exercise) {
-                res.status(201).json({
-                    weight: ""
-                });
-
-                connect.close();
-            }
-
-            else {
-                const exerciseWeight = String(exercise.weight).replace(".", ",");
-
-                res.status(201).json({
-                    weight: exerciseWeight,
-                });
-            }
-        }
-    
-        catch (error) {
-            res.status(500).json({
-                message: "Erro de conexão com o banco de dados."
-            });
-        }
-    }
-
     if (req.method === "POST") {
         const { exerciseId, week, day, weight } = req.body as IExerciseData;
 
@@ -121,42 +52,26 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
         }
 
         else {
-            const exercise: string = `exercise-${exerciseId.toString().slice(-1)}`;
+            const exercise: string = `exercise-${exerciseId}`;
             const filePath = buildPath(week, day);
 
             if (fs.existsSync(filePath)) {
                 const data: IData = extractData(filePath);
-                const { name } = data.exercises[`${exercise}`];
 
-                const connect = await dbConnect();
-                const db = connect.db();
+                data.exercises[`${exercise}`].weight = Number(weight.replace(",", "."));
 
-                const exerciseDataExists = await db.collection("exercise").findOne({ exerciseId }) as IExercise;
+                updateData(filePath, data);
 
-                if (exerciseDataExists) {
-                    //
-                }
+                res.status(201).json({
+                    message: "Carga adicionada com sucesso.",
+                    weight
+                });
+            }
 
-                else {
-                    const exerciseWeight = Number(weight.replace(",", "."));
-                    const exerciseWeek = week.replace("-", " ").substring(0, 1).toUpperCase() + week.replace("-", " ").substring(1);
-                    const exerciseDay = getDay(day);
-
-                    await db.collection("exercise").insertOne({
-                        exerciseId,
-                        week: exerciseWeek,
-                        day: exerciseDay,
-                        name,
-                        weight: exerciseWeight
-                    });
-
-                    res.status(201).json({
-                        message: "Carga adicionada com sucesso.",
-                        weight
-                    });
-
-                    connect.close();
-                }
+            else {
+                res.status(500).json({
+                    message: "Erro de conexão com o banco de dados."
+                });
             }
         }
     }

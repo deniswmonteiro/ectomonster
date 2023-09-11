@@ -22,6 +22,7 @@ type IExercisesData = {
     "reps-max": number,
     pause: number,
     technique: string,
+    weight: number,
     "is-grouping"?: boolean,
 }
 

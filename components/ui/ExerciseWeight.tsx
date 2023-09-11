@@ -4,41 +4,43 @@ import CreateExerciseWeightModal from "../trainingDay/TrainingExercises/CreateEx
 import EditExerciseWeightModal from "../trainingDay/TrainingExercises/EditExerciseWeightModal/EditExerciseWeightModal";
 import styles from "./ExerciseWeight.module.css";
 
-const ExerciseWeight = ({ exerciseId }: {exerciseId: number}) => {
+const ExerciseWeight = ({ exerciseId, weight }: { exerciseId: number, weight: number }) => {
     const [loading, setLoading] = React.useState(false);
-    const [exerciseWeight, setExerciseWeight] = React.useState("");
+    const [exerciseWeight, setExerciseWeight] = React.useState(() => {
+        return weight !== 0 ? weight.toString().replace(".", ",") : ""
+    });
     
-     /** Modal state */
-     const [showCreateExerciseWeightModal, setShowCreateExerciseWeightModal] = React.useState(false);
-     const [showEditExerciseWeightModal, setShowEditExerciseWeightModal] = React.useState(false);
+    /** Modal state */
+    const [showCreateExerciseWeightModal, setShowCreateExerciseWeightModal] = React.useState(false);
+    const [showEditExerciseWeightModal, setShowEditExerciseWeightModal] = React.useState(false);
 
-     /** Create Exercise Weight modal */
-     const handleShowCreateExerciseWeightModal = () => setShowCreateExerciseWeightModal(true);
-     const handleCloseCreateExerciseWeightModal = () => setShowCreateExerciseWeightModal(false);
+    /** Create Exercise Weight modal */
+    const handleShowCreateExerciseWeightModal = () => setShowCreateExerciseWeightModal(true);
+    const handleCloseCreateExerciseWeightModal = () => setShowCreateExerciseWeightModal(false);
 
-     /** Edit Exercise Weight modal */
-     const handleShowEditExerciseWeightModal = () => setShowEditExerciseWeightModal(true);
-     const handleCloseEditExerciseWeightModal = () => setShowEditExerciseWeightModal(false);
+    /** Edit Exercise Weight modal */
+    const handleShowEditExerciseWeightModal = () => setShowEditExerciseWeightModal(true);
+    const handleCloseEditExerciseWeightModal = () => setShowEditExerciseWeightModal(false);
 
     React.useEffect(() => {
-        /** Get Exercise Weight */
-        const handleGetExerciseWeight = async () => {
-            setLoading(true);
+        // /** Get Exercise Weight */
+        // const handleGetExerciseWeight = async () => {
+        //     setLoading(true);
 
-            const response = await fetch(`/api/exercise/?exerciseId=${exerciseId}`);
+        //     const response = await fetch(`/api/exercise/?exerciseId=${exerciseId}`);
 
-            if (response.ok) {
-                setLoading(false);
+        //     if (response.ok) {
+        //         setLoading(false);
 
-                const result = await response.json() as { weight: string };
+        //         const result = await response.json() as { weight: string };
 
-                setExerciseWeight(result.weight);
-            }
+        //         setExerciseWeight(result.weight);
+        //     }
 
-            else setLoading(false);
-        }
+        //     else setLoading(false);
+        // }
 
-        handleGetExerciseWeight();
+        // handleGetExerciseWeight();
     }, [exerciseId]);
 
     return (
@@ -73,9 +75,9 @@ const ExerciseWeight = ({ exerciseId }: {exerciseId: number}) => {
                 handleCloseCreateExerciseWeightModal={handleCloseCreateExerciseWeightModal} />
 
             {/* Edit Exercise Weight modal */}
-            <EditExerciseWeightModal exerciseId={exerciseId}
+            {/* <EditExerciseWeightModal exerciseId={exerciseId}
                 showEditExerciseWeightModal={showEditExerciseWeightModal}
-                handleCloseEditExerciseWeightModal={handleCloseEditExerciseWeightModal} />
+                handleCloseEditExerciseWeightModal={handleCloseEditExerciseWeightModal} /> */}
         </>
     )
 }
