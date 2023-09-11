@@ -95,7 +95,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
 
             if (fs.existsSync(filePath)) {
                 const data: IData = extractData(filePath);
-                updateData(filePath, data);
+
+                data.exercises[`${exercise}`].weight = Number(weight.replace(",", "."));
+                // updateData(filePath, data);
 
                 const { name } = data.exercises[`${exercise}`];
 
