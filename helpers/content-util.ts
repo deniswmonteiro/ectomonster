@@ -11,6 +11,6 @@ export function extractData(filePath: string) {
     return JSON.parse(fileData.toString());
 }
 
-export async function updateData(filePath: string, data: any) {
+export function updateData(filePath: string, data: any) {
     fs.writeFileSync(filePath, JSON.stringify(data, null, 4));
 }

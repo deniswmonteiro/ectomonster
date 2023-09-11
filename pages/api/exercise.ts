@@ -97,7 +97,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
                 const data: IData = extractData(filePath);
 
                 data.exercises[`${exercise}`].weight = Number(weight.replace(",", "."));
-                await updateData(filePath, data);
+                fs.writeFileSync(filePath, JSON.stringify(data, null, 4));
 
                 const { name } = data.exercises[`${exercise}`];
 
