@@ -131,7 +131,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
 
                 res.status(201).json({
                     message: "Carga adicionada com sucesso.",
-                    // weight
+                    weight
                 });
 
                 // connect.close();

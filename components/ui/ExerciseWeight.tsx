@@ -3,6 +3,7 @@ import ExerciseWeightModal from "../trainingDay/TrainingExercises/ExerciseWeight
 import styles from "./ExerciseWeight.module.css";
 
 const ExerciseWeight = ({ exerciseId, weight }: { exerciseId: number, weight: number }) => {
+    const [teste, setTeste] = React.useState("");
     const [exerciseWeight, setExerciseWeight] = React.useState(() => {
         return weight && weight !== 0 ? weight.toString().replace(".", ",") : ""
     });
@@ -18,10 +19,19 @@ const ExerciseWeight = ({ exerciseId, weight }: { exerciseId: number, weight: nu
         <>  
             {exerciseWeight === "" ? 
                 (
-                    <button className={styles.exerciseWeightButton}
-                        onClick={handleShowExerciseWeightModal}>
-                        Adicionar Carga
-                    </button>
+                    (teste === "" ? 
+                        (
+                            <button className={styles.exerciseWeightButton}
+                            onClick={handleShowExerciseWeightModal}>
+                            Adicionar Carga
+                        </button>
+                        ) : (
+                            <button className={styles.exerciseWeightButton}
+                            onClick={handleShowExerciseWeightModal}>
+                                {exerciseWeight} kg
+                            </button>
+                        )
+                    )
                 ) : (
                     <button className={styles.exerciseWeightButton}
                         onClick={handleShowExerciseWeightModal}>
@@ -33,6 +43,7 @@ const ExerciseWeight = ({ exerciseId, weight }: { exerciseId: number, weight: nu
             {/* Exercise Weight modal */}
             <ExerciseWeightModal exerciseId={exerciseId}
                 exerciseWeight={exerciseWeight}
+                setTeste={setTeste}
                 setExerciseWeight={setExerciseWeight}
                 showExerciseWeightModal={showExerciseWeightModal}
                 handleCloseExerciseWeightModal={handleCloseExerciseWeightModal} />
