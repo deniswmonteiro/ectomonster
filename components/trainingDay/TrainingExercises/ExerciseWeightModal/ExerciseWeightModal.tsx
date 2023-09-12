@@ -41,20 +41,36 @@ const ExerciseWeightModal = ({ exerciseId, exerciseWeight, setExerciseWeight, sh
     const handleExerciseWeightFormSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
 
-        if (weight.validate()) {
-            setLoading(true);
+        let method: string;
+        let data: object;
+        
+        if (exerciseWeight === "") {
+            method = "POST";
+            data = {
+                exerciseId,
+                week,
+                day,
+                weight: weight.value
+            }
+        }
 
-            const response = await fetch("/api/exercise", {
-                method: "POST",
+        else {
+            method = "PATCH";
+            data = {
+                exerciseId,
+                weight: weight.value
+            }
+        }
+
+        if (weight.validate()) {
+            // setLoading(true);
+
+            const response = await fetch("/api/exercises", {
+                method,
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({
-                    exerciseId,
-                    week,
-                    day,
-                    weight: weight.value
-                })
+                body: JSON.stringify(data)
             });
 
             const result = await response.json() as {
@@ -64,11 +80,11 @@ const ExerciseWeightModal = ({ exerciseId, exerciseWeight, setExerciseWeight, sh
 
             if (response.ok) { 
                 hideExerciseWeightModal(true);
-                setLoading(false);
+                // setLoading(false);
                 setExerciseWeight(result.weight);
             }
 
-            else setLoading(false);
+            // else setLoading(false);
         }
     }
 

@@ -9,8 +9,7 @@
             "reps-min": 4,
             "reps-max": 6,
             "pause": 120,
-            "technique": "Carga alta",
-            "weight": 0
+            "technique": "Carga alta"
         },
         "exercise-112": {
             "exerciseId": 112,
@@ -19,8 +18,7 @@
             "reps-min": 4,
             "reps-max": 6,
             "pause": 120,
-            "technique": "Carga alta",
-            "weight": 0
+            "technique": "Carga alta"
         },
         "exercise-113": {
             "exerciseId": 113,
@@ -29,8 +27,7 @@
             "reps-min": 4,
             "reps-max": 6,
             "pause": 90,
-            "technique": "Carga alta",
-            "weight": 0
+            "technique": "Carga alta"
         },
         "exercise-114": {
             "exerciseId": 114,
@@ -39,8 +36,7 @@
             "reps-min": 6,
             "reps-max": 6,
             "pause": 90,
-            "technique": "Carga alta",
-            "weight": 0
+            "technique": "Carga alta"
         },
         "exercise-115": {
             "exerciseId": 115,
@@ -49,8 +45,7 @@
             "reps-min": 6,
             "reps-max": 6,
             "pause": 120,
-            "technique": "Carga alta",
-            "weight": 0
+            "technique": "Carga alta"
         },
         "exercise-116": {
             "exerciseId": 116,
@@ -59,8 +54,7 @@
             "reps-min": 6,
             "reps-max": 6,
             "pause": 120,
-            "technique": "Carga alta",
-            "weight": 0
+            "technique": "Carga alta"
         },
         "exercise-117": {
             "exerciseId": 117,
@@ -69,8 +63,7 @@
             "reps-min": 10,
             "reps-max": 15,
             "pause": 60,
-            "technique": "Carga alta",
-            "weight": 0
+            "technique": "Carga alta"
         }
     }
 }
