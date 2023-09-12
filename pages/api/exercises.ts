@@ -1,5 +1,5 @@
-import fs from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
+import fs from "fs";
 import { validate } from "@/helpers/form-validate";
 import { buildPath, extractData, updateData } from "@/helpers/content-util";
 import { dbConnect } from "@/helpers/db-util";
@@ -104,37 +104,30 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
             const filePath = buildPath(week, day);
 
             if (fs.existsSync(filePath)) {
+                const connect = await dbConnect();
+                const db = connect.db();
+
                 const data: IData = extractData(filePath);
+                const { name } = data.exercises[`${exercise}`];
 
                 const exerciseWeight = Number(weight.replace(",", "."));
+                const exerciseWeek = (week.substring(0, 1).toUpperCase() + week.substring(1)).replace("-", " ");
+                const exerciseDay = getDay(day);
 
-                data.exercises[`${exercise}`].weight = exerciseWeight;
-
-                fs.writeFileSync(filePath, JSON.stringify(data, null, 4));
-
-                // const { name } = data.exercises[`${exercise}`];
-
-                // const connect = await dbConnect();
-                // const db = connect.db();
-
-                // const exerciseWeight = Number(weight.replace(",", "."));
-                // const exerciseWeek = (week.substring(0, 1).toUpperCase() + week.substring(1)).replace("-", " ");
-                // const exerciseDay = getDay(day);
-
-                // await db.collection("exercises").insertOne({
-                //     exerciseId,
-                //     week: exerciseWeek,
-                //     day: exerciseDay,
-                //     name,
-                //     weight: exerciseWeight
-                // });
+                await db.collection("exercises").insertOne({
+                    exerciseId,
+                    week: exerciseWeek,
+                    day: exerciseDay,
+                    name,
+                    weight: exerciseWeight
+                });
 
                 res.status(201).json({
                     message: "Carga adicionada com sucesso.",
                     weight
                 });
 
-                // connect.close();
+                connect.close();
             }
         }
     }

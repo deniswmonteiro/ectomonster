@@ -9,12 +9,11 @@ type IExerciseWeightModal = {
     exerciseId: number,
     exerciseWeight: string,
     setExerciseWeight: React.Dispatch<React.SetStateAction<string>>,
-    setTeste: React.Dispatch<React.SetStateAction<string>>,
     showExerciseWeightModal: boolean,
     handleCloseExerciseWeightModal: () => void
 }
 
-const ExerciseWeightModal = ({ exerciseId, exerciseWeight, setTeste, setExerciseWeight, showExerciseWeightModal, handleCloseExerciseWeightModal }: IExerciseWeightModal) => {
+const ExerciseWeightModal = ({ exerciseId, exerciseWeight, setExerciseWeight, showExerciseWeightModal, handleCloseExerciseWeightModal }: IExerciseWeightModal) => {
     const weight = useForm({ type: "exerciseWeight", initial: exerciseWeight });
     const [week, setWeek] = React.useState("");
     const [day, setDay] = React.useState("");
@@ -42,29 +41,29 @@ const ExerciseWeightModal = ({ exerciseId, exerciseWeight, setTeste, setExercise
     const handleExerciseWeightFormSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
 
-        // let method: string;
-        // let data: object;
+        let method: string;
+        let data: object;
         
-        // if (exerciseWeight === "") {
-        //     method = "POST";
-        //     data = {
-        //         exerciseId,
-        //         week,
-        //         day,
-        //         weight: weight.value
-        //     }
-        // }
+        if (exerciseWeight === "") {
+            method = "POST";
+            data = {
+                exerciseId,
+                week,
+                day,
+                weight: weight.value
+            }
+        }
 
-        // else {
-        //     method = "PATCH";
-        //     data = {
-        //         exerciseId,
-        //         weight: weight.value
-        //     }
-        // }
+        else {
+            method = "PATCH";
+            data = {
+                exerciseId,
+                weight: weight.value
+            }
+        }
 
         if (weight.validate()) {
-            // setLoading(true);
+            setLoading(true);
 
             const response = await fetch("/api/exercises", {
                 method: "POST",
@@ -86,12 +85,11 @@ const ExerciseWeightModal = ({ exerciseId, exerciseWeight, setTeste, setExercise
 
             if (response.ok) { 
                 hideExerciseWeightModal(true);
-                // setLoading(false);
+                setLoading(false);
                 setExerciseWeight(result.weight);
-                setTeste(result.weight);
             }
 
-            // else setLoading(false);
+            else setLoading(false);
         }
     }
 

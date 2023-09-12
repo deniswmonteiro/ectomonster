@@ -34,8 +34,6 @@ const trainingDays = [
 ];
 
 const DayPage = ({ hasError, trainingData}: { hasError: boolean, trainingData: IData }) => {
-    console.log(trainingData)
-
     return (
         <TrainingDay hasError={hasError} training={trainingData} />
     )
@@ -59,8 +57,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return {
         props: {
             trainingData
-        },
-        revalidate: 10
+        }
     }
 }
 
