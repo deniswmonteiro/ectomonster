@@ -29,6 +29,15 @@ type IExercisesData = {
     description?: string
 }
 
+type IExerciseData = {
+    exerciseData: [{
+        exerciseId: number,
+        week: string,
+        day: string,
+        weight: string
+    }]
+}
+
 const trainingDays = [
     "Segunda", "Terca", "Quarta", "Quinta", "Sexta"
 ];
@@ -53,6 +62,19 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
     const result = await response.json() as IResult;
     const trainingData = result.data;
+
+    const req = await fetch(`${process.env.NEXTAUTH_URL}/api/exercises/?week=${training[0]}`);
+    const res = await req.json() as IExerciseData;
+
+    console.log(res)
+
+    // res.exerciseData.map((exercise) => {
+    //     const exerciseId = `exercise-${exercise.exerciseId}`;
+
+    //     if (trainingData.exercises[`${exerciseId}`].exerciseId === exercise.exerciseId) {
+    //         trainingData.exercises[`${exerciseId}`].weight = Number(exercise.weight);
+    //     }
+    // });
 
     return {
         props: {

@@ -9,18 +9,14 @@ import { authOptions } from "./auth/[...nextauth]";
 
 type ResponseData = {
     message?: string,
-    weight?: string | null
+    weight?: string | null,
+    exerciseData?: IExerciseGet
 }
 
 type IExerciseData = {
     exerciseId: number,
     week: string,
     day: string,
-    weight: string
-}
-
-type IExerciseDataUpdate = {
-    exerciseId: number,
     weight: string
 }
 
@@ -60,6 +56,8 @@ type ISession = {
     expires: string
 }
 
+type IExerciseGet = WithId<Document>[] & [IExerciseData]
+
 function getDay(day: string) {
     let dayName = "";
 
@@ -89,6 +87,21 @@ function getDay(day: string) {
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
+    if (req.method === "GET") {
+        const week = req.query.week as string;
+
+        // Adding exercise weight value to data if exists
+        const connect = await dbConnect();
+        const db = connect.db();
+
+        const exerciseWeek = (week.substring(0, 1).toUpperCase() + week.substring(1)).replace("-", " ");
+        const exerciseData = await db.collection("exercises").find({ week: exerciseWeek }).toArray() as IExerciseGet;
+
+        res.status(201).json({
+            exerciseData
+        });
+    }
+
     if (req.method === "POST") {
         const { exerciseId, week, day, weight } = req.body as IExerciseData;
 

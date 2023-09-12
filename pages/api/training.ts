@@ -32,15 +32,6 @@ type IExercisesData = {
     description?: string
 }
 
-type IExercise = WithId<Document>[] & [IExerciseData]
-
-type IExerciseData = {
-    exerciseId: number,
-    week: string,
-    day: string,
-    weight: string
-}
-
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
     if (req.method === "GET") {
         const week = req.query.week as string;
@@ -50,21 +41,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
 
         if (fs.existsSync(filePath)) {
             const data: IData = extractData(filePath);
-            
-            // Adding exercise weight value to data if exists
-            const connect = await dbConnect();
-            const db = connect.db();
-            
-            const exerciseWeek = (week.substring(0, 1).toUpperCase() + week.substring(1)).replace("-", " ");
-            const exerciseData = await db.collection("exercises").find({ week: exerciseWeek }).toArray() as IExercise;
-            
-            exerciseData.map((exercise: IExerciseData) => {
-                const exerciseId = `exercise-${exercise.exerciseId}`;
-
-                if (data.exercises[`${exerciseId}`].exerciseId === exercise.exerciseId) {
-                    data.exercises[`${exerciseId}`].weight = Number(exercise.weight)
-                }
-            });
 
             res.status(200).json({
                 data
