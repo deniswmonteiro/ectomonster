@@ -87,21 +87,6 @@ function getDay(day: string) {
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
-    if (req.method === "GET") {
-        const week = req.query.week as string;
-
-        // Adding exercise weight value to data if exists
-        const connect = await dbConnect();
-        const db = connect.db();
-
-        const exerciseWeek = (week.substring(0, 1).toUpperCase() + week.substring(1)).replace("-", " ");
-        const exerciseData = await db.collection("exercises").find({ week: exerciseWeek }).toArray() as IExerciseGet;
-
-        res.status(201).json({
-            exerciseData
-        });
-    }
-
     if (req.method === "POST") {
         const { exerciseId, week, day, weight } = req.body as IExerciseData;
 
@@ -121,29 +106,35 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
             if (fs.existsSync(filePath)) {
                 const data: IData = extractData(filePath);
 
-                const { name } = data.exercises[`${exercise}`];
-
-                const connect = await dbConnect();
-                const db = connect.db();
-
                 const exerciseWeight = Number(weight.replace(",", "."));
-                const exerciseWeek = week.replace("-", " ").substring(0, 1).toUpperCase() + week.replace("-", " ").substring(1);
-                const exerciseDay = getDay(day);
 
-                await db.collection("exercises").insertOne({
-                    exerciseId,
-                    week: exerciseWeek,
-                    day: exerciseDay,
-                    name,
-                    weight: exerciseWeight
-                });
+                data.exercises[`${exercise}`].weight = exerciseWeight;
+
+                fs.writeFileSync(filePath, JSON.stringify(data, null, 4));
+
+                // const { name } = data.exercises[`${exercise}`];
+
+                // const connect = await dbConnect();
+                // const db = connect.db();
+
+                // const exerciseWeight = Number(weight.replace(",", "."));
+                // const exerciseWeek = (week.substring(0, 1).toUpperCase() + week.substring(1)).replace("-", " ");
+                // const exerciseDay = getDay(day);
+
+                // await db.collection("exercises").insertOne({
+                //     exerciseId,
+                //     week: exerciseWeek,
+                //     day: exerciseDay,
+                //     name,
+                //     weight: exerciseWeight
+                // });
 
                 res.status(201).json({
                     message: "Carga adicionada com sucesso.",
-                    weight
+                    // weight
                 });
 
-                connect.close();
+                // connect.close();
             }
         }
     }

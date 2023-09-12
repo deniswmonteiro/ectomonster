@@ -9,7 +9,8 @@
             "reps-min": 8,
             "reps-max": 12,
             "pause": 120,
-            "technique": "Falha concêntrica"
+            "technique": "Falha concêntrica",
+            "weight": 0
         },
         "exercise-2": {
             "exerciseId": 212,
@@ -19,6 +20,7 @@
             "reps-max": 12,
             "pause": 0,
             "technique": "No-stop",
+            "weight": 0,
             "description": "Realizar o exercício sem intervalo entre as séries."
         },
         "exercise-3": {
@@ -29,6 +31,7 @@
             "reps-max": 10,
             "pause": 90,
             "technique": "Drop-set",
+            "weight": 0,
             "description": "10 repetições com 40% da carga alta + 10 repetições com a carga normal após 10s de descanso."
         },
         "exercise-4": {
@@ -39,6 +42,7 @@
             "reps-max": 10,
             "pause": 0,
             "technique": "Falha concêntrica",
+            "weight": 0,
             "is-grouping": true
         },
         "exercise-5": {
@@ -49,6 +53,7 @@
             "reps-max": 12,
             "pause": 90,
             "technique": "Falha concêntrica",
+            "weight": 0,
             "is-grouping": true
         },
         "exercise-6": {
@@ -58,6 +63,7 @@
             "reps-min": 12,
             "reps-max": 12,
             "pause": 120,
+            "weight": 0,
             "technique": "Falha concêntrica"
         },
         "exercise-7": {
@@ -67,6 +73,7 @@
             "reps-min": 20,
             "reps-max": 20,
             "pause": 60,
+            "weight": 0,
             "technique": "Carga alta"
         }
     }

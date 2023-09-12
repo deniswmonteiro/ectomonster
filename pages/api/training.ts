@@ -6,7 +6,8 @@ import { WithId } from "mongodb";
 
 type ResponseData = {
     message?: string,
-    data: IData | null
+    data: IData | null,
+    filePath?: string
 }
 
 type IData = {
@@ -27,7 +28,7 @@ type IExercisesData = {
     "reps-max": number,
     pause: number,
     technique: string,
-    weight?: number,
+    weight: number,
     "is-grouping"?: boolean,
     description?: string
 }
