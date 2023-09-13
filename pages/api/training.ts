@@ -2,28 +2,16 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { dbConnect } from "@/helpers/db-util";
 import { WithId } from "mongodb";
 import { validate } from "@/helpers/form-validate";
-import { getServerSession } from "next-auth";
-import { authOptions } from "./auth/[...nextauth]";
-
-type ISession = {
-    user: {
-        name: string,
-        email: string,
-        image: string | null
-    },
-    expires: string
-}
 
 type ResponseData = {
     message?: string,
     data?: IData | null,
-    weight?: string,
+    weight?: string
 }
 
 type IData = {
-    email?: string,
-    title?: string;
-    exercises?: {
+    title: string;
+    exercises: {
         exerciseId: number;
         name: string;
         series: number;
@@ -82,59 +70,44 @@ function getDay(day: string) {
 
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
     if (req.method === "GET") {
-        const session: ISession | null = await getServerSession(req, res, authOptions);
+        const week = req.query.week as string;
+        const day = req.query.day as string;
 
-        if (!session) {
-            res.status(401).json({
-                message: "Usuário não autenticado."
-            })
+        try {
+            const connect = await dbConnect();
+            const db = connect.db();
+
+            const exerciseWeek = (week.substring(0, 1).toUpperCase() + week.substring(1)).replace("-", " ");
+            const training = await db.collection("training").find({ week: exerciseWeek }).toArray() as ITraining;
+
+            const trainingData = training.map((item: IExercisesData) => {
+                return {
+                    exerciseId: item.exerciseId,
+                    name: item.name,
+                    series: item.series,
+                    "reps-min": item["reps-min"],
+                    "reps-max": item["reps-max"],
+                    pause: item.pause,
+                    technique: item.technique,
+                    weight: item.weight
+                }
+            });
+
+            const data = {
+                title: `Treino de ${getDay(day)}`,
+                exercises: trainingData
+            }
+
+            res.status(200).json({
+                data
+            });
         }
 
-        else {
-            const email = session.user.email;
-            const week = req.query.week as string;
-            const day = req.query.day as string;
-
-            try {
-                // const connect = await dbConnect();
-                // const db = connect.db();
-
-                // const exerciseWeek = (week.substring(0, 1).toUpperCase() + week.substring(1)).replace("-", " ");
-                // const training = await db.collection("training").find({ week: exerciseWeek }).toArray() as ITraining;
-
-                // const trainingData = training.map((item: IExercisesData) => {
-                //     return {
-                //         exerciseId: item.exerciseId,
-                //         name: item.name,
-                //         series: item.series,
-                //         "reps-min": item["reps-min"],
-                //         "reps-max": item["reps-max"],
-                //         pause: item.pause,
-                //         technique: item.technique,
-                //         weight: item.weight
-                //     }
-                // });
-
-                // const data = {
-                //     title: `Treino de ${getDay(day)}`,
-                //     exercises: trainingData
-                // }
-
-                const data = {
-                    email
-                }
-
-                res.status(200).json({
-                    data
-                });
-            }
-
-            catch (error) {
-                res.status(500).json({
-                    message: "Dia de treino não encontrado.",
-                    data: null
-                });
-            }
+        catch (error) {
+            res.status(500).json({
+                message: "Dia de treino não encontrado.",
+                data: null
+            });
         }
     }
 
