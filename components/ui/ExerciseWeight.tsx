@@ -4,7 +4,7 @@ import styles from "./ExerciseWeight.module.css";
 
 const ExerciseWeight = ({ exerciseId, weight }: { exerciseId: number, weight: number }) => {
     const [exerciseWeight, setExerciseWeight] = React.useState(() => {
-        return weight && weight !== 0 ? weight.toString().replace(".", ",") : ""
+        return weight !== 0 ? weight.toString().replace(".", ",") : "";
     });
     
     /** Modal state */

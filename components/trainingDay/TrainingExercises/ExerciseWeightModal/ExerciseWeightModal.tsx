@@ -1,6 +1,5 @@
 import React from "react";
 import useForm from "@/hooks/useForm";
-import { useRouter } from "next/router";
 import { Modal, Spinner } from "react-bootstrap";
 import InputComponent from "@/components/forms/InputComponent";
 import ButtonComponent from "@/components/forms/ButtonComponent";
@@ -15,17 +14,7 @@ type IExerciseWeightModal = {
 
 const ExerciseWeightModal = ({ exerciseId, exerciseWeight, setExerciseWeight, showExerciseWeightModal, handleCloseExerciseWeightModal }: IExerciseWeightModal) => {
     const weight = useForm({ type: "exerciseWeight", initial: exerciseWeight });
-    const [week, setWeek] = React.useState("");
-    const [day, setDay] = React.useState("");
     const [loading, setLoading] = React.useState(false);
-    const router = useRouter();
-
-    React.useEffect(() => {
-        if (router.query.dia) {
-            setWeek(router.query.dia[0]);
-            setDay(router.query.dia[1]);
-        }
-    }, [router.query.dia]);
 
     /** Close modal and reset form */
     const hideExerciseWeightModal = (saved: boolean) => {
@@ -41,39 +30,16 @@ const ExerciseWeightModal = ({ exerciseId, exerciseWeight, setExerciseWeight, sh
     const handleExerciseWeightFormSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
 
-        let method: string;
-        let data: object;
-        
-        if (exerciseWeight === "") {
-            method = "POST";
-            data = {
-                exerciseId,
-                week,
-                day,
-                weight: weight.value
-            }
-        }
-
-        else {
-            method = "PATCH";
-            data = {
-                exerciseId,
-                weight: weight.value
-            }
-        }
-
         if (weight.validate()) {
             setLoading(true);
 
-            const response = await fetch("/api/exercises", {
-                method: "POST",
+            const response = await fetch("/api/training", {
+                method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
                     exerciseId,
-                    week,
-                    day,
                     weight: weight.value
                 })
             });

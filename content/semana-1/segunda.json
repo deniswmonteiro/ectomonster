@@ -24,6 +24,8 @@
         },
         "exercise-113": {
             "exerciseId": 113,
+            "week": "Semana 1",
+            "day": "Segunda",
             "name": "Cadeira extensora",
             "series": 4,
             "reps-min": 4,
@@ -34,6 +36,8 @@
         },
         "exercise-114": {
             "exerciseId": 114,
+            "week": "Semana 1",
+            "day": "Segunda",
             "name": "Mesa Flexora",
             "series": 4,
             "reps-min": 6,
@@ -44,6 +48,8 @@
         },
         "exercise-115": {
             "exerciseId": 115,
+            "week": "Semana 1",
+            "day": "Segunda",
             "name": "Levantamento terra sumô",
             "series": 3,
             "reps-min": 6,
@@ -54,6 +60,8 @@
         },
         "exercise-116": {
             "exerciseId": 116,
+            "week": "Semana 1",
+            "day": "Segunda",
             "name": "Stiff",
             "series": 4,
             "reps-min": 6,
@@ -64,6 +72,8 @@
         },
         "exercise-117": {
             "exerciseId": 117,
+            "week": "Semana 1",
+            "day": "Segunda",
             "name": "Panturrilha em pé",
             "series": 4,
             "reps-min": 10,

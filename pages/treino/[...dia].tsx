@@ -57,7 +57,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return {
         props: {
             trainingData
-        }
+        },
+        revalidate: 10
     }
 }
 

@@ -29,6 +29,43 @@ type IUser = WithId<Document> & {
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
+    if (req.method === "GET") {
+        const email = req.query.email;
+
+        try {
+            const connect = await dbConnect();
+            const db = connect.db();
+            const user = await db.collection("users").findOne({ email }) as IUser;
+
+            if (!user) {
+                res.status(422).json({
+                    message: "Usuário não encontrado."
+                });
+
+                connect.close();
+            }
+
+            else {
+                const userGender = (user.gender === "male") ? "1" : "2";
+                const userWeight = String(user.weight).replace(".", ",");
+                const userHeight = String(user.height / 100).replace(".", ",");
+
+                res.status(201).json({
+                    name: user.name,
+                    gender: userGender,
+                    weight: userWeight,
+                    height: userHeight,
+                });
+            }
+        }
+    
+        catch (error) {
+            res.status(500).json({
+                message: "Erro de conexão com o banco de dados."
+            });
+        }
+    }
+    
     if (req.method === "POST") {
         const { name, gender, weight, height, email, password } = req.body as IUserData;
 
@@ -92,43 +129,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
                     message: "Erro de conexão com o servidor."
                 });
             }
-        }
-    }
-
-    if (req.method === "GET") {
-        const email = req.query.email;
-
-        try {
-            const connect = await dbConnect();
-            const db = connect.db();
-            const user = await db.collection("users").findOne({ email }) as IUser;
-
-            if (!user) {
-                res.status(422).json({
-                    message: "Usuário não encontrado."
-                });
-
-                connect.close();
-            }
-
-            else {
-                const userGender = (user.gender === "male") ? "1" : "2";
-                const userWeight = String(user.weight).replace(".", ",");
-                const userHeight = String(user.height / 100).replace(".", ",");
-
-                res.status(201).json({
-                    name: user.name,
-                    gender: userGender,
-                    weight: userWeight,
-                    height: userHeight,
-                });
-            }
-        }
-    
-        catch (error) {
-            res.status(500).json({
-                message: "Erro de conexão com o banco de dados."
-            });
         }
     }
 }
