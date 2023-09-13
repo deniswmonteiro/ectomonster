@@ -2,6 +2,17 @@ import React from "react";
 import { GetStaticProps } from "next";
 import TrainingDay from "@/components/trainingDay/TrainingDay";
 
+type IUserData = {
+    user: IUser | null
+}
+
+type IUser = {
+    name: string,
+    gender: "1" | "2",
+    weight: string,
+    height: string,
+}
+
 type IResult = {
     data: IData
 }
@@ -34,8 +45,10 @@ const trainingDays = [
 ];
 
 const DayPage = ({ hasError, trainingData}: { hasError: boolean, trainingData: IData }) => {
+    console.log(trainingData)
     return (
-        <TrainingDay hasError={hasError} training={trainingData} />
+        <></>
+        // <TrainingDay hasError={hasError} training={trainingData} />
     )
 }
 

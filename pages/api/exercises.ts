@@ -56,6 +56,10 @@ type ISession = {
     expires: string
 }
 
+type IUser = WithId<Document> & {
+    id: number
+}
+
 type IExerciseGet = WithId<Document>[] & [IExerciseData]
 
 function getDay(day: string) {
@@ -88,46 +92,96 @@ function getDay(day: string) {
 
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
     if (req.method === "POST") {
-        const { exerciseId, week, day, weight } = req.body as IExerciseData;
+        const session: ISession | null = await getServerSession(req, res, authOptions);
 
-        // Validation
-        const isValidExerciseWeight = weight ? validate({ type: "exerciseWeight", value: weight }) : false;
-
-        if (!isValidExerciseWeight) {
-            res.status(422).json({
-                message: "Preencha o campo corretamente."
-            });
+        if (!session) {
+            res.status(401).json({
+                message: "Usuário não autenticado."
+            })
         }
 
         else {
-            const exercise: string = `exercise-${exerciseId}`;
-            const filePath = buildPath(week, day);
+            const { exerciseId, weight } = req.body as IExerciseData;
 
-            if (fs.existsSync(filePath)) {
-                const connect = await dbConnect();
-                const db = connect.db();
+            // Validation
+            const isValidExerciseWeight = weight ? validate({ type: "exerciseWeight", value: weight }) : false;
 
-                const data: IData = extractData(filePath);
-                const { name } = data.exercises[`${exercise}`];
-
-                const exerciseWeight = Number(weight.replace(",", "."));
-                const exerciseWeek = (week.substring(0, 1).toUpperCase() + week.substring(1)).replace("-", " ");
-                const exerciseDay = getDay(day);
-
-                await db.collection("exercises").insertOne({
-                    exerciseId,
-                    week: exerciseWeek,
-                    day: exerciseDay,
-                    name,
-                    weight: exerciseWeight
+            if (!isValidExerciseWeight) {
+                res.status(422).json({
+                    message: "Preencha o campo corretamente."
                 });
+            }
 
-                res.status(201).json({
-                    message: "Carga adicionada com sucesso.",
-                    weight
-                });
+            else {
+                try {
+                    const connect = await dbConnect();
+                    const db = connect.db();
+                    
+                    const email = session.user.email;
+                    const users = db.collection("users");
+                    const user = await users.findOne({ email }) as IUser;
 
-                connect.close();
+                    if (!user) {
+                        res.status(404).json({
+                            message: "Usuário não encontrado."
+                        });
+
+                        connect.close();
+                    }
+
+                    else {
+                        const exerciseWeight = Number(weight.replace(",", "."));
+
+                        await db.collection("exercises").insertOne({
+                            exerciseId,
+                            userId: user.id,
+                            weight: exerciseWeight
+                        });
+    
+                        res.status(201).json({
+                            message: "Carga adicionada com sucesso.",
+                            weight
+                        });
+
+                        connect.close();
+                    }
+                }
+
+                catch (error) {
+                    res.status(500).json({
+                        message: "Erro de conexão com o servidor."
+                    });
+                }
+                
+                // const exercise: string = `exercise-${exerciseId}`;
+                // const filePath = buildPath(week, day);
+
+                // if (fs.existsSync(filePath)) {
+                //     const connect = await dbConnect();
+                //     const db = connect.db();
+
+                //     const data: IData = extractData(filePath);
+                //     const { name } = data.exercises[`${exercise}`];
+
+                //     const exerciseWeight = Number(weight.replace(",", "."));
+                //     const exerciseWeek = (week.substring(0, 1).toUpperCase() + week.substring(1)).replace("-", " ");
+                //     const exerciseDay = getDay(day);
+
+                //     await db.collection("exercises").insertOne({
+                //         exerciseId,
+                //         week: exerciseWeek,
+                //         day: exerciseDay,
+                //         name,
+                //         weight: exerciseWeight
+                //     });
+
+                //     res.status(201).json({
+                //         message: "Carga adicionada com sucesso.",
+                //         weight
+                //     });
+
+                //     connect.close();
+                // }
             }
         }
     }
