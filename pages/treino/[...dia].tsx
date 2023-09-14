@@ -1,6 +1,17 @@
 import React from "react";
-import { GetStaticProps } from "next";
+import { GetServerSideProps, GetStaticProps } from "next";
 import TrainingDay from "@/components/trainingDay/TrainingDay";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]";
+
+type ISession = {
+    user: {
+        name: string,
+        email: string,
+        image: string | null
+    },
+    expires: string
+}
 
 type IResult = {
     data: IData

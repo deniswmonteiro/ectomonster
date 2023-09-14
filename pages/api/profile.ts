@@ -36,7 +36,7 @@ type ISession = {
 
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
     if (req.method === "GET") {
-        const email = req.query.email;
+        const email = req.query.email as string;
 
         try {
             const connect = await dbConnect();

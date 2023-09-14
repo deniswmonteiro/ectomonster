@@ -6,7 +6,7 @@ const ExerciseWeight = ({ exerciseId, weight }: { exerciseId: number, weight: nu
     const [exerciseWeight, setExerciseWeight] = React.useState(() => {
         return weight !== 0 ? weight.toString().replace(".", ",") : "";
     });
-    
+
     /** Modal state */
     const [showExerciseWeightModal, setShowExerciseWeightModal] = React.useState(false);
 

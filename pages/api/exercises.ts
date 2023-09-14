@@ -1,7 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import fs from "fs";
 import { validate } from "@/helpers/form-validate";
-import { buildPath, extractData, updateData } from "@/helpers/content-util";
 import { dbConnect } from "@/helpers/db-util";
 import { WithId } from "mongodb";
 import { getServerSession } from "next-auth";
@@ -10,7 +8,7 @@ import { authOptions } from "./auth/[...nextauth]";
 type ResponseData = {
     message?: string,
     weight?: string | null,
-    exerciseData?: IExerciseGet
+    exercisesData?: IExercisesGetData[]
 }
 
 type IExerciseData = {
@@ -60,7 +58,15 @@ type IUser = WithId<Document> & {
     id: number
 }
 
-type IExerciseGet = WithId<Document>[] & [IExerciseData]
+type IExercisesGet = WithId<Document>[] & [{
+    exerciseId: number,
+    weight: number
+}]
+
+type IExercisesGetData = {
+    exerciseId: number,
+    weight: number
+}
 
 function getDay(day: string) {
     let dayName = "";
@@ -91,6 +97,44 @@ function getDay(day: string) {
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
+    if (req.method === "GET") {
+        const email = req.query.email as string;
+        
+        try {
+            const connect = await dbConnect();
+            const db = connect.db();
+            const user = await db.collection("users").findOne({ email }) as IUser;
+
+            if (!user) {
+                res.status(422).json({
+                    message: "Usuário não encontrado.",
+                });
+
+                connect.close();
+            }
+
+            else {
+                const exercises = await db.collection("exercises").find({ userId: user.id }).toArray() as IExercisesGet;
+                const exercisesData = exercises.map((exercise: IExercisesGetData) => {
+                    return {
+                        exerciseId: exercise.exerciseId,
+                        weight: exercise.weight
+                    }
+                });
+                
+                res.status(201).json({
+                    exercisesData
+                });
+            }
+        }
+    
+        catch (error) {
+            res.status(500).json({
+                message: "Erro de conexão com o banco de dados."
+            });
+        }
+    }
+
     if (req.method === "POST") {
         const session: ISession | null = await getServerSession(req, res, authOptions);
 
@@ -152,100 +196,70 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
                         message: "Erro de conexão com o servidor."
                     });
                 }
-                
-                // const exercise: string = `exercise-${exerciseId}`;
-                // const filePath = buildPath(week, day);
-
-                // if (fs.existsSync(filePath)) {
-                //     const connect = await dbConnect();
-                //     const db = connect.db();
-
-                //     const data: IData = extractData(filePath);
-                //     const { name } = data.exercises[`${exercise}`];
-
-                //     const exerciseWeight = Number(weight.replace(",", "."));
-                //     const exerciseWeek = (week.substring(0, 1).toUpperCase() + week.substring(1)).replace("-", " ");
-                //     const exerciseDay = getDay(day);
-
-                //     await db.collection("exercises").insertOne({
-                //         exerciseId,
-                //         week: exerciseWeek,
-                //         day: exerciseDay,
-                //         name,
-                //         weight: exerciseWeight
-                //     });
-
-                //     res.status(201).json({
-                //         message: "Carga adicionada com sucesso.",
-                //         weight
-                //     });
-
-                //     connect.close();
-                // }
             }
         }
     }
 
-    if (req.method === "PATCH") {
-        const session: ISession | null = await getServerSession(req, res, authOptions);
+    // if (req.method === "PATCH") {
+    //     const session: ISession | null = await getServerSession(req, res, authOptions);
 
-        if (!session) {
-            res.status(401).json({
-                message: "Usuário não autenticado."
-            })
-        }
+    //     if (!session) {
+    //         res.status(401).json({
+    //             message: "Usuário não autenticado."
+    //         })
+    //     }
 
-        else {
-            const { exerciseId, weight } = req.body as IExerciseData;
+    //     else {
+    //         const { exerciseId, weight } = req.body as IExerciseData;
 
-            // Validation
-            const isValidExerciseWeight = weight ? validate({ type: "exerciseWeight", value: weight }) : false;
+    //         // Validation
+    //         const isValidExerciseWeight = weight ? validate({ type: "exerciseWeight", value: weight }) : false;
 
-            if (!isValidExerciseWeight) {
-                res.status(422).json({
-                    message: "Preencha o campo corretamente."
-                });
-            }
+    //         if (!isValidExerciseWeight) {
+    //             res.status(422).json({
+    //                 message: "Preencha o campo corretamente."
+    //             });
+    //         }
 
-            else {
-                try {
-                    const connect = await dbConnect();
-                    const exercises = connect.db().collection("exercises");
-                    const exercise = await exercises.findOne({ exerciseId }) as IExercise;
+    //         else {
+    //             try {
+    //                 const connect = await dbConnect();
+    //                 const exercises = connect.db().collection("exercises");
+    //                 const exercise = await exercises.findOne({ exerciseId }) as IExercise;
 
-                    if (!exercise) {
-                        res.status(404).json({
-                            message: "Exercício não encontrado."
-                        });
+    //                 if (!exercise) {
+    //                     res.status(404).json({
+    //                         message: "Exercício não encontrado."
+    //                     });
 
-                        connect.close();
-                    }
+    //                     connect.close();
+    //                 }
 
-                    else {
-                        const exerciseWeight = Number(weight.replace(",", "."));
+    //                 else {
+    //                     const exerciseWeight = Number(weight.replace(",", "."));
 
-                        await exercises.updateOne({ exerciseId }, {
-                            $set: {
-                                weight: exerciseWeight,
-                            }
-                        });
+    //                     await exercises.updateOne({ exerciseId }, {
+    //                         $set: {
+    //                             weight: exerciseWeight,
+    //                         }
+    //                     });
 
-                        res.status(200).json({
-                            message: "Carga atualizada com sucesso."
-                        });
+    //                     res.status(200).json({
+    //                         message: "Carga atualizada com sucesso."
+    //                     });
                         
-                        connect.close();
-                    }
-                }
+    //                     connect.close();
+    //                 }
+    //             }
 
-                catch (error) {
-                    res.status(500).json({
-                        message: "Erro de conexão com o servidor."
-                    });
-                }
-            }
-        }
-    }
+    //             catch (error) {
+    //                 res.status(500).json({
+    //                     message: "Erro de conexão com o servidor."
+    //                 });
+    //             }
+    //         }
+    //     }
+    // }
 }
 
 export default handler

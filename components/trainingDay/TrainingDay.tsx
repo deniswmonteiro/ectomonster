@@ -1,4 +1,5 @@
 import React from "react";
+import { useSession } from "next-auth/react";
 import Header from "../layout/Header";
 import { useRouter } from "next/router";
 import TrainingExercises from "./TrainingExercises/TrainingExercises";
@@ -27,12 +28,40 @@ type IExercisesData = {
 }
 
 const TrainingDay = ({ hasError, training}: { hasError: boolean, training: IData }) => {
-    const router = useRouter();
+    const [trainingData, setTrainingData] = React.useState<IData | null>(null)
     const [week, setWeek] = React.useState("");
+    const { data: session } = useSession();
+    const router = useRouter();
 
     React.useEffect(() => {
         if (router.query.dia) setWeek(router.query.dia[0]);
-    }, [router.query.dia]);
+
+        async function handleExerciseWeight() {
+            if (session && session.user) {
+                const response = await fetch(`/api/exercises/?email=${session.user.email}`);
+                const result = await response.json() as {
+                    exercisesData: {
+                        exerciseId: number,
+                        weight: number
+                    }[]
+                };
+
+                if (training) {
+                    Object.entries(training.exercises).map((exercise) => {
+                        result.exercisesData.map((data) => {
+                            if (exercise[1].exerciseId === data.exerciseId) {
+                                exercise[1].weight = data.weight;
+                            }
+                        })
+                    })
+
+                    setTrainingData(training);
+                }
+            }
+        }
+
+        handleExerciseWeight();
+    }, [router.query.dia, session, training]);
 
     if (hasError) {
         return (
@@ -43,13 +72,23 @@ const TrainingDay = ({ hasError, training}: { hasError: boolean, training: IData
         )
     }
 
-    if (training) {
+    if (!trainingData) return (
+        <>
+            <Header backNavigation={true} href={`/treino/${week}`} />
+        
+            <section className={`container animeLeft ${styles.trainingDay}`}>
+                <p>carregando o treino...</p>
+            </section>
+        </>
+    )
+
+    if (trainingData) {
         return (
             <>
                 <Header backNavigation={true} href={`/treino/${week}`} />
 
                 <section className={`container animeLeft ${styles.trainingDay}`}>
-                    <TrainingExercises training={training} />
+                    <TrainingExercises training={trainingData} />
                 </section>
             </>
         )
