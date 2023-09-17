@@ -16,6 +16,7 @@ type IData = {
         name: string;
         series: number;
         "reps-min": number;
+        "reps-avg"?: number;
         "reps-max": number;
         pause: number;
         technique: string;
@@ -32,6 +33,7 @@ type IExercisesData = {
     name: string,
     series: number,
     "reps-min": number,
+    "reps-avg"?: number,
     "reps-max": number,
     pause: number,
     technique: string,
@@ -94,6 +96,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
                     name: item.name,
                     series: item.series,
                     "reps-min": item["reps-min"],
+                    "reps-avg": item["reps-avg"],
                     "reps-max": item["reps-max"],
                     pause: item.pause,
                     technique: item.technique,

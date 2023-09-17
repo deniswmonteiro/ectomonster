@@ -20,6 +20,7 @@ type IExercisesData = {
     name: string,
     series: number,
     "reps-min": number,
+    "reps-avg"?: number,
     "reps-max": number,
     pause: number,
     technique: string,

@@ -19,6 +19,7 @@ type IExercisesData = {
     name: string,
     series: number,
     "reps-min": number,
+    "reps-avg"?: number,
     "reps-max": number,
     pause: number,
     technique: string,
@@ -70,9 +71,17 @@ const TrainingExercises = ({ training }: { training: IData }) => {
                                                 } repetições
                                             </p>
                                         ) : (
-                                            <p>
-                                                <span>{exercise[1]["reps-min"]}</span> &ndash; <span>{exercise[1]["reps-max"]}</span> repetições
-                                            </p>
+                                            (exercise[1].technique === "Drop-set 2x" ? 
+                                                (
+                                                    <p>
+                                                        <span>{exercise[1]["reps-min"]} + {exercise[1]["reps-avg"]} + {exercise[1]["reps-max"]}</span> repetições
+                                                    </p>
+                                                ) : (
+                                                    <p>
+                                                        <span>{exercise[1]["reps-min"]}</span> &ndash; <span>{exercise[1]["reps-max"]}</span> repetições
+                                                    </p>
+                                                )
+                                            )
                                         )
                                     }
                                 </div>
