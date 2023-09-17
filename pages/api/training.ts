@@ -19,6 +19,8 @@ type IData = {
         "reps-max": number;
         pause: number;
         technique: string;
+        "is-grouping"?: boolean,
+        description?: string,
         weight: number;
     }[]
 }
@@ -33,9 +35,9 @@ type IExercisesData = {
     "reps-max": number,
     pause: number,
     technique: string,
-    weight: number,
     "is-grouping"?: boolean,
-    description?: string
+    description?: string,
+    weight: number
 }
 
 type ITraining = WithId<Document>[] & [IExercisesData]
@@ -78,7 +80,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
             const db = connect.db();
 
             const exerciseWeek = (week.substring(0, 1).toUpperCase() + week.substring(1)).replace("-", " ");
-            const training = await db.collection("training").find({ week: exerciseWeek }).toArray() as ITraining;
+            const exerciseDay = getDay(day);
+
+            const training = await db.collection("training").find({
+                $and: [
+                    { week: exerciseWeek },
+                    { day: exerciseDay }
+                ]}).toArray() as ITraining;
 
             const trainingData = training.map((item: IExercisesData) => {
                 return {
@@ -89,6 +97,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
                     "reps-max": item["reps-max"],
                     pause: item.pause,
                     technique: item.technique,
+                    "is-grouping": item["is-grouping"],
+                    description: item.description,
                     weight: item.weight
                 }
             });

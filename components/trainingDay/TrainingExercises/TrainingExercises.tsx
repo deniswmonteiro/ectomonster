@@ -22,9 +22,9 @@ type IExercisesData = {
     "reps-max": number,
     pause: number,
     technique: string,
-    weight: number,
     "is-grouping"?: boolean,
     description?: string
+    weight: number
 }
 
 const TrainingExercises = ({ training }: { training: IData }) => {
@@ -53,7 +53,21 @@ const TrainingExercises = ({ training }: { training: IData }) => {
                                     {exercise[1]["reps-min"] === exercise[1]["reps-max"] ?
                                         (
                                             <p>
-                                                <span>{exercise[1]["reps-min"]}</span> repetições
+                                                {exercise[1].technique === "Rest pause 10s" ?
+                                                    (
+                                                        <span>{exercise[1]["reps-min"]} + Falha</span> 
+                                                    ) : (
+                                                        (exercise[1].technique === "Drop-set" ? 
+                                                            (
+                                                                <span>
+                                                                    {exercise[1]["reps-min"]} + {exercise[1]["reps-min"]}
+                                                                </span>
+                                                            ) : (
+                                                                <span>{exercise[1]["reps-min"]}</span>
+                                                            )
+                                                        )
+                                                    )
+                                                } repetições
                                             </p>
                                         ) : (
                                             <p>

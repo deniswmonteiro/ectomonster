@@ -31,21 +31,11 @@ const ExerciseWeightModal = ({ exerciseId, exerciseWeight, setExerciseWeight, sh
         event.preventDefault();
 
         if (weight.validate()) {
-            // setLoading(true);
+            setLoading(true);
 
-            // const response = await fetch("/api/training", {
-            //     method: "PATCH",
-            //     headers: {
-            //         "Content-Type": "application/json"
-            //     },
-            //     body: JSON.stringify({
-            //         exerciseId,
-            //         weight: weight.value
-            //     })
-            // });
-
+            const method = exerciseWeight === "" ? "POST" : "PATCH";
             const response = await fetch("/api/exercises", {
-                method: "POST",
+                method,
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -62,11 +52,11 @@ const ExerciseWeightModal = ({ exerciseId, exerciseWeight, setExerciseWeight, sh
 
             if (response.ok) { 
                 hideExerciseWeightModal(true);
-                // setLoading(false);
+                setLoading(false);
                 setExerciseWeight(result.weight);
             }
 
-            // else setLoading(false);
+            else setLoading(false);
         }
     }
 

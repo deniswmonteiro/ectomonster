@@ -23,8 +23,9 @@ type IExercisesData = {
     "reps-max": number,
     pause: number,
     technique: string,
-    weight: number,
     "is-grouping"?: boolean,
+    description?: string,
+    weight: number
 }
 
 const TrainingDay = ({ hasError, training}: { hasError: boolean, training: IData }) => {

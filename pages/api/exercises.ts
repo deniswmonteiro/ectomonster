@@ -18,29 +18,6 @@ type IExerciseData = {
     weight: string
 }
 
-type IData = {
-    id: number,
-    title: string,
-    exercises: IExercises
-}
-
-type IExercises = {
-    [key: string]: IExercisesData
-}
-
-type IExercisesData = {
-    exerciseId: number,
-    name: string,
-    series: number,
-    "reps-min": number,
-    "reps-max": number,
-    pause: number,
-    technique: string,
-    weight: number,
-    "is-grouping"?: boolean,
-    description?: string
-}
-
 type IExercise = WithId<Document> & IExerciseData & {
     name: string,
 }
@@ -66,34 +43,6 @@ type IExercisesGet = WithId<Document>[] & [{
 type IExercisesGetData = {
     exerciseId: number,
     weight: number
-}
-
-function getDay(day: string) {
-    let dayName = "";
-
-    switch (day) {
-        case "segunda":
-            dayName = "Segunda";
-            break;
-
-        case "terca":
-            dayName = "Terça";
-            break;
-
-        case "quarta":
-            dayName = "Quarta";
-            break;
-
-        case "quinta":
-            dayName = "Quinta";
-            break;
-
-        case "sexta":
-            dayName = "Sexta";
-            break;
-    }
-
-    return dayName;
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
@@ -200,66 +149,69 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
         }
     }
 
-    // if (req.method === "PATCH") {
-    //     const session: ISession | null = await getServerSession(req, res, authOptions);
+    if (req.method === "PATCH") {
+        const session: ISession | null = await getServerSession(req, res, authOptions);
 
-    //     if (!session) {
-    //         res.status(401).json({
-    //             message: "Usuário não autenticado."
-    //         })
-    //     }
+        if (!session) {
+            res.status(401).json({
+                message: "Usuário não autenticado."
+            })
+        }
 
-    //     else {
-    //         const { exerciseId, weight } = req.body as IExerciseData;
+        else {
+            const { exerciseId, weight } = req.body as IExerciseData;
 
-    //         // Validation
-    //         const isValidExerciseWeight = weight ? validate({ type: "exerciseWeight", value: weight }) : false;
+            // Validation
+            const isValidExerciseWeight = weight ? validate({ type: "exerciseWeight", value: weight }) : false;
 
-    //         if (!isValidExerciseWeight) {
-    //             res.status(422).json({
-    //                 message: "Preencha o campo corretamente."
-    //             });
-    //         }
+            if (!isValidExerciseWeight) {
+                res.status(422).json({
+                    message: "Preencha o campo corretamente."
+                });
+            }
 
-    //         else {
-    //             try {
-    //                 const connect = await dbConnect();
-    //                 const exercises = connect.db().collection("exercises");
-    //                 const exercise = await exercises.findOne({ exerciseId }) as IExercise;
+            else {
+                try {
+                    const connect = await dbConnect();
+                    const db = connect.db();
 
-    //                 if (!exercise) {
-    //                     res.status(404).json({
-    //                         message: "Exercício não encontrado."
-    //                     });
+                    const exercises = db.collection("exercises");
+                    const exercise = await exercises.findOne({ exerciseId }) as IExercise;
 
-    //                     connect.close();
-    //                 }
+                    if (!exercise) {
+                        res.status(404).json({
+                            message: "Exercício não encontrado."
+                        });
 
-    //                 else {
-    //                     const exerciseWeight = Number(weight.replace(",", "."));
+                        connect.close();
+                    }
 
-    //                     await exercises.updateOne({ exerciseId }, {
-    //                         $set: {
-    //                             weight: exerciseWeight,
-    //                         }
-    //                     });
+                    else {
+                        const exerciseWeight = Number(weight.replace(",", "."));
 
-    //                     res.status(200).json({
-    //                         message: "Carga atualizada com sucesso."
-    //                     });
+                        await exercises.updateOne({ exerciseId }, {
+                            $set: {
+                                weight: exerciseWeight,
+                            }
+                        });
+
+                        res.status(200).json({
+                            message: "Carga atualizada com sucesso.",
+                            weight
+                        });
                         
-    //                     connect.close();
-    //                 }
-    //             }
+                        connect.close();
+                    }
+                }
 
-    //             catch (error) {
-    //                 res.status(500).json({
-    //                     message: "Erro de conexão com o servidor."
-    //                 });
-    //             }
-    //         }
-    //     }
-    // }
+                catch (error) {
+                    res.status(500).json({
+                        message: "Erro de conexão com o servidor."
+                    });
+                }
+            }
+        }
+    }
 }
 
 export default handler
