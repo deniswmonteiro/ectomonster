@@ -15,14 +15,15 @@ type IData = {
         exerciseId: number;
         name: string;
         series: number;
-        "reps-min": number;
-        "reps-avg"?: number;
-        "reps-max": number;
+        "reps-1": number;
+        "reps-2": number;
+        "reps-3": number;
+        "reps-4": number;
         pause: number;
         technique: string;
-        "is-grouping"?: boolean,
-        description?: string,
-        weight: number;
+        "is-grouping": boolean,
+        weight: number,
+        description: string
     }[]
 }
 
@@ -32,14 +33,15 @@ type IExercisesData = {
     day: string,
     name: string,
     series: number,
-    "reps-min": number,
-    "reps-avg"?: number,
-    "reps-max": number,
+    "reps-1": number,
+    "reps-2": number,
+    "reps-3": number,
+    "reps-4": number,
     pause: number,
     technique: string,
-    "is-grouping"?: boolean,
-    description?: string,
-    weight: number
+    "is-grouping": boolean,
+    weight: number,
+    description: string
 }
 
 type ITraining = WithId<Document>[] & [IExercisesData]
@@ -95,14 +97,15 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
                     exerciseId: item.exerciseId,
                     name: item.name,
                     series: item.series,
-                    "reps-min": item["reps-min"],
-                    "reps-avg": item["reps-avg"],
-                    "reps-max": item["reps-max"],
+                    "reps-1": item["reps-1"],
+                    "reps-2": item["reps-2"],
+                    "reps-3": item["reps-3"],
+                    "reps-4": item["reps-4"],
                     pause: item.pause,
                     technique: item.technique,
                     "is-grouping": item["is-grouping"],
-                    description: item.description,
-                    weight: item.weight
+                    weight: item.weight,
+                    description: item.description
                 }
             });
 

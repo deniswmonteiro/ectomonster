@@ -18,14 +18,15 @@ type IExercisesData = {
     exerciseId: number,
     name: string,
     series: number,
-    "reps-min": number,
-    "reps-avg"?: number,
-    "reps-max": number,
+    "reps-1": number,
+    "reps-2": number,
+    "reps-3": number,
+    "reps-4": number,
     pause: number,
     technique: string,
-    "is-grouping"?: boolean,
-    description?: string
-    weight: number
+    "is-grouping": boolean,
+    weight: number,
+    description: string
 }
 
 const TrainingExercises = ({ training }: { training: IData }) => {
@@ -50,36 +51,44 @@ const TrainingExercises = ({ training }: { training: IData }) => {
                                     <p>
                                         <span>{exercise[1].series}</span> séries
                                     </p>
-                                    
-                                    {exercise[1]["reps-min"] === exercise[1]["reps-max"] ?
+
+                                    {exercise[1]["reps-1"] === exercise[1]["reps-4"] ?
                                         (
                                             <p>
                                                 {exercise[1].technique === "Rest pause 10s" ?
                                                     (
-                                                        <span>{exercise[1]["reps-min"]} + Falha</span> 
+                                                        <span>{exercise[1]["reps-1"]} + Falha</span> 
                                                     ) : (
                                                         (exercise[1].technique === "Drop-set" ? 
                                                             (
                                                                 <span>
-                                                                    {exercise[1]["reps-min"]} + {exercise[1]["reps-min"]}
+                                                                    {exercise[1]["reps-1"]} + {exercise[1]["reps-4"]}
                                                                 </span>
                                                             ) : (
-                                                                <span>{exercise[1]["reps-min"]}</span>
+                                                                <span>{exercise[1]["reps-1"]}</span>
                                                             )
                                                         )
                                                     )
                                                 } repetições
                                             </p>
                                         ) : (
-                                            (exercise[1].technique === "Drop-set 2x" ? 
+                                            (exercise[1]["reps-2"] !== 0 && exercise[1]["reps-3"] === 0 ?
                                                 (
                                                     <p>
-                                                        <span>{exercise[1]["reps-min"]} + {exercise[1]["reps-avg"]} + {exercise[1]["reps-max"]}</span> repetições
+                                                        <span>{exercise[1]["reps-1"]} + {exercise[1]["reps-2"]} + {exercise[1]["reps-4"]}</span> repetições
                                                     </p>
                                                 ) : (
-                                                    <p>
-                                                        <span>{exercise[1]["reps-min"]}</span> &ndash; <span>{exercise[1]["reps-max"]}</span> repetições
-                                                    </p>
+                                                    (exercise[1]["reps-3"] !== 0 ?
+                                                        (
+                                                            <p>
+                                                                <span>{exercise[1]["reps-1"]} + {exercise[1]["reps-2"]} + {exercise[1]["reps-3"]} + {exercise[1]["reps-4"]}</span> repetições
+                                                            </p>
+                                                        ) : (
+                                                            <p>
+                                                                <span>{exercise[1]["reps-1"]}</span> &ndash; <span>{exercise[1]["reps-4"]}</span> repetições
+                                                            </p>
+                                                        )
+                                                    )
                                                 )
                                             )
                                         )
@@ -95,7 +104,7 @@ const TrainingExercises = ({ training }: { training: IData }) => {
                                         <span>Técnica:</span> {exercise[1].technique}
                                     </p>
                                     
-                                    {exercise[1].description && (
+                                    {exercise[1].description !== "null" && (
                                         <p>
                                             {exercise[1].description}
                                         </p>

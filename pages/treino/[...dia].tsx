@@ -20,14 +20,15 @@ type IExercisesData = {
     exerciseId: number,
     name: string,
     series: number,
-    "reps-min": number,
-    "reps-avg"?: number,
-    "reps-max": number,
+    "reps-1": number,
+    "reps-2": number,
+    "reps-3": number,
+    "reps-4": number,
     pause: number,
     technique: string,
-    "is-grouping"?: boolean,
-    description?: string,
-    weight: number
+    "is-grouping": boolean,
+    weight: number,
+    description: string
 }
 
 const trainingDays = [
