@@ -31,7 +31,7 @@ type IExercisesData = {
 
 const TrainingExercises = ({ training }: { training: IData }) => {
     return (
-        <>
+        <div className="animeLeft">
             <Carousel controls={false} interval={null}>
                 {Object.entries(training.exercises).map((exercise) => (
                     <Carousel.Item key={exercise[0]}>
@@ -117,7 +117,7 @@ const TrainingExercises = ({ training }: { training: IData }) => {
                     </Carousel.Item>
                 ))}
             </Carousel>
-        </>
+        </div>
     )
 }
 

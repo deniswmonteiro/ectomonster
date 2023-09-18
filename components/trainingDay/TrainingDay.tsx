@@ -4,6 +4,7 @@ import Header from "../layout/Header";
 import { useRouter } from "next/router";
 import TrainingExercises from "./TrainingExercises/TrainingExercises";
 import styles from "./TrainingDay.module.css";
+import { Spinner } from "react-bootstrap";
 
 type IData = {
     id: number,
@@ -79,8 +80,11 @@ const TrainingDay = ({ hasError, training}: { hasError: boolean, training: IData
         <>
             <Header backNavigation={true} href={`/treino/${week}`} />
         
-            <section className={`container animeLeft ${styles.trainingDay}`}>
-                <p>carregando o treino...</p>
+            <section className={`container animeLeft ${styles.trainingDayLoading}`}>
+                <h1 className="title-1">
+                    Seu treino está sendo carregado
+                </h1>
+                <Spinner animation="border" className={styles.loading} />
             </section>
         </>
     )
