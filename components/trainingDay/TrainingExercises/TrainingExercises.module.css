@@ -67,6 +67,7 @@
 }
 
 .exerciseDetails span {
+    margin-top: 1rem;
     font-size: .875rem;
     font-weight: 700;
     color: var(--color-grey-2);
