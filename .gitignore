@@ -35,4 +35,4 @@ yarn-error.log*
 next-env.d.ts
 
 # next config
-next.config.js
+_next.config.js
