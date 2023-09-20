@@ -6,6 +6,7 @@ import LogoutModal from "./LogoutModal/LogoutModal";
 import TrainingWeekCard from "./TrainingWeekCard/TrainingWeekCard";
 import PersonCircleIcon from "../icons/person-circle-icon";
 import styles from "./HomeAuthenticated.module.css";
+import { getWithExpiry } from "@/helpers/localstorage-util";
 
 type IUserData = {
     name: string,
@@ -19,6 +20,8 @@ const trainingWeeks = [
 ];
 
 const HomeAuthenticated = ({ user }: { user: IUserData }) => {
+    const [dayDone, setDayDone] = React.useState("");
+
     /** Modal state */
     const [showProfileModal, setShowProfileModal] = React.useState(false);
     const [showLogoutModal, setShowLogoutModal] = React.useState(false);
@@ -30,6 +33,13 @@ const HomeAuthenticated = ({ user }: { user: IUserData }) => {
     /** Logout modal */
     const handleShowLogoutModal = () => setShowLogoutModal(true);
     const handleCloseLogoutModal = () => setShowLogoutModal(false);
+
+    React.useEffect(() => {
+        /** Get day done from local storage */
+        const calendarData = getWithExpiry(`Calendar`) as string;
+
+        if (calendarData !== null) setDayDone(calendarData);
+    }, []);
 
     return (
         <>
@@ -46,7 +56,7 @@ const HomeAuthenticated = ({ user }: { user: IUserData }) => {
                 </div>
                 <div className={styles.workoutsWeek}>
                     <h3 className="title-3">Treinos feitos na semana</h3>
-                    <Calendar />
+                    <Calendar dayDone={dayDone} />
                 </div>
                 <div className={styles.workouts}>
                     <h2 className="title-2">Plano de Treino</h2>

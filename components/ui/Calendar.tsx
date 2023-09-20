@@ -1,4 +1,5 @@
 import React from "react";
+import { getDates } from "@/helpers/calendar-util";
 import styles from "./Calendar.module.css";
 
 type IWeek = {
@@ -6,40 +7,21 @@ type IWeek = {
     date: number
 }
 
-const days = [
-    "Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"
-]
+const Calendar = ({ dayDone }: { dayDone: string }) => {
+    const [daysWeek, setDaysWeek] = React.useState<IWeek[]>([]);
 
-const Calendar = () => {
-    // COLOCAR PARA EXPIRAR AO TERMINAR A SEMANA
-    const dateObj = new Date();
-    const firstDay = dateObj.getDate() - dateObj.getDay();
-
-    const getDates = () => {
-        const week: IWeek[] = [];
-
-        for (let i = 0; i < days.length; i++) {
-            let nextDate = new Date(dateObj.getTime());
-            nextDate.setDate(firstDay + i);
-
-            const nameDayDate = nextDate.getDate();
-
-            week.push({
-                name: days[i],
-                date: nameDayDate
-            });
-        }
-
-        return week;
-    }
-    
-    const daysWeek = getDates();
+    React.useEffect(() => {
+        /** Get dates to fill the calendar */
+        const week = getDates();
+        setDaysWeek(week);
+    }, [dayDone]);
 
     return (
         <>
             <ul className={styles.calendar}>
                 {daysWeek.map((day) => (
-                    <li key={day.date} className={styles.calendarItem}>
+                    <li key={day.date}
+                        className={`${styles.calendarItem} ${day.name === dayDone ? styles.itemActive : ""}`}>
                         <p>{day.name}</p>
                         <p>{day.date}</p>
                     </li>

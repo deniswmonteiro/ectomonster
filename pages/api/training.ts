@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { dbConnect } from "@/helpers/db-util";
 import { WithId } from "mongodb";
 import { validate } from "@/helpers/form-validate";
+import { getDayName } from "@/helpers/calendar-util";
 
 type ResponseData = {
     message?: string,
@@ -46,34 +47,6 @@ type IExercisesData = {
 
 type ITraining = WithId<Document>[] & [IExercisesData]
 
-function getDay(day: string) {
-    let dayName = "";
-
-    switch (day) {
-        case "segunda":
-            dayName = "Segunda";
-            break;
-
-        case "terca":
-            dayName = "Terça";
-            break;
-
-        case "quarta":
-            dayName = "Quarta";
-            break;
-
-        case "quinta":
-            dayName = "Quinta";
-            break;
-
-        case "sexta":
-            dayName = "Sexta";
-            break;
-    }
-
-    return dayName;
-}
-
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
     if (req.method === "GET") {
         const week = req.query.week as string;
@@ -84,7 +57,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
             const db = connect.db();
 
             const exerciseWeek = (week.substring(0, 1).toUpperCase() + week.substring(1)).replace("-", " ");
-            const exerciseDay = getDay(day);
+            const exerciseDay = getDayName(day);
 
             const training = await db.collection("training").find({
                 $and: [
@@ -110,7 +83,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
             });
 
             const data = {
-                title: `Treino de ${getDay(day)}`,
+                title: `Treino de ${getDayName(day)}`,
                 exercises: trainingData
             }
 

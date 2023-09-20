@@ -36,6 +36,10 @@
     top: 20px;
 }
 
+.calendarItem.itemActive::after {
+    border: 3px solid var(--color-green-1);
+}
+
 .calendarItem p {
     display: block;
     text-align: center;
