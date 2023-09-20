@@ -36,9 +36,9 @@ const nextConfig = (phase) => {
             env: {
                 NEXTAUTH_URL: "http://localhost:3000",
                 NEXTAUTH_SECRET: "ZkhRjxaMTpibWO2fomRDP9tjczKD61Q6r23RH8roJZ8=",
-                DB_USERNAME: "dev_user",
-                DB_PASSWORD: "X002HVKzcSEuO4Yp",
-                DB_NAME: "dev-ecto-db"
+                DB_USERNAME: "deniswmonteiro",
+                DB_PASSWORD: "woftam-corMat-1pipna",
+                DB_NAME: "ectomonster-db"
             }
         }
     }
@@ -76,9 +76,9 @@ const nextConfig = (phase) => {
             env: {
                 NEXTAUTH_URL: "https://ectomonster.vercel.app",
                 NEXTAUTH_SECRET: "Jm6J5cKmbJBGxwA9OIQMsTDgrHN57uk0+ngevoasi50=",
-                DB_USERNAME: "dev_user",
-                DB_PASSWORD: "X002HVKzcSEuO4Yp",
-                DB_NAME: "dev-ecto-db"
+                DB_USERNAME: "deniswmonteiro",
+                DB_PASSWORD: "woftam-corMat-1pipna",
+                DB_NAME: "ectomonster-db"
             }
         }
     }
