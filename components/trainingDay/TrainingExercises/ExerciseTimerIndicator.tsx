@@ -17,6 +17,11 @@ type ISeriesList = {
     done: boolean;
 }
 
+type IStorageExerciseData = {
+    data: [ISeriesList],
+    expiry: number
+}
+
 const ExerciseTimerIndicator = ({ id, pause, serieListDone, setSerieListDone }: IExerciseTimerIndicator) => {
     const [serieStarted, setSerieStarted] = React.useState(0);
     const [exerciseFinished, setExerciseFinished] = React.useState(false);
@@ -52,8 +57,8 @@ const ExerciseTimerIndicator = ({ id, pause, serieListDone, setSerieListDone }: 
 
         setSerieListDone((serieListDone) => [...serieListDone]);
 
-        // Save done series in local storage
-        window.localStorage.setItem(`Exercise-${id}`, JSON.stringify(serieListDone));
+        // Save done series in local storage expiring in one day
+        setWithExpiry(`Exercise-${id}`, serieListDone, 86400000);
 
         handleExerciseDone();
     }
@@ -63,26 +68,53 @@ const ExerciseTimerIndicator = ({ id, pause, serieListDone, setSerieListDone }: 
         const exercisesSeries = window.localStorage.getItem(`Exercise-${id}`);
 
         if (exercisesSeries !== null) {
-            const seriesDone = JSON.parse(exercisesSeries).every((item: ISeriesList) => item.done);
+            const storagedSeries = JSON.parse(exercisesSeries) as IStorageExerciseData;
+            const seriesDone = storagedSeries.data.every((item: ISeriesList) => item.done);
 
             if (seriesDone) setExerciseFinished(true);
         }
     }, [id]);
 
-    React.useEffect(() => {
-        /** Get done series from local storage */
-        const handleGetSerieDone = () => {
-            const exerciseSeries = window.localStorage.getItem(`Exercise-${id}`);
+    /** Save done series in local storage expiring in one day */
+    function setWithExpiry(key: string, value: ISeriesList[], ttl: number) {
+        const now = new Date();
 
-            if (exerciseSeries !== null) {
-                const exerciseSeriesList = JSON.parse(exerciseSeries);
-                
-                setSerieListDone(exerciseSeriesList);
-                handleExerciseDone();
-            }
+        const item = {
+            data: value,
+            expiry: now.getTime() + ttl,
         }
 
-        handleGetSerieDone();
+        localStorage.setItem(key, JSON.stringify(item));
+    }
+
+    /** Get done series from local storage */
+    function getWithExpiry(key: string) {
+        const itemStr = localStorage.getItem(key);
+
+        // If the item doesn't exist, return null
+        if (!itemStr) return null;
+
+        const item = JSON.parse(itemStr) as IStorageExerciseData;
+        const now = new Date();
+
+        // Compare the expiry time of the item with the current time
+        if (now.getTime() > item.expiry) {
+            // If the item is expired, delete the item from storage and return null
+            localStorage.removeItem(key);
+            return null;
+        }
+
+        return item.data;
+    }
+
+    React.useEffect(() => {
+        /** Get done series from local storage */
+        const exerciseSeriesList = getWithExpiry(`Exercise-${id}`);
+
+        if (exerciseSeriesList !== null) {
+            setSerieListDone(exerciseSeriesList)
+            handleExerciseDone()
+        }
     }, [id, setSerieListDone, handleExerciseDone]);
 
     return (
