@@ -29,7 +29,7 @@ const Profile = ({ user }: { user: IUserData | null }) => {
         async function handleLogout() {
             const logout = await signOut({
                 redirect: false,
-                callbackUrl: "/"
+                callbackUrl: "/login"
             });
 
             router.replace(logout.url);

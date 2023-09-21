@@ -1,10 +1,10 @@
 import React from "react";
-import { useSession } from "next-auth/react";
-import Header from "../layout/Header";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import Header from "../layout/Header";
 import TrainingExercises from "./TrainingExercises/TrainingExercises";
-import styles from "./TrainingDay.module.css";
 import { Spinner } from "react-bootstrap";
+import styles from "./TrainingDay.module.css";
 
 type IData = {
     id: number,
@@ -32,73 +32,90 @@ type IExercisesData = {
 }
 
 const TrainingDay = ({ hasError, training}: { hasError: boolean, training: IData }) => {
-    const [trainingData, setTrainingData] = React.useState<IData | null>(null)
+    const [trainingData, setTrainingData] = React.useState<IData | null>(null);
     const [week, setWeek] = React.useState("");
     const { data: session } = useSession();
     const router = useRouter();
 
-    React.useEffect(() => {
-        if (router.query.dia) setWeek(router.query.dia[0]);
+    /** Get user exercise weight */
+    const handleExerciseWeight = React.useCallback(async () => {
+        if (session && session.user) {
+            const response = await fetch(`/api/exercises/?email=${session.user.email}`);
+            const result = await response.json() as {
+                exercisesData: {
+                    exerciseId: number,
+                    weight: number
+                }[]
+            };
 
-        async function handleExerciseWeight() {
-            if (session && session.user) {
-                const response = await fetch(`/api/exercises/?email=${session.user.email}`);
-                const result = await response.json() as {
-                    exercisesData: {
-                        exerciseId: number,
-                        weight: number
-                    }[]
-                };
-
-                if (training) {
-                    Object.entries(training.exercises).map((exercise) => {
-                        result.exercisesData.map((data) => {
-                            if (exercise[1].exerciseId === data.exerciseId) {
-                                exercise[1].weight = data.weight;
-                            }
-                        })
+            if (training) {
+                Object.entries(training.exercises).map((exercise) => {
+                    result.exercisesData.map((data) => {
+                        if (exercise[1].exerciseId === data.exerciseId) {
+                            exercise[1].weight = data.weight;
+                        }
                     })
+                })
 
-                    setTrainingData(training);
-                }
+                setTrainingData(training);
             }
         }
+    }, [session, training]);
 
-        handleExerciseWeight();
-    }, [router.query.dia, session, training]);
+    React.useEffect(() => {
+        /** User logout if session is null */
+        async function handleLogout() {
+            const logout = await signOut({
+                redirect: false,
+                callbackUrl: "/login"
+            });
 
-    if (hasError) {
-        return (
+            router.replace(logout.url);
+        }
+
+        if (session === null) handleLogout();
+
+        else {
+            if (router.query.dia) setWeek(router.query.dia[0]);
+
+            handleExerciseWeight();
+        }
+    }, [router, router.query.dia, session, training, handleExerciseWeight]);
+
+    if (session !== null) {
+        if (hasError) {
+            return (
+                <>
+                    <Header backNavigation={true} href={`/treino/${week}`} />
+                    <p>Não há treinos para esse dia.</p>
+                </>
+            )
+        }
+
+        if (!trainingData) return (
             <>
                 <Header backNavigation={true} href={`/treino/${week}`} />
-                <p>Não há treinos para esse dia.</p>
-            </>
-        )
-    }
-
-    if (!trainingData) return (
-        <>
-            <Header backNavigation={true} href={`/treino/${week}`} />
-        
-            <section className={`container animeLeft ${styles.trainingDayLoading}`}>
-                <h1 className="title-1">
-                    Seu treino está sendo carregado
-                </h1>
-                <Spinner animation="border" className={styles.loading} />
-            </section>
-        </>
-    )
-
-    if (trainingData) {
-        return (
-            <>
-                <Header backNavigation={true} href={`/treino/${week}`} />
-
-                <section className={`container animeLeft ${styles.trainingDay}`}>
-                    <TrainingExercises training={trainingData} />
+            
+                <section className={`container animeLeft ${styles.trainingDayLoading}`}>
+                    <h1 className="title-1">
+                        Seu treino está sendo carregado
+                    </h1>
+                    <Spinner animation="border" className={styles.loading} />
                 </section>
             </>
         )
+
+        if (trainingData) {
+            return (
+                <>
+                    <Header backNavigation={true} href={`/treino/${week}`} />
+
+                    <section className={`container animeLeft ${styles.trainingDay}`}>
+                        <TrainingExercises training={trainingData} />
+                    </section>
+                </>
+            )
+        }
     }
 
     else return null;
