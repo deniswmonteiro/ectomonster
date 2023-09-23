@@ -1,4 +1,5 @@
 import React from "react";
+import { getWithExpiry } from "@/helpers/localstorage-util";
 import Header from "../layout/Header";
 import Calendar from "../ui/Calendar";
 import ProfileModal from "./ProfileModal/ProfileModal";
@@ -6,7 +7,6 @@ import LogoutModal from "./LogoutModal/LogoutModal";
 import TrainingWeekCard from "./TrainingWeekCard/TrainingWeekCard";
 import PersonCircleIcon from "../icons/person-circle-icon";
 import styles from "./HomeAuthenticated.module.css";
-import { getWithExpiry } from "@/helpers/localstorage-util";
 
 type IUserData = {
     name: string,

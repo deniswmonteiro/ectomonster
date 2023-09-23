@@ -1,5 +1,6 @@
 import React from "react";
 import useForm from "@/hooks/useForm";
+import { useNotification } from "@/store/NotificationContext";
 import { Modal, Spinner } from "react-bootstrap";
 import InputComponent from "@/components/forms/InputComponent";
 import ButtonComponent from "@/components/forms/ButtonComponent";
@@ -15,6 +16,7 @@ type IExerciseWeightModal = {
 const ExerciseWeightModal = ({ exerciseId, exerciseWeight, setExerciseWeight, showExerciseWeightModal, handleCloseExerciseWeightModal }: IExerciseWeightModal) => {
     const weight = useForm({ type: "exerciseWeight", initial: exerciseWeight });
     const [loading, setLoading] = React.useState(false);
+    const { showNotification } = useNotification();
 
     /** Close modal and reset form */
     const hideExerciseWeightModal = (saved: boolean) => {
@@ -54,6 +56,11 @@ const ExerciseWeightModal = ({ exerciseId, exerciseWeight, setExerciseWeight, sh
                 hideExerciseWeightModal(true);
                 setLoading(false);
                 setExerciseWeight(result.weight);
+
+                showNotification({
+                    message: result.message,
+                    status: "success"
+                });
             }
 
             else setLoading(false);
@@ -75,6 +82,7 @@ const ExerciseWeightModal = ({ exerciseId, exerciseWeight, setExerciseWeight, sh
                         label="Carga"
                         type="text"
                         id="exercise-weight"
+                        autofocus={true}
                         {...weight} />
 
                     {loading ? 

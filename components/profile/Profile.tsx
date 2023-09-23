@@ -1,5 +1,6 @@
 import React from "react";
 import useForm from "@/hooks/useForm";
+import { useNotification } from "@/store/NotificationContext";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
 import Header from "../layout/Header";
@@ -22,6 +23,7 @@ const Profile = ({ user }: { user: IUserData | null }) => {
     const weight = useForm({ type: "weight", initial: user?.weight });
     const height = useForm({ type: "height", initial: user?.height });
     const [loading, setLoading] = React.useState(false);
+    const { showNotification } = useNotification();
     const router = useRouter();
 
     React.useEffect(() => {
@@ -61,8 +63,23 @@ const Profile = ({ user }: { user: IUserData | null }) => {
             message: string
         };
 
-        if (response.ok) router.replace("/");
-        else console.log(result.message);
+        if (response.ok) {
+            router.replace("/");
+
+            showNotification({
+                message: result.message,
+                status: "success"
+            });
+        }
+        
+        else {
+            setLoading(false);
+
+            showNotification({
+                message: result.message,
+                status: "error"
+            });
+        }
     }
 
     if (user === null) return null;
@@ -79,6 +96,7 @@ const Profile = ({ user }: { user: IUserData | null }) => {
                         {/* Name */}
                         <InputComponent label="Nome" type="text"
                             id="name"
+                            autofocus={true}
                             {...name} />
 
                         {/* Gender */}

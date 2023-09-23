@@ -14,8 +14,7 @@ const Login = () => {
     const password = useForm({ type: "password" });
     const [loading, setLoading] = React.useState(false);
     const router = useRouter();
-
-    const notificationContext = useNotification();
+    const { showNotification } = useNotification();
 
     const handleLoginFormSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
@@ -32,7 +31,7 @@ const Login = () => {
             if (response.ok) router.replace("/");
             
             else {
-                notificationContext.showNotification({
+                showNotification({
                     message: response.error as string,
                     status: "error"
                 });

@@ -9,7 +9,7 @@ const trainingDays = [
     "Segunda", "Terca", "Quarta", "Quinta", "Sexta"
 ];
 
-const Training = ({ weekId }: { weekId: string }) => {
+const Training = ({ week, weekId }: { week: boolean, weekId: string }) => {
     const { data: session } = useSession();
     const router = useRouter();
 
@@ -28,21 +28,35 @@ const Training = ({ weekId }: { weekId: string }) => {
     }, [router, session]);
 
     if (session !== null) {
-        return (
-            <>
-                <Header backNavigation={true} href="/" />
+        if (!week) {
+            return (
+                <>
+                    <Header backNavigation={true} href="/" />
 
-                <section className={`container animeLeft ${styles.training}`}>
-                    <h1 className="title-1">
-                        {weekId.replace("-", " ")}
-                    </h1>
-                
-                    {trainingDays.map((day) => (
-                        <TrainingDayCard key={day} week={weekId} day={day} />
-                    ))}
-                </section>
-            </>
-        )
+                    <section className={`container animeLeft ${styles.training}`}>
+                        <p>Não há treinos para essa semana.</p>
+                    </section>
+                </>
+            )
+        }
+
+        else {
+            return (
+                <>
+                    <Header backNavigation={true} href="/" />
+
+                    <section className={`container animeLeft ${styles.training}`}>
+                        <h1 className="title-1">
+                            {weekId.replace("-", " ")}
+                        </h1>
+                    
+                        {trainingDays.map((day) => (
+                            <TrainingDayCard key={day} week={weekId} day={day} />
+                        ))}
+                    </section>
+                </>
+            )
+        }
     }
 
     else return null;

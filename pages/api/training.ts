@@ -99,61 +99,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) 
             });
         }
     }
-
-    if (req.method === "PATCH") {
-        const { exerciseId, weight } = req.body as {
-            exerciseId: number,
-            weight: string
-        }
-
-        // Validation
-        const isValidExerciseWeight = weight ? validate({ type: "exerciseWeight", value: weight }) : false;
-
-        if (!isValidExerciseWeight) {
-            res.status(422).json({
-                message: "Preencha o campo corretamente."
-            });
-        }
-
-        else {
-            try {
-                const connect = await dbConnect();
-                const exercises = connect.db().collection("training");
-                const exercise = await exercises.findOne({ exerciseId });
-
-                if (!exercise) {
-                    res.status(404).json({
-                        message: "Exercício não encontrado."
-                    });
-
-                    connect.close();
-                }
-
-                else {
-                    const exerciseWeight = Number(weight.replace(",", "."));
-
-                    await exercises.updateOne({ exerciseId }, {
-                        $set: {
-                            weight: exerciseWeight,
-                        }
-                    });
-
-                    res.status(200).json({
-                        message: "Carga atualizada com sucesso.",
-                        weight
-                    });
-                    
-                    connect.close();
-                }
-            }
-
-            catch (error) {
-                res.status(500).json({
-                    message: "Erro de conexão com o servidor."
-                });
-            }
-        }
-    }
 }
 
 export default handler

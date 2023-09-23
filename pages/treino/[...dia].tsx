@@ -9,11 +9,7 @@ type IResult = {
 type IData = {
     id: number,
     title: string,
-    exercises: IExercises
-}
-
-type IExercises = {
-    [key: string]: IExercisesData
+    exercises: IExercisesData[]
 }
 
 type IExercisesData = {
@@ -52,15 +48,25 @@ export const getStaticProps: GetStaticProps = async (context) => {
             }
         }
     }
-
+    
     const result = await response.json() as IResult;
     const trainingData = result.data;
 
-    return {
-        props: {
-            trainingData
-        },
-        revalidate: 10
+    if (trainingData.exercises.length === 0) {
+        return {
+            props: {
+                hasError: true
+            }
+        }
+    }
+
+    else {
+        return {
+            props: {
+                trainingData
+            },
+            revalidate: 10
+        }
     }
 }
 

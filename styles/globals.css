@@ -125,7 +125,6 @@ a {
     background-color: var(--color-tomato-1) !important;
     border-radius: .375rem;
     transition: .3s;
-    padding: 1.25rem .5rem;
 }
 
 .modal-body p {
@@ -149,15 +148,6 @@ a {
     width: .375rem !important;
     height: .375rem !important;
     border-radius: 50% !important;
-}
-
-/** Alert */
-.alert-dismissible .btn-close {
-    margin-right: 0;
-    background-color: var(--color-white) !important;
-    border-radius: 0;
-    padding: 1.25rem .5rem !important;
-    transition: .3s;
 }
 
 /** Animation */

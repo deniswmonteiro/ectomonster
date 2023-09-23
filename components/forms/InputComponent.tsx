@@ -10,10 +10,11 @@ type IInputComponent = React.ComponentProps<"input"> & {
     value: string,
     message: string | null,
     valid: boolean | null,
+    autofocus?: boolean
 }
 
 const InputComponent = ({
-    inputGroup, inputGroupText, label, type, id, value, onChange, onBlur, message, valid
+    inputGroup, inputGroupText, label, type, id, value, onChange, onBlur, message, valid, autofocus
 }: IInputComponent) => {
     return (
         <Form.Group className="mb-4">
@@ -30,7 +31,8 @@ const InputComponent = ({
                             name={id}
                             value={value}
                             onChange={onChange}
-                            onBlur={onBlur} />
+                            onBlur={onBlur}
+                            autoFocus={autofocus} />
                         <InputGroup.Text className={styles.inputGroupText}>
                             {inputGroupText}
                         </InputGroup.Text>
@@ -42,7 +44,8 @@ const InputComponent = ({
                         name={id}
                         value={value}
                         onChange={onChange}
-                        onBlur={onBlur} />
+                        onBlur={onBlur}
+                        autoFocus={autofocus} />
                 )
             }
 

@@ -9,11 +9,7 @@ import styles from "./TrainingDay.module.css";
 type IData = {
     id: number,
     title: string,
-    exercises: IExercises
-}
-
-type IExercises = {
-    [key: string]: IExercisesData
+    exercises: IExercisesData[]
 }
 
 type IExercisesData = {
@@ -87,34 +83,39 @@ const TrainingDay = ({ hasError, training}: { hasError: boolean, training: IData
             return (
                 <>
                     <Header backNavigation={true} href={`/treino/${week}`} />
-                    <p>Não há treinos para esse dia.</p>
+                    
+                    <section className={`container animeLeft ${styles.trainingDay}`}>
+                        <p>Não há treino para essa dia.</p>
+                    </section>
                 </>
             )
         }
 
-        if (!trainingData) return (
-            <>
-                <Header backNavigation={true} href={`/treino/${week}`} />
-            
-                <section className={`container animeLeft ${styles.trainingDayLoading}`}>
-                    <h1 className="title-1">
-                        Seu treino está sendo carregado
-                    </h1>
-                    <Spinner animation="border" className={styles.loading} />
-                </section>
-            </>
-        )
-
-        if (trainingData) {
-            return (
+        else {
+            if (!trainingData) return (
                 <>
                     <Header backNavigation={true} href={`/treino/${week}`} />
-
-                    <section className={`container animeLeft ${styles.trainingDay}`}>
-                        <TrainingExercises training={trainingData} />
+                
+                    <section className={`container animeLeft ${styles.trainingDayLoading}`}>
+                        <h1 className="title-1">
+                            Seu treino está sendo carregado
+                        </h1>
+                        <Spinner animation="border" className={styles.loading} />
                     </section>
                 </>
             )
+
+            else {
+                return (
+                    <>
+                        <Header backNavigation={true} href={`/treino/${week}`} />
+
+                        <section className={`container animeLeft ${styles.trainingDay}`}>
+                            <TrainingExercises training={trainingData} />
+                        </section>
+                    </>
+                )
+            }
         }
     }
 

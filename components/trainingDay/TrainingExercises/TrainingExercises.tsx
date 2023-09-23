@@ -7,11 +7,7 @@ import styles from "./TrainingExercises.module.css";
 type IData = {
     id: number,
     title: string,
-    exercises: IExercises
-}
-
-type IExercises = {
-    [key: string]: IExercisesData
+    exercises: IExercisesData[]
 }
 
 type IExercisesData = {

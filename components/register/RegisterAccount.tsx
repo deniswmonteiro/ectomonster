@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../layout/Header";
 import useForm from "@/hooks/useForm";
 import { useRouter } from "next/router";
+import { useNotification } from "@/store/NotificationContext";
 import { signIn } from "next-auth/react";
 import ProgressBarComponent from "../ui/ProgressBarComponent";
 import InputComponent from "../forms/InputComponent";
@@ -16,6 +17,7 @@ const RegisterAccount = () => {
     const [fillProgressBar, setFillProgressBar] = React.useState(50);
     const router = useRouter();
     const userProfileData = router.query;
+    const { showNotification } = useNotification();
 
     React.useEffect(() => {
         if (Object.keys(userProfileData).length > 0) {
@@ -64,10 +66,16 @@ const RegisterAccount = () => {
                 });
 
                 if (login && login.ok) router.replace("/");
-                else console.log(result.message);
             }
 
-            else setLoading(false);
+            else {
+                setLoading(false);
+
+                showNotification({
+                    message: result.message,
+                    status: "error"
+                });
+            }
         }
     }
 
