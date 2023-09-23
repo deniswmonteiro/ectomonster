@@ -3,6 +3,7 @@ import Header from "../layout/Header";
 import useForm from "@/hooks/useForm";
 import { SignInResponse, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useNotification } from "@/store/NotificationContext";
 import InputComponent from "../forms/InputComponent";
 import ButtonComponent from "../forms/ButtonComponent";
 import { Spinner } from "react-bootstrap";
@@ -13,6 +14,8 @@ const Login = () => {
     const password = useForm({ type: "password" });
     const [loading, setLoading] = React.useState(false);
     const router = useRouter();
+
+    const notificationContext = useNotification();
 
     const handleLoginFormSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
@@ -29,8 +32,12 @@ const Login = () => {
             if (response.ok) router.replace("/");
             
             else {
+                notificationContext.showNotification({
+                    message: response.error as string,
+                    status: "error"
+                });
+
                 setLoading(false);
-                console.log(response.error);
             }
         }
     }

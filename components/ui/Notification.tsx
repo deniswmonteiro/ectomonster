@@ -1,6 +1,7 @@
 import React from "react";
 import { useNotification } from "@/store/NotificationContext";
 import styles from "./Notification.module.css";
+import { Alert } from "react-bootstrap";
 
 const Notification = ({ message, status }: { message: string, status: string }) => {
     const { hideNotification } = useNotification();
@@ -22,10 +23,11 @@ const Notification = ({ message, status }: { message: string, status: string }) 
     }
 
     return (
-        <div className={`${styles.notification} ${statusClass}`}
-            onClick={hideNotification}>
+        <Alert className={`${styles.notification} ${statusClass}`}
+            onClose={hideNotification}
+            dismissible>
             <p>{message}</p>
-        </div>
+        </Alert>
     )
 }
 
