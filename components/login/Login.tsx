@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../layout/Header";
 import useForm from "@/hooks/useForm";
-import { signIn } from "next-auth/react";
+import { SignInResponse, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import InputComponent from "../forms/InputComponent";
 import ButtonComponent from "../forms/ButtonComponent";
@@ -24,10 +24,14 @@ const Login = () => {
                 redirect: false,
                 email: email.value,
                 password: password.value
-            });
+            }) as SignInResponse;
 
-            if (response?.ok) router.replace("/");
-            else console.log(response?.error);
+            if (response.ok) router.replace("/");
+            
+            else {
+                setLoading(false);
+                console.log(response.error);
+            }
         }
     }
 

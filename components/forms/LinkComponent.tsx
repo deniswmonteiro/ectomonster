@@ -17,7 +17,7 @@ type ILinkComponent = {
 }
 
 const LinkComponent = ({ href, type, textType, query, disabled, children }: ILinkComponent) => {
-    let linkClass;
+    let linkClass = "";
 
     switch (type) {
         case "success":
