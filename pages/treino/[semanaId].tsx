@@ -15,7 +15,7 @@ const TrainingPage = () => {
         trainingWeeks.find((weekDay) => {
             if (weekDay.replace(" ", "-").toLowerCase() === weekId) setWeek(true);
         });
-    });
+    }, [weekId]);
 
     return (
         <Training week={week} weekId={weekId} />
